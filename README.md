@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## 루틴 & 머니 프로젝트
 
-## Getting Started
+은행에서 제공하는 **지출 내역 엑셀 파일을 자동으로 분석해 가계부를 생성**하고 월별 소비 패턴 분석을 제공하는 **개인 재무 관리 프로그램**입니다.
 
-First, run the development server:
+## 기능
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+### 1. 엑셀 기반 자동 가계부 생성
+
+- 사용자가 엑셀 파일을 업로드하면, 서버에서 데이터를 분석하여 자동으로 가계부를 생성한다.
+
+세부 기능
+
+- 엑셀 파일 업로드 가능
+- 업로드된 엑셀의 거래 내역 자동 파싱
+- 정제된 데이터를 기반으로 월별/일별/카테고리별 가계부 자동 생성
+- 필터 기능: 기간별, 카테고리별, 금액 범위별 조회
+- 가계부 데이터는 브라우저에서도 즉시 확인 가능
+
+### 2. 소비 패턴 분석 및 데이터 시각화
+
+- 가계부 데이터를 기반으로 소비 패턴을 자동 분석하고 시각화된 대시보드를 통해 사용자에게 피드백을 제공한다.
+
+세부 기능
+
+- 월별 소비 트랜드 그래프
+- 카테고리별 소비 비율 원형 차트
+- 가장 많이 소비한 항목 / 절약 포인트 자동 도출
+- 특정 카테고리의 월별 변화 추세 분석
+
+### 3. 추가 확장 아이디어
+
+---
+
+## 프로젝트 파일 구조
+
+```jsx
+src/
+ ├─ app/                      # 페이지, 라우팅 (FE + 일부 BE 서버컴포넌트)
+ │   ├─ api/                  # 백엔드 API 라우트(REST)
+ │   ├─ actions/              # 서버 액션(Server Actions)
+ │   ├─ (routes)/             # 각 페이지 라우팅 그룹 (프론트)
+ │   │     └─ home/
+ │   │           └─ page.tsx
+ │   │     └─ dashboard/
+ │   │           └─ page.tsx
+ │   └─ layout.tsx
+ │
+ ├─ components/               # 프론트 UI 컴포넌트
+ │
+ ├─ lib/                      # 백엔드 핵심 로직 (DB 등 나중에 추가 예정)
+ │
+ ├─ hooks/                    # 프론트에서 사용하는 커스텀 훅
+ │
+ ├─ styles/                   # 전역 스타일, reset, tailwind config 등
+ │     └─ globals.css
+ │
+ └─ test/                     # 테스트 (optional)
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
