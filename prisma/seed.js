@@ -3,6 +3,8 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
+
+  // 카테고리
   const categories = [
     {
       name: "식비",
@@ -57,6 +59,56 @@ async function main() {
       });
     }
   }
+
+  // 카테고리 룰
+  console.log("카테고리 가져오는 중...");
+  const allCategories = await prisma.category.findMany();
+  const categoryMap = Object.fromEntries(
+    allCategories.map((c) => [c.name, c.id])
+  );
+
+  const rules = [
+    // 식비 → 외식
+    { keyword: "버거", category: "외식" },
+    { keyword: "찌개", category: "외식" },
+    { keyword: "식당", category: "외식" },
+    { keyword: "KFC", category: "외식" },
+    { keyword: "맥도날드", category: "외식" },
+
+    // 카페/음료
+    { keyword: "카페", category: "카페/음료" },
+    { keyword: "쥬씨", category: "카페/음료" },
+    { keyword: "스타벅스", category: "카페/음료" },
+    { keyword: "투썸", category: "카페/음료" },
+
+    // 장보기
+    { keyword: "GS25", category: "장보기(마트/편의점)" },
+    { keyword: "CU", category: "장보기(마트/편의점)" },
+    { keyword: "올리브영", category: "장보기(마트/편의점)" },
+
+    // 교통
+    { keyword: "버스", category: "버스" },
+    { keyword: "지하철", category: "지하철" },
+    { keyword: "티머니", category: "버스" },
+    { keyword: "고속버스", category: "버스" },
+
+    // 취미/여가
+    { keyword: "PC방", category: "게임" },
+    { keyword: "노래", category: "음악/영화" },
+    { keyword: "영화", category: "음악/영화" },
+  ];
+
+  console.log("카테고리 규칙 생성 중...");
+
+  await prisma.categoryRule.createMany({
+    data: rules.map((r) => ({
+      keyword: r.keyword,
+      categoryId: categoryMap[r.category],
+    })),
+    skipDuplicates: true,
+  });
+
+  console.log("카테고리 + 규칙 seed 완료!");
 }
 
 main()

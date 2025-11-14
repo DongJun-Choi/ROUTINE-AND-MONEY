@@ -16,6 +16,7 @@ model Category {
   createdAt DateTime     @default(now())
   updatedAt DateTime     @updatedAt
   transactions Transaction[]
+  rules        CategoryRule[]
 }
 
 model Transaction {
@@ -28,4 +29,16 @@ model Transaction {
   category     Category? @relation(fields: [categoryId], references: [id])
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
+}
+
+model CategoryRule {
+  id          Int        @id @default(autoincrement())
+  keyword     String
+  categoryId  Int
+  category    Category   @relation(fields: [categoryId], references: [id])
+
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@unique([keyword, categoryId])
 }
