@@ -8,7 +8,7 @@ async function main() {
   const categories = [
     {
       name: "식비",
-      children: ["외식", "카페/음료", "배달", "장보기(마트/편의점)"],
+      children: ["외식", "카페/음료", "배달", "장보기"],
     },
     {
       name: "생활",
@@ -28,7 +28,7 @@ async function main() {
     },
     {
       name: "취미·여가",
-      children: ["게임", "음악/영화", "독서", "운동"],
+      children: ["게임", "영화", "독서", "운동"],
     },
     {
       name: "교육",
@@ -82,9 +82,9 @@ async function main() {
     { keyword: "투썸", category: "카페/음료" },
 
     // 장보기
-    { keyword: "GS25", category: "장보기(마트/편의점)" },
-    { keyword: "CU", category: "장보기(마트/편의점)" },
-    { keyword: "올리브영", category: "장보기(마트/편의점)" },
+    { keyword: "GS25", category: "장보기" },
+    { keyword: "CU", category: "장보기" },
+    { keyword: "올리브영", category: "장보기" },
 
     // 교통
     { keyword: "버스", category: "버스" },
