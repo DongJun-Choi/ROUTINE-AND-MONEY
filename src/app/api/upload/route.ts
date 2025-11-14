@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { parseExcel } from "@/lib/excel/parseExcel";
 import { normalizeExcelData } from "@/lib/excel/normalizeExcel";
 import prisma from "@/lib/prisma";
+import { loadCategoryRules, findCategoryId } from "@/lib/autoCategory";
 
 export async function POST(req: Request) {
   try {
@@ -21,13 +22,19 @@ export async function POST(req: Request) {
 
     const refined = normalizeExcelData(rows);
 
-    const dbData = refined.map((t) => ({
-      date: new Date(t.date),
-      merchant: t.merchant,
-      amount: t.amount,
-      paymentType: t.paymentType,
-      categoryId: null,
-    }));
+    const rules = await loadCategoryRules();
+
+    const dbData = refined.map((t) => {
+      const categoryId = findCategoryId(t.merchant, rules);
+
+      return {
+        date: new Date(t.date),
+        merchant: t.merchant,
+        amount: t.amount,
+        paymentType: t.paymentType,
+        categoryId: categoryId,
+      };
+    });
 
     await prisma.transaction.createMany({
       data: dbData,
