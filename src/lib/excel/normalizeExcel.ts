@@ -6,6 +6,18 @@ export interface Transaction {
   paymentType: "CARD" | "POINT" | "MIXED";
 }
 
+function parseAmount(value: any): number | null {
+  if (value == null) return null;
+
+  const cleaned = String(value)
+    .replace(/\u00A0/g, "") // NBSP 제거
+    .replace(/\s/g, "")     // 공백/탭 제거
+    .replace(/,/g, "");     // 천 단위 콤마 제거
+
+  const num = Number(cleaned);
+  return isNaN(num) ? null : num;
+}
+
 export function normalizeExcelData(rows: any[][]): Transaction[] {
   const result: Transaction[] = [];
 
@@ -20,7 +32,9 @@ export function normalizeExcelData(rows: any[][]): Transaction[] {
     const cardNumber = row[0];      // 카드번호
     const rawDate = row[1];         // 이용일
     const merchant = row[3];        // 가맹점명
-    let amount = Number(row[4]);    // 금액
+
+    let amount = parseAmount(row[4]);    // 금액
+    if (amount === null) continue;
 
     // 날짜 정규화: "2025.08.08 " → "2025-08-08"
     const date = rawDate.replace(/\./g, "-").trim();
