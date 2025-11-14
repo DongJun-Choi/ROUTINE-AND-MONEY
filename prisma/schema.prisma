@@ -9,7 +9,7 @@ datasource db {
 
 model Category {
   id        Int          @id @default(autoincrement())
-  name      String
+  name      String       @unique
   parentId  Int?
   parent    Category?    @relation("SubCategories", fields: [parentId], references: [id])
   children  Category[]   @relation("SubCategories")
