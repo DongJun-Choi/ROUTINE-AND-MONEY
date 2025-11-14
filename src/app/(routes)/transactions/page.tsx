@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import Calendar from "@/components/Calendar";
+import CategoryModal from "@/components/CategoryModal";
+import CategoryTag from "@/components/CategoryTag";
 
 interface Transaction {
   id: number;
@@ -9,6 +11,17 @@ interface Transaction {
   merchant: string;
   amount: number;
   paymentType: string;
+
+  categoryId: number | null;
+  category?: {
+    id: number;
+    name: string;
+    parentId: number | null;
+    parent?: {
+      id: number;
+      name: string;
+    } | null;
+  } | null;
 }
 
 export default function TransactionsPage() {
@@ -23,6 +36,10 @@ export default function TransactionsPage() {
   const [selectedDate, setSelectedDate] = useState<string | null>(todayKey);
 
   const listRef = useRef<HTMLDivElement>(null);
+
+  const [modalOpen, setModalOpen] = useState(false);
+  const [editingTxId, setEditingTxId] = useState<number | null>(null);
+  const [editingCategoryId, setEditingCategoryId] = useState<number | null>(null);
 
   async function fetchData() {
     setLoading(true);
@@ -123,6 +140,7 @@ export default function TransactionsPage() {
                 <th className="p-3">날짜</th>
                 <th className="p-3">가맹점</th>
                 <th className="p-3 text-right">금액</th>
+                <th className="p-3">카테고리</th>
                 <th className="p-3">결제</th>
               </tr>
             </thead>
@@ -144,6 +162,17 @@ export default function TransactionsPage() {
                       {t.amount.toLocaleString()}원
                     </td>
                     <td className="p-3">
+                      <CategoryTag
+                        name={t.category?.name ?? null}
+                        parentName={t.category?.parent?.name ?? null}
+                        onClick={() => {
+                          setEditingTxId(t.id);
+                          setEditingCategoryId(t.categoryId ?? null);
+                          setModalOpen(true);
+                        }}
+                      />
+                    </td>
+                    <td className="p-3">
                       <PaymentTypeTag type={t.paymentType} />
                     </td>
                   </tr>
@@ -153,6 +182,13 @@ export default function TransactionsPage() {
           </table>
         )}
       </div>
+      <CategoryModal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        transactionId={editingTxId}
+        currentCategoryId={editingCategoryId}
+        onUpdated={fetchData}
+      />
     </div>
   );
 }

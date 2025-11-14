@@ -26,6 +26,13 @@ export async function GET(req: Request) {
 
     const data = await prisma.transaction.findMany({
       where,
+      include: {
+        category: {
+          include: {
+            parent: true,
+          }
+        }
+      },
       orderBy: { date: "desc" },
     });
 
