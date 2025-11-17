@@ -59,10 +59,6 @@ export default function Calendar({
 
     return (
         <div>
-            <h2 className="text-xl font-bold mb-4">
-                📅 {year}년 {month}월 소비 달력
-            </h2>
-
             {/* 요일 */}
             <div className="grid grid-cols-7 text-center text-gray-600 mb-2 font-semibold">
                 <div>일</div><div>월</div><div>화</div>

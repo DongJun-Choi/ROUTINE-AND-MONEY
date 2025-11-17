@@ -77,6 +77,47 @@ export default function TransactionsPage() {
   );
   const total = monthlySummary.income + monthlySummary.expense;
 
+  function goToday() {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, "0");
+    const dd = today.toISOString().slice(0, 10);
+
+    setYear(String(yyyy));
+    setMonth(mm);
+    setSelectedDate(dd);
+  }
+
+  function goPrevMonth() {
+    let y = Number(year);
+    let m = Number(month);
+
+    if (m === 1) {
+      y -= 1;
+      m = 12;
+    } else {
+      m -= 1;
+    }
+
+    setYear(String(y));
+    setMonth(String(m).padStart(2, "0"));
+  }
+
+  function goNextMonth() {
+    let y = Number(year);
+    let m = Number(month);
+
+    if (m === 12) {
+      y += 1;
+      m = 1;
+    } else {
+      m += 1;
+    }
+
+    setYear(String(y));
+    setMonth(String(m).padStart(2, "0"));
+  }
+
   useEffect(() => {
     fetchData();
   }, []);
@@ -96,6 +137,37 @@ export default function TransactionsPage() {
   return (
     <div className="max-w-3xl mx-auto px-4 pb-20">
       <h1 className="text-2xl font-bold mb-4">📒 가계부</h1>
+
+      {/* 달 이동 + 제목 */}
+      <div className="flex items-center justify-between mb-2 mt-6">
+        <button
+          onClick={goPrevMonth}
+          className="px-3 py-1 rounded-lg bg-gray-100 hover:bg-gray-200"
+        >
+          ◀
+        </button>
+
+        <h2 className="text-xl font-bold">
+          📅 {year}년 {month}월 소비 달력
+        </h2>
+
+        <div className="flex items-center gap-2">
+          <button
+            onClick={goNextMonth}
+            className="px-3 py-1 rounded-lg bg-gray-100 hover:bg-gray-200"
+          >
+            ▶
+          </button>
+
+          <button
+            onClick={goToday}
+            className="px-2 py-1 rounded-lg bg-gray-100 hover:bg-gray-200 text-sm"
+            title="오늘로 이동"
+          >
+            ⟳
+          </button>
+        </div>
+      </div>
 
       <Calendar
         year={Number(year)}
