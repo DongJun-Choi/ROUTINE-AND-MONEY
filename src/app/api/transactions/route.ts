@@ -45,3 +45,36 @@ export async function GET(req: Request) {
     );
   }
 }
+
+export async function POST(req: Request) {
+  try {
+    const body = await req.json();
+    const { date, merchant, amount, paymentType, memo, categoryId } = body;
+
+    if (!date || !merchant || !amount || !paymentType) {
+      return NextResponse.json(
+        { message: "필수 값이 누락되었습니다." },
+        { status: 400 }
+      );
+    }
+
+    const newTx = await prisma.transaction.create({
+      data: {
+        date: new Date(date),
+        merchant,
+        amount: Number(amount),
+        paymentType,
+        memo: memo ?? null,
+        categoryId: categoryId ? Number(categoryId) : null,
+      },
+    });
+
+    return NextResponse.json(newTx, { status: 201 });
+  } catch (err) {
+    console.error("Error creating transaction:", err);
+    return NextResponse.json(
+      { message: "Error creating transaction" },
+      { status: 500 }
+    );
+  }
+}
