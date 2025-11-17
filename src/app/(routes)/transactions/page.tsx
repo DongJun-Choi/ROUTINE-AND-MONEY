@@ -53,7 +53,6 @@ export default function TransactionsPage() {
   }, {});
 
   const dailyTotals: Record<string, { income: number; expense: number }> = {};
-
   data.forEach((t) => {
     const key = t.date.slice(0, 10);
 
@@ -67,6 +66,16 @@ export default function TransactionsPage() {
       dailyTotals[key].income += t.amount;
     }
   });
+
+  const monthlySummary = data.reduce(
+    (acc, t) => {
+      if (t.amount < 0) acc.expense += t.amount;
+      else acc.income += t.amount;
+      return acc;
+    },
+    { income: 0, expense: 0 }
+  );
+  const total = monthlySummary.income + monthlySummary.expense;
 
   useEffect(() => {
     fetchData();
@@ -95,6 +104,31 @@ export default function TransactionsPage() {
         selectedDate={selectedDate ?? undefined}
         onSelectDate={handleDateSelect}
       />
+
+      {/* 월 합계 */}
+      <div className="mt-4 mb-6 p-4 rounded-xl bg-gray-50 border">
+        <div className="text-lg font-semibold mb-2">
+          📊 {year}년 {month}월 총합
+        </div>
+
+        <div className="flex flex-col gap-1 text-sm">
+          <div className="text-red-600 font-medium">
+            지출: -{Math.abs(monthlySummary.expense).toLocaleString()}원
+          </div>
+          <div className="text-blue-600 font-medium">
+            수입: +{monthlySummary.income.toLocaleString()}원
+          </div>
+
+          <div
+            className={`font-bold mt-1 ${
+              total < 0 ? "text-red-600" : "text-blue-600"
+            }`}
+          >
+            합계: {total < 0 ? "-" : "+"}
+            {Math.abs(total).toLocaleString()}원
+          </div>
+        </div>
+      </div>
 
       {/* 월별 선택 */}
       <div className="flex items-center justify-between mb-6 mt-6">
