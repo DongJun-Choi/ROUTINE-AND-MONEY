@@ -52,10 +52,20 @@ export default function TransactionsPage() {
     return acc;
   }, {});
 
-  const dailyTotals: Record<string, number> = {};
+  const dailyTotals: Record<string, { income: number; expense: number }> = {};
+
   data.forEach((t) => {
     const key = t.date.slice(0, 10);
-    dailyTotals[key] = (dailyTotals[key] ?? 0) + t.amount;
+
+    if (!dailyTotals[key]) {
+      dailyTotals[key] = { income: 0, expense: 0 };
+    }
+
+    if (t.amount < 0) {
+      dailyTotals[key].expense += t.amount;
+    } else {
+      dailyTotals[key].income += t.amount;
+    }
   });
 
   useEffect(() => {
@@ -78,16 +88,6 @@ export default function TransactionsPage() {
     <div className="max-w-3xl mx-auto px-4 pb-20">
       <h1 className="text-2xl font-bold mb-4">📒 가계부</h1>
 
-      <button
-        onClick={() => {
-          setSelectedTx(null);
-          setDetailOpen(true);
-        }}
-        className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
-      >
-        + 내역 추가
-      </button>
-
       <Calendar
         year={Number(year)}
         month={Number(month)}
@@ -97,21 +97,36 @@ export default function TransactionsPage() {
       />
 
       {/* 월별 선택 */}
-      <div className="flex gap-3 mb-6 mt-6">
-        <select className="border px-3 py-2 rounded-lg" value={year} onChange={(e) => setYear(e.target.value)}>
-          <option value="2025">2025</option>
-          <option value="2024">2024</option>
-          <option value="2023">2023</option>
-        </select>
-        <select className="border px-3 py-2 rounded-lg" value={month} onChange={(e) => setMonth(e.target.value)}>
-          {[...Array(12)].map((_, i) => {
-            const mm = String(i + 1).padStart(2, "0");
-            return <option key={mm}>{mm}</option>;
-          })}
-        </select>
+      <div className="flex items-center justify-between mb-6 mt-6">
+        {/* 왼쪽: 연/월/조회 버튼 */}
+        <div className="flex gap-3">
+          <select className="border px-3 py-2 rounded-lg" value={year} onChange={(e) => setYear(e.target.value)}>
+            <option value="2025">2025</option>
+            <option value="2024">2024</option>
+            <option value="2023">2023</option>
+          </select>
 
-        <button className="bg-blue-500 text-white px-4 py-2 rounded-lg" onClick={fetchData}>
-          조회
+          <select className="border px-3 py-2 rounded-lg" value={month} onChange={(e) => setMonth(e.target.value)}>
+            {[...Array(12)].map((_, i) => {
+              const mm = String(i + 1).padStart(2, "0");
+              return <option key={mm}>{mm}</option>;
+            })}
+          </select>
+
+          <button className="bg-blue-500 text-white px-4 py-2 rounded-lg" onClick={fetchData}>
+            조회
+          </button>
+        </div>
+
+        {/* 오른쪽: 추가 버튼 */}
+        <button
+          onClick={() => {
+            setSelectedTx(null);
+            setDetailOpen(true);
+          }}
+          className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
+        >
+          + 내역 추가
         </button>
       </div>
 

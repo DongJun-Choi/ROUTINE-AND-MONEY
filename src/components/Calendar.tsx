@@ -3,11 +3,11 @@
 import { useMemo } from "react";
 
 interface CalendarProps {
-    year: number;        // 2025
-    month: number;       // 6 (주의: 1~12 입력)
-    dailyTotals: Record<string, number>;   // { "2025-06-01": 5400, ... }
-    onSelectDate?: (date: string) => void; // 날짜 클릭 이벤트
-    selectedDate?: string;                 // 선택된 날짜
+    year: number;
+    month: number;
+    dailyTotals: Record<string, { income: number; expense: number }>; // 변경!
+    onSelectDate?: (date: string) => void;
+    selectedDate?: string;
 }
 
 export default function Calendar({
@@ -17,21 +17,25 @@ export default function Calendar({
     onSelectDate,
     selectedDate,
 }: CalendarProps) {
-    // JS는 month가 0~11이라 조정 필요
+
     const jsMonth = month - 1;
 
     const daysArray = useMemo(() => {
         const firstDay = new Date(year, jsMonth, 1);
         const lastDay = new Date(year, jsMonth + 1, 0);
 
-        const startDayOfWeek = firstDay.getDay(); // 0=일요일
+        const startDayOfWeek = firstDay.getDay();
         const totalDays = lastDay.getDate();
 
-        const calendarCells: { date: string | null; total: number }[] = [];
+        const calendarCells: {
+            date: string | null;
+            income: number;
+            expense: number;
+        }[] = [];
 
-        // 빈칸 초기 채우기
+        // 빈칸 채우기
         for (let i = 0; i < startDayOfWeek; i++) {
-            calendarCells.push({ date: null, total: 0 });
+            calendarCells.push({ date: null, income: 0, expense: 0 });
         }
 
         // 날짜 채우기
@@ -45,7 +49,8 @@ export default function Calendar({
 
             calendarCells.push({
                 date: key,
-                total: dailyTotals[key] ?? 0,
+                income: dailyTotals[key]?.income ?? 0,
+                expense: dailyTotals[key]?.expense ?? 0,
             });
         }
 
@@ -71,20 +76,27 @@ export default function Calendar({
                         key={idx}
                         onClick={() => cell.date && onSelectDate?.(cell.date)}
                         className={`
-              min-h-[80px] border rounded-lg p-2 flex flex-col
-              ${cell.date ? "cursor-pointer bg-white hover:bg-gray-50" : "bg-gray-100"}
-              ${cell.date === selectedDate ? "ring-2 ring-blue-500" : ""}
-            `}
+                            min-h-[80px] border rounded-lg p-2 flex flex-col
+                            ${cell.date ? "cursor-pointer bg-white hover:bg-gray-50" : "bg-gray-100"}
+                            ${cell.date === selectedDate ? "ring-2 ring-blue-500" : ""}
+                        `}
                     >
                         {/* 날짜 */}
                         <div className="text-sm font-bold text-gray-800">
                             {cell.date ? Number(cell.date.slice(8)) : ""}
                         </div>
 
-                        {/* 금액 */}
-                        {cell.date && (
-                            <div className="text-xs text-blue-600 mt-auto">
-                                {cell.total > 0 ? `${cell.total.toLocaleString()}원` : ""}
+                        {/* 지출 */}
+                        {cell.date && cell.expense !== 0 && (
+                            <div className="text-xs text-red-600 font-semibold mt-auto">
+                                -{Math.abs(cell.expense).toLocaleString()}원
+                            </div>
+                        )}
+
+                        {/* 수입 */}
+                        {cell.date && cell.income !== 0 && (
+                            <div className="text-xs text-blue-600 font-semibold">
+                                +{cell.income.toLocaleString()}원
                             </div>
                         )}
                     </div>
