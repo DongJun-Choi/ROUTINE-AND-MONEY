@@ -78,6 +78,16 @@ export default function TransactionsPage() {
     <div className="max-w-3xl mx-auto px-4 pb-20">
       <h1 className="text-2xl font-bold mb-4">📒 가계부</h1>
 
+      <button
+        onClick={() => {
+          setSelectedTx(null);
+          setDetailOpen(true);
+        }}
+        className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
+      >
+        + 내역 추가
+      </button>
+
       <Calendar
         year={Number(year)}
         month={Number(month)}
@@ -148,7 +158,10 @@ export default function TransactionsPage() {
 
       <TransactionDetailModal
         open={detailOpen}
-        onClose={() => setDetailOpen(false)}
+        onClose={() => {
+          setDetailOpen(false);
+          setSelectedTx(null);
+        }}
         transaction={selectedTx}
         onSaved={fetchData}
         onDeleted={fetchData}

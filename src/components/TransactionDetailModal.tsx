@@ -29,7 +29,7 @@ interface Props {
 const paymentTypeLabels: Record<string, string> = {
   CARD: "카드 결제",
   POINT: "포인트",
-  MIXED: "혼합 결제",
+  MIX합결제: "혼합 결제",
 };
 
 export default function TransactionDetailModal({
@@ -40,7 +40,7 @@ export default function TransactionDetailModal({
   onDeleted,
 }: Props) {
   const [merchant, setMerchant] = useState("");
-  const [date, setDate] = useState(""); // "YYYY-MM-DD"
+  const [date, setDate] = useState("");
   const [amount, setAmount] = useState("");
   const [paymentType, setPaymentType] =
     useState<"CARD" | "POINT" | "MIXED">("CARD");
@@ -54,19 +54,14 @@ export default function TransactionDetailModal({
   const [parentSelected, setParentSelected] = useState<number | null>(null);
   const [childSelected, setChildSelected] = useState<number | null>(null);
 
-  useEffect(() => {
-  if (open && transaction && categories.length > 0) {
-    if (transaction.categoryId) {
-      const c = categories.find(cat => cat.id === transaction.categoryId);
-      setChildSelected(c?.id ?? null);
-      setParentSelected(c?.parentId ?? c?.id ?? null);
-    } else {
-      setChildSelected(null);
-      setParentSelected(null);
-    }
+  /** 전체 카테고리 로딩 */
+  async function loadCategories() {
+    const res = await fetch("/api/categories");
+    const data = await res.json();
+    setCategories(data.categories);
   }
-}, [open, transaction, categories]);
 
+  /** 부모/자식 카테고리 분류 */
   const parents = categories.filter(c => c.parentId === null);
   const childrenMap = categories.reduce((acc, c) => {
     if (c.parentId) {
@@ -76,32 +71,51 @@ export default function TransactionDetailModal({
     return acc;
   }, {} as Record<number, Category[]>);
 
-  // 모달 열릴 때 현재 거래 정보로 초기화
+  /** 모달 open 시 초기화 */
   useEffect(() => {
-    if (open && transaction) {
+    if (!open) return;
+
+    loadCategories();
+
+    if (transaction) {
+      // 수정 모드
       setMerchant(transaction.merchant);
       setAmount(String(transaction.amount));
       setPaymentType(transaction.paymentType);
       setMemo(transaction.memo ?? "");
-      setCategoryId(transaction.categoryId ?? "");
-      // ISO → "YYYY-MM-DD"
+
       const d = new Date(transaction.date);
       const yyyy = d.getFullYear();
       const mm = String(d.getMonth() + 1).padStart(2, "0");
       const dd = String(d.getDate()).padStart(2, "0");
       setDate(`${yyyy}-${mm}-${dd}`);
-      loadCategories();
+
+      setCategoryId(transaction.categoryId ?? "");
+
+      const c = categories.find(cat => cat.id === transaction.categoryId);
+      setChildSelected(c?.id ?? null);
+      setParentSelected(c?.parentId ?? c?.id ?? null);
+
+    } else {
+      // 추가 모드: 초기값
+      const today = new Date();
+      const yyyy = today.getFullYear();
+      const mm = String(today.getMonth() + 1).padStart(2, "0");
+      const dd = String(today.getDate()).padStart(2, "0");
+
+      setMerchant("");
+      setAmount("");
+      setPaymentType("CARD");
+      setMemo("");
+      setCategoryId("");
+      setDate(`${yyyy}-${mm}-${dd}`);
+
+      setParentSelected(null);
+      setChildSelected(null);
     }
   }, [open, transaction]);
 
-  async function loadCategories() {
-    const res = await fetch("/api/categories");
-    const data = await res.json();
-    setCategories(data.categories);
-  }
-
-  if (!open || !transaction) return null;
-
+  /** 저장 (POST | PUT) */
   const handleSave = async () => {
     if (!date || !merchant || !amount) {
       alert("날짜, 가맹점, 금액은 필수입니다.");
@@ -109,25 +123,35 @@ export default function TransactionDetailModal({
     }
 
     const finalCategoryId =
-    childSelected !== null
-      ? childSelected
-      : parentSelected !== null
-      ? parentSelected
-      : null;
+      childSelected !== null
+        ? childSelected
+        : parentSelected !== null
+        ? parentSelected
+        : null;
 
     setSaving(true);
-    const res = await fetch(`/api/transactions/${transaction.id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        date,
-        merchant,
-        amount: Number(amount),
-        paymentType,
-        categoryId: finalCategoryId,
-        memo,
-      }),
-    });
+
+    const payload = {
+      date,
+      merchant,
+      amount: Number(amount),
+      paymentType,
+      categoryId: finalCategoryId,
+      memo,
+    };
+
+    const res = transaction
+      ? await fetch(`/api/transactions/${transaction.id}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        })
+      : await fetch(`/api/transactions`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
     setSaving(false);
 
     if (res.ok) {
@@ -138,13 +162,17 @@ export default function TransactionDetailModal({
     }
   };
 
+  /** 삭제 */
   const handleDelete = async () => {
+    if (!transaction) return;
     if (!confirm("정말 이 거래 내역을 삭제할까요?")) return;
 
     setDeleting(true);
+
     const res = await fetch(`/api/transactions/${transaction.id}`, {
       method: "DELETE",
     });
+
     setDeleting(false);
 
     if (res.ok) {
@@ -158,12 +186,17 @@ export default function TransactionDetailModal({
   const formattedAmount =
     amount === "" ? "" : Number(amount).toLocaleString() + "원";
 
+  if (!open) return null;
+
   return (
     <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/40">
       <div className="w-full max-w-md rounded-2xl bg-white shadow-lg p-5">
+
         {/* 헤더 */}
         <div className="flex items-center justify-between mb-3">
-          <h2 className="text-lg font-semibold">거래 상세</h2>
+          <h2 className="text-lg font-semibold">
+            {transaction ? "거래 상세" : "내역 추가"}
+          </h2>
           <button
             onClick={onClose}
             className="text-sm text-gray-400 hover:text-gray-600"
@@ -172,7 +205,7 @@ export default function TransactionDetailModal({
           </button>
         </div>
 
-        {/* 상단 요약 영역 */}
+        {/* 상단 입력 영역 */}
         <div className="mb-4 rounded-xl bg-gray-50 p-3">
           <div className="text-sm text-gray-500 mb-1">가맹점</div>
           <input
@@ -209,7 +242,7 @@ export default function TransactionDetailModal({
           </div>
         </div>
 
-        {/* 결제 수단 */}
+        {/* 결제 방식 */}
         <div className="mb-4">
           <div className="text-sm font-medium mb-2">결제 방식</div>
           <div className="flex gap-2">
@@ -234,7 +267,6 @@ export default function TransactionDetailModal({
         <div className="mb-4">
           <div className="text-sm font-medium mb-2">카테고리</div>
 
-          {/* 1단: 부모 카테고리 */}
           <div className="flex flex-wrap gap-2 mb-3">
             {parents.map(parent => (
               <button
@@ -253,6 +285,7 @@ export default function TransactionDetailModal({
                 {parent.name}
               </button>
             ))}
+
             <button
               onClick={() => {
                 setParentSelected(null);
@@ -262,15 +295,13 @@ export default function TransactionDetailModal({
                 px-3 py-1 rounded-full border text-sm
                 ${parentSelected === null && childSelected === null
                   ? "bg-blue-100 border-blue-500 text-blue-600"
-                  : "bg-white border-gray-300 text-gray-700"
-                }
+                  : "bg-white border-gray-300 text-gray-700"}
               `}
             >
               미분류
             </button>
           </div>
 
-          {/* 2단: 자식 카테고리 (부모 선택 시에만 표시) */}
           {parentSelected !== null && (
             <div className="ml-1 mt-2 pl-3 border-l space-y-1">
               {(childrenMap[parentSelected] ?? []).map(child => (
@@ -302,7 +333,7 @@ export default function TransactionDetailModal({
           <textarea
             maxLength={100}
             className="w-full border rounded px-2 py-2 text-sm resize-none h-20"
-            placeholder="이 지출에 대해 메모를 남겨보세요."
+            placeholder="이 지출에 메모를 남겨보세요."
             value={memo}
             onChange={(e) => setMemo(e.target.value)}
           />
@@ -310,16 +341,22 @@ export default function TransactionDetailModal({
 
         {/* 하단 버튼 */}
         <div className="flex items-center justify-between mt-4">
-          <button
-            type="button"
-            onClick={handleDelete}
-            disabled={deleting}
-            className={`text-sm ${
-              deleting ? "text-gray-400" : "text-red-500 hover:text-red-600"
-            }`}
-          >
-            {deleting ? "삭제 중..." : "삭제"}
-          </button>
+
+          {/* 수정 모드에서만 삭제 버튼 표시 */}
+          {transaction ? (
+            <button
+              type="button"
+              onClick={handleDelete}
+              disabled={deleting}
+              className={`text-sm ${
+                deleting ? "text-gray-400" : "text-red-500 hover:text-red-600"
+              }`}
+            >
+              {deleting ? "삭제 중..." : "삭제"}
+            </button>
+          ) : (
+            <div />
+          )}
 
           <div className="flex gap-2">
             <button
@@ -329,6 +366,7 @@ export default function TransactionDetailModal({
             >
               취소
             </button>
+
             <button
               type="button"
               disabled={saving}
@@ -339,10 +377,11 @@ export default function TransactionDetailModal({
                   : "bg-blue-500 hover:bg-blue-600"
               }`}
             >
-              {saving ? "저장 중..." : "저장"}
+              {saving ? "저장 중..." : transaction ? "저장" : "추가"}
             </button>
           </div>
         </div>
+
       </div>
     </div>
   );
