@@ -29,12 +29,15 @@ export default function TransactionsPage() {
 
   const [year, setYear] = useState(String(today.getFullYear()));
   const [month, setMonth] = useState(String(today.getMonth() + 1).padStart(2, "0"));
-
   const [selectedDate, setSelectedDate] = useState<string | null>(todayKey);
+
   const [detailOpen, setDetailOpen] = useState(false);
   const [selectedTx, setSelectedTx] = useState<Transaction | null>(null);
 
   const listRef = useRef<HTMLDivElement>(null);
+
+  const currentYear = new Date().getFullYear();
+  const years = Array.from({ length: 6 }, (_, i) => currentYear - i);
 
   async function fetchData() {
     setLoading(true);
@@ -52,21 +55,18 @@ export default function TransactionsPage() {
     return acc;
   }, {});
 
+  // 날짜별 income/expense 계산
   const dailyTotals: Record<string, { income: number; expense: number }> = {};
   data.forEach((t) => {
     const key = t.date.slice(0, 10);
 
-    if (!dailyTotals[key]) {
-      dailyTotals[key] = { income: 0, expense: 0 };
-    }
+    if (!dailyTotals[key]) dailyTotals[key] = { income: 0, expense: 0 };
 
-    if (t.amount < 0) {
-      dailyTotals[key].expense += t.amount;
-    } else {
-      dailyTotals[key].income += t.amount;
-    }
+    if (t.amount < 0) dailyTotals[key].expense += t.amount;
+    else dailyTotals[key].income += t.amount;
   });
 
+  // 월 통계
   const monthlySummary = data.reduce(
     (acc, t) => {
       if (t.amount < 0) acc.expense += t.amount;
@@ -77,54 +77,33 @@ export default function TransactionsPage() {
   );
   const total = monthlySummary.income + monthlySummary.expense;
 
+  // 날짜 이동
   function goToday() {
     const today = new Date();
-    const yyyy = today.getFullYear();
-    const mm = String(today.getMonth() + 1).padStart(2, "0");
-    const dd = today.toISOString().slice(0, 10);
-
-    setYear(String(yyyy));
-    setMonth(mm);
-    setSelectedDate(dd);
+    setYear(String(today.getFullYear()));
+    setMonth(String(today.getMonth() + 1).padStart(2, "0"));
+    setSelectedDate(today.toISOString().slice(0, 10));
   }
-
   function goPrevMonth() {
-    let y = Number(year);
-    let m = Number(month);
-
-    if (m === 1) {
-      y -= 1;
-      m = 12;
-    } else {
-      m -= 1;
-    }
-
+    let y = Number(year), m = Number(month);
+    if (m === 1) { y -= 1; m = 12; }
+    else m -= 1;
     setYear(String(y));
     setMonth(String(m).padStart(2, "0"));
   }
-
   function goNextMonth() {
-    let y = Number(year);
-    let m = Number(month);
-
-    if (m === 12) {
-      y += 1;
-      m = 1;
-    } else {
-      m += 1;
+    let y = Number(year), m = Number(month);
+    if (y === currentYear && m === 12) {
+      return;
     }
-
+    if (m === 12) { y += 1; m = 1; }
+    else m += 1;
     setYear(String(y));
     setMonth(String(m).padStart(2, "0"));
   }
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    fetchData();
-  }, [year, month]);
+  useEffect(() => { fetchData(); }, []);
+  useEffect(() => { fetchData(); }, [year, month]);
 
   const handleDateSelect = (date: string) => {
     setSelectedDate(date);
@@ -136,39 +115,25 @@ export default function TransactionsPage() {
 
   return (
     <div className="max-w-3xl mx-auto px-4 pb-20">
-      <h1 className="text-2xl font-bold mb-4">📒 가계부</h1>
 
-      {/* 달 이동 + 제목 */}
-      <div className="flex items-center justify-between mb-2 mt-6">
-        <button
-          onClick={goPrevMonth}
-          className="px-3 py-1 rounded-lg bg-gray-100 hover:bg-gray-200"
-        >
-          ◀
-        </button>
+      {/* 헤더 */}
+      <h1 className="text-2xl font-bold mb-2">📒 가계부</h1>
+
+      {/* 월 이동 */}
+      <div className="flex items-center justify-between mb-4 mt-4">
+        <button onClick={goPrevMonth} className="px-3 py-1 rounded-lg bg-gray-100 hover:bg-gray-200">◀</button>
 
         <h2 className="text-xl font-bold">
-          📅 {year}년 {month}월 소비 달력
+          {year}년 {month}월
         </h2>
 
         <div className="flex items-center gap-2">
-          <button
-            onClick={goNextMonth}
-            className="px-3 py-1 rounded-lg bg-gray-100 hover:bg-gray-200"
-          >
-            ▶
-          </button>
-
-          <button
-            onClick={goToday}
-            className="px-2 py-1 rounded-lg bg-gray-100 hover:bg-gray-200 text-sm"
-            title="오늘로 이동"
-          >
-            ⟳
-          </button>
+          <button onClick={goNextMonth} className="px-3 py-1 rounded-lg bg-gray-100 hover:bg-gray-200">▶</button>
+          <button onClick={goToday} className="px-2 py-1 rounded-lg bg-gray-100 hover:bg-gray-200 text-sm">⟳</button>
         </div>
       </div>
 
+      {/* 캘린더 */}
       <Calendar
         year={Number(year)}
         month={Number(month)}
@@ -177,60 +142,60 @@ export default function TransactionsPage() {
         onSelectDate={handleDateSelect}
       />
 
-      {/* 월 합계 */}
-      <div className="mt-4 mb-6 p-4 rounded-xl bg-gray-50 border">
-        <div className="text-lg font-semibold mb-2">
-          📊 {year}년 {month}월 총합
-        </div>
+      {/* 월 요약 */}
+      <div className="mt-6 mb-8 p-5 rounded-2xl bg-gray-50 border shadow-sm">
+        <div className="text-lg font-semibold mb-2">📊 이번 달 요약</div>
 
         <div className="flex flex-col gap-1 text-sm">
-          <div className="text-red-600 font-medium">
+          <span className="text-red-600 font-semibold">
             지출: -{Math.abs(monthlySummary.expense).toLocaleString()}원
-          </div>
-          <div className="text-blue-600 font-medium">
+          </span>
+          <span className="text-blue-600 font-semibold">
             수입: +{monthlySummary.income.toLocaleString()}원
-          </div>
+          </span>
 
-          <div
-            className={`font-bold mt-1 ${
+          <span
+            className={`mt-2 font-bold ${
               total < 0 ? "text-red-600" : "text-blue-600"
             }`}
           >
             합계: {total < 0 ? "-" : "+"}
             {Math.abs(total).toLocaleString()}원
-          </div>
+          </span>
         </div>
       </div>
 
-      {/* 월별 선택 */}
-      <div className="flex items-center justify-between mb-6 mt-6">
-        {/* 왼쪽: 연/월/조회 버튼 */}
+      {/* 년/월 선택 + 추가 */}
+      <div className="flex items-center justify-between mb-5">
         <div className="flex gap-3">
-          <select className="border px-3 py-2 rounded-lg" value={year} onChange={(e) => setYear(e.target.value)}>
-            <option value="2025">2025</option>
-            <option value="2024">2024</option>
-            <option value="2023">2023</option>
+          <select
+            className="border px-3 py-2 rounded-lg bg-white shadow-sm"
+            value={year}
+            onChange={(e) => setYear(e.target.value)}
+          >
+            {years.map((y) => (
+              <option key={y} value={y}>{y}</option>
+            ))}
           </select>
 
-          <select className="border px-3 py-2 rounded-lg" value={month} onChange={(e) => setMonth(e.target.value)}>
+          <select className="border px-3 py-2 rounded-lg bg-white shadow-sm" value={month} onChange={(e) => setMonth(e.target.value)}>
             {[...Array(12)].map((_, i) => {
               const mm = String(i + 1).padStart(2, "0");
               return <option key={mm}>{mm}</option>;
             })}
           </select>
 
-          <button className="bg-blue-500 text-white px-4 py-2 rounded-lg" onClick={fetchData}>
+          <button className="bg-blue-500 text-white px-4 py-2 rounded-lg shadow-sm hover:bg-blue-600">
             조회
           </button>
         </div>
 
-        {/* 오른쪽: 추가 버튼 */}
         <button
           onClick={() => {
             setSelectedTx(null);
             setDetailOpen(true);
           }}
-          className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600"
+          className="bg-green-500 text-white px-4 py-2 rounded-lg shadow-sm hover:bg-green-600"
         >
           + 내역 추가
         </button>
@@ -242,7 +207,7 @@ export default function TransactionsPage() {
 
         {!loading &&
           Object.entries(groupedByDate)
-            .sort(([a], [b]) => (a < b ? 1 : -1)) // 최신 날짜 위로
+            .sort(([a], [b]) => (a < b ? 1 : -1))
             .map(([date, items]) => (
               <div key={date} id={`day-${date}`}>
                 <div className="text-gray-500 font-semibold mb-2">{formatDate(date)}</div>
@@ -301,5 +266,9 @@ function PaymentTypeTag({ type }: { type: string }) {
 }
 
 function formatDate(date: string) {
-  return new Date(date).toLocaleDateString("ko-KR", { month: "long", day: "numeric", weekday: "short" });
+  return new Date(date).toLocaleDateString("ko-KR", {
+    month: "long",
+    day: "numeric",
+    weekday: "short",
+  });
 }
