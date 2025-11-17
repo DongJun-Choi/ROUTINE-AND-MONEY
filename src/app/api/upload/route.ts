@@ -30,7 +30,7 @@ export async function POST(req: Request) {
       return {
         date: new Date(t.date),
         merchant: t.merchant,
-        amount: t.amount,
+        amount: -Math.abs(t.amount),
         paymentType: t.paymentType,
         categoryId: categoryId,
       };
