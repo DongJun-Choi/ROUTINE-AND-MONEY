@@ -231,7 +231,16 @@ export default function TransactionDetailModal({
                 className="w-32 text-right bg-white border rounded px-2 py-1 text-sm"
                 value={amount}
                 onChange={(e) => {
-                  const v = e.target.value.replace(/[^0-9]/g, "");
+                  let v = e.target.value;
+
+                  v = v.replace(/[^0-9-]/g, "");
+                  if ((v.match(/-/g) || []).length > 1) {
+                    v = "-" + v.replace(/-/g, "");
+                  }
+                  if (v.includes("-") && v.indexOf("-") !== 0) {
+                    v = "-" + v.replace(/-/g, "");
+                  }
+
                   setAmount(v);
                 }}
               />
