@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
 import Calendar from "@/components/Calendar";
 import CategoryTag from "@/components/CategoryTag";
 import TransactionDetailModal from "@/components/TransactionDetailModal";
+import FilterFloatingBox from "@/components/FilterFloatingBox";
 
 interface Transaction {
   id: number;
@@ -39,6 +40,14 @@ export default function TransactionsPage() {
   const currentYear = new Date().getFullYear();
   const years = Array.from({ length: 6 }, (_, i) => currentYear - i);
 
+  const [filters, setFilters] = useState({
+    categoryId: null as number | null,
+    type: null as "income" | "expense" | null,
+    paymentType: null as string | null,
+  });
+
+  const [categories, setCategories] = useState<{ id: number; name: string }[]>([]);
+
   async function fetchData() {
     setLoading(true);
     const res = await fetch(`/api/transactions?year=${year}&month=${month}`);
@@ -47,8 +56,50 @@ export default function TransactionsPage() {
     setLoading(false);
   }
 
+
+  // categories 미리 로드
+  useEffect(() => {
+    fetch("/api/categories")
+      .then((res) => res.json())
+      .then((d) => setCategories(d.categories));
+  }, []);
+
+  const childrenMap = useMemo(() => {
+    return categories.reduce((acc, c) => {
+      if (c.parentId !== null) {
+        if (!acc[c.parentId]) acc[c.parentId] = [];
+        acc[c.parentId].push(c.id);
+      }
+      return acc;
+    }, {} as Record<number, number[]>);
+  }, [categories]);
+
+  function getCategoryIdsForFilter(parentId: number): number[] {
+    const childIds = childrenMap[parentId] ?? [];
+    return [parentId, ...childIds];
+  }
+
+  const filteredData = useMemo(() => {
+    return data.filter((t) => {
+      // 카테고리
+      if (filters.categoryId !== null) {
+        const ids = getCategoryIdsForFilter(filters.categoryId);
+        if (!ids.includes(t.categoryId ?? -1)) return false;
+      }
+
+      // 수입/지출
+      if (filters.type === "income" && t.amount < 0) return false;
+      if (filters.type === "expense" && t.amount > 0) return false;
+
+      // 결제 방식
+      if (filters.paymentType && t.paymentType !== filters.paymentType) return false;
+
+      return true;
+    });
+  }, [data, filters, childrenMap]);
+
   // 날짜별 그룹핑
-  const groupedByDate = data.reduce((acc: Record<string, Transaction[]>, t) => {
+  const groupedByDate = filteredData.reduce((acc: Record<string, Transaction[]>, t) => {
     const key = t.date.slice(0, 10);
     acc[key] = acc[key] || [];
     acc[key].push(t);
@@ -57,7 +108,7 @@ export default function TransactionsPage() {
 
   // 날짜별 income/expense 계산
   const dailyTotals: Record<string, { income: number; expense: number }> = {};
-  data.forEach((t) => {
+  filteredData.forEach((t) => {
     const key = t.date.slice(0, 10);
 
     if (!dailyTotals[key]) dailyTotals[key] = { income: 0, expense: 0 };
@@ -67,7 +118,7 @@ export default function TransactionsPage() {
   });
 
   // 월 통계
-  const monthlySummary = data.reduce(
+  const monthlySummary = filteredData.reduce(
     (acc, t) => {
       if (t.amount < 0) acc.expense += t.amount;
       else acc.income += t.amount;
@@ -113,7 +164,20 @@ export default function TransactionsPage() {
     }, 80);
   };
 
+
   return (
+    <>
+    <FilterFloatingBox
+      categories={categories}
+      onApply={(newFilters) => setFilters(newFilters)}
+      onReset={() =>
+        setFilters({
+          categoryId: null,
+          type: null,
+          paymentType: null,
+        })
+      }
+    />
     <div className="max-w-3xl mx-auto px-4 pb-20">
 
       {/* 헤더 */}
@@ -253,6 +317,7 @@ export default function TransactionsPage() {
         onDeleted={fetchData}
       />
     </div>
+    </>
   );
 }
 
