@@ -17,6 +17,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <a href="/transactions" className="text-gray-700 hover:text-black">
               📒 가계부 내역
             </a>
+            <a href="/category" className="text-gray-700 hover:text-black">
+              🗂️ 카테고리
+            </a>
           </nav>
         </aside>
 
