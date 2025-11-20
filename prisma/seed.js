@@ -28,7 +28,7 @@ async function main() {
     },
     {
       name: "취미·여가",
-      children: ["게임", "영화", "독서", "운동"],
+      children: ["게임", "영화", "독서", "운동", "음악"],
     },
     {
       name: "교육",
@@ -94,8 +94,8 @@ async function main() {
 
     // 취미/여가
     { keyword: "PC방", category: "게임" },
-    { keyword: "노래", category: "음악/영화" },
-    { keyword: "영화", category: "음악/영화" },
+    { keyword: "노래", category: "음악" },
+    { keyword: "영화", category: "영화" },
   ];
 
   console.log("카테고리 규칙 생성 중...");
