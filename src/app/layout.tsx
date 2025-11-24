@@ -20,6 +20,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <a href="/category" className="text-gray-700 hover:text-black">
               🗂️ 카테고리
             </a>
+            <a href="/dashboard" className="text-gray-700 hover:text-black">
+              📊 대시보드
+            </a>
           </nav>
         </aside>
 
