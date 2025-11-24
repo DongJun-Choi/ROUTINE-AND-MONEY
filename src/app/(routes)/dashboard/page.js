@@ -11,6 +11,7 @@ export default function DashboardPage() {
   const today = new Date();
   const [year, setYear] = useState(today.getFullYear());
   const [month, setMonth] = useState(today.getMonth() + 1);
+  const currentYear = today.getFullYear();
 
   return (
     <div className="max-w-6xl mx-auto px-6 py-10 space-y-10">
@@ -22,8 +23,10 @@ export default function DashboardPage() {
           value={year}
           onChange={(e) => setYear(Number(e.target.value))}
         >
-          {[year, year - 1, year - 2].map((y) => (
-            <option key={y}>{y}</option>
+          {Array.from({ length: 4 }, (_, i) => currentYear - i).map((y) => (
+            <option key={y} value={y}>
+              {y}
+            </option>
           ))}
         </select>
 
