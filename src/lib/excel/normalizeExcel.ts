@@ -4,6 +4,7 @@ export interface Transaction {
   merchant: string;
   amount: number;
   paymentType: "CARD" | "POINT" | "MIXED";
+  type: "EXPENSE";
 }
 
 function parseAmount(value: any): number | null {
@@ -26,7 +27,7 @@ export function normalizeExcelData(rows: any[][]): Transaction[] {
     const row = rows[i];
 
     // 정상 거래 아닐 경우 skip
-    const normalType = row[2]; // 정상구분 ← ★ 수정됨
+    const normalType = row[2]; // 정상구분
     if (normalType.trim() !== "정상") continue;
 
     const cardNumber = row[0];      // 카드번호
@@ -52,8 +53,10 @@ export function normalizeExcelData(rows: any[][]): Transaction[] {
 
       paymentType = amount === 0 ? "POINT" : "MIXED";
 
-      i++; // 다음 줄 skip
+      i++;
     }
+
+    const type = "EXPENSE";
 
     result.push({
       cardNumber,
@@ -61,6 +64,7 @@ export function normalizeExcelData(rows: any[][]): Transaction[] {
       merchant,
       amount,
       paymentType,
+      type,
     });
   }
 
