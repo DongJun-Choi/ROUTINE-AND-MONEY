@@ -5,8 +5,7 @@ import { useEffect, useState } from "react";
 import ParentCategorySelector from "@/components/category/ParentCategorySelector";
 import ChildCategoryList from "@/components/category/ChildCategoryList";
 import DeleteCategoryModal from "@/components/category/DeleteCategoryModal";
-// 🔥 자동 분류 기능은 나중에 여기에 import 하면 됨
-// import CategoryRuleManager from "./components/CategoryRuleManager";
+import CategoryRuleManager from "@/components/category/category-rule/CategoryRuleManager";
 
 interface Category {
   id: number;
@@ -113,26 +112,34 @@ export default function CategorySettingsPage() {
   return (
     <div className="p-6 space-y-8">
 
-      {/* 부모 카테고리 */}
-      <ParentCategorySelector
-        parents={parents}
-        selectedParent={selectedParent}
-        onSelect={setSelectedParent}
-      />
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="border rounded-xl p-5 bg-white shadow-sm">
+          <h2 className="text-xl font-bold mb-4">카테고리 관리</h2>
 
-      {/* 자식 카테고리 */}
-      <ChildCategoryList
-        children={children}
-        selectedParent={selectedParent}
-        newChildName={newChildName}
-        setNewChildName={setNewChildName}
-        onAdd={addChildCategory}
-        onUpdate={updateCategoryName}
-        onDelete={deleteCategory}
-      />
+          {/* 대분류 선택 */}
+          <ParentCategorySelector
+            parents={parents}
+            selectedParent={selectedParent}
+            onSelect={setSelectedParent}
+          />
 
-      {/* 나중에 자동 분류 규칙 추가 */}
-      {/* <CategoryRuleManager /> */}
+          {/* 중분류 목록 관리 */}
+          <ChildCategoryList
+            children={children}
+            selectedParent={selectedParent}
+            newChildName={newChildName}
+            setNewChildName={setNewChildName}
+            onAdd={addChildCategory}
+            onUpdate={updateCategoryName}
+            onDelete={deleteCategory}
+          />
+        </div>
+
+        <div className="border rounded-xl p-5 bg-white shadow-sm">
+          <h2 className="text-xl font-bold mb-4">엑셀 자동 카테고리 분류</h2>
+          <CategoryRuleManager />
+        </div>
+      </div>
 
       {/* 삭제 모달 */}
       <DeleteCategoryModal
@@ -149,7 +156,6 @@ export default function CategorySettingsPage() {
           moveTransactionsToCategory(deleteTarget.id, null)
         }
       />
-
     </div>
   );
 }
