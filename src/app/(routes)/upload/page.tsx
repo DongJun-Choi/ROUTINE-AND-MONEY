@@ -5,6 +5,7 @@ import { useState } from "react";
 export default function UploadPage() {
   const [file, setFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
+  const [uploadedList, setUploadedList] = useState<any[]>([]);
 
   const handleUpload = async () => {
     if (!file) return alert("📂 업로드할 파일을 선택하세요!");
@@ -25,6 +26,7 @@ export default function UploadPage() {
     if (res.ok) {
       alert("업로드 성공!");
       console.log(data);
+      setUploadedList(data.preview ?? []);
     } else {
       alert(`업로드 실패: ${data.message}`);
     }
@@ -83,6 +85,43 @@ export default function UploadPage() {
             {uploading ? "업로드 중..." : "업로드하기"}
           </button>
         </div>
+
+        {uploadedList.length > 0 && (
+          <div className="mt-12">
+            <h2 className="text-xl font-bold mb-4">📄 업로드된 거래 내역</h2>
+
+            <div className="overflow-x-auto border rounded-lg">
+              <table className="w-full text-sm">
+                <thead className="bg-gray-100 border-b">
+                  <tr>
+                    <th className="py-2 px-3 text-left">날짜</th>
+                    <th className="py-2 px-3 text-left">가맹점</th>
+                    <th className="py-2 px-3 text-right">금액</th>
+                    <th className="py-2 px-3 text-center">결제방식</th>
+                    <th className="py-2 px-3 text-center">카테고리</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {uploadedList.map((tx, i) => (
+                    <tr key={i} className="border-b hover:bg-gray-50">
+                      <td className="py-2 px-3">{tx.date.split("T")[0]}</td>
+                      <td className="py-2 px-3">{tx.merchant}</td>
+                      <td className="py-2 px-3 text-right">
+                        {tx.amount.toLocaleString()}
+                      </td>
+                      <td className="py-2 px-3 text-center">
+                        {tx.paymentType}
+                      </td>
+                      <td className="py-2 px-3 text-center">
+                        {tx.categoryId ?? "미분류"}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

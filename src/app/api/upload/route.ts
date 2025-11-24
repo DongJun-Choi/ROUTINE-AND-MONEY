@@ -17,7 +17,6 @@ export async function POST(req: Request) {
     }
 
     const buffer = Buffer.from(await file.arrayBuffer());
-
     const rows = parseExcel(buffer);
 
     const refined = normalizeExcelData(rows);
@@ -45,6 +44,7 @@ export async function POST(req: Request) {
     return NextResponse.json({
       message: "업로드 및 저장 성공",
       count: refined.length,
+      preview: dbData,
     });
   } catch (error) {
     console.error("업로드 오류:", error);
