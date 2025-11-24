@@ -15,14 +15,25 @@ export async function loadCategoryRules(): Promise<CategoryRuleItem[]> {
   }));
 }
 
+export function normalize(str: string): string {
+  return str
+    .toLowerCase()
+    .replace(/\s+/g, "")
+    .replace(/[^\w가-힣]/g, "")
+    .trim();
+}
+
 export function findCategoryId(
   merchant: string,
   rules: CategoryRuleItem[]
 ): number | null {
-  const name = merchant.trim();
+
+  const normalizedName = normalize(merchant);
 
   for (const r of rules) {
-    if (name.includes(r.keyword)) {
+    const normalizedKeyword = normalize(r.keyword);
+
+    if (normalizedName.includes(normalizedKeyword)) {
       return r.categoryId;
     }
   }

@@ -46,10 +46,10 @@ export function normalizeExcelData(rows: any[][]): Transaction[] {
 
     if (
       next &&
-      next[3] === "포인트사용" &&   // 가맹점명 = 포인트사용
-      Number(next[4]) < 0           // 금액 음수
+      next[3] === "포인트사용" &&
+      Number(next[4]) < 0
     ) {
-      amount += Number(next[4]); // 음수 더함
+      amount += Number(next[4]);
 
       paymentType = amount === 0 ? "POINT" : "MIXED";
 
