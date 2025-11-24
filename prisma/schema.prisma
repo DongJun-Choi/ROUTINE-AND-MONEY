@@ -44,3 +44,12 @@ model CategoryRule {
 
   @@unique([keyword, categoryId])
 }
+
+model ExcelUploadLog {
+  id        Int      @id @default(autoincrement())
+  date      String
+  rowCount  Int
+  createdAt DateTime @default(now())
+
+  @@unique([date, rowCount])
+}

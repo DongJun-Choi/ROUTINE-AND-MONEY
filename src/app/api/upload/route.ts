@@ -18,8 +18,39 @@ export async function POST(req: Request) {
 
     const buffer = Buffer.from(await file.arrayBuffer());
     const rows = parseExcel(buffer);
+    const rowCount = rows.length;
 
     const refined = normalizeExcelData(rows);
+    if (refined.length === 0) {
+      return NextResponse.json(
+        { message: "정상 거래가 없습니다." },
+        { status: 400 }
+      );
+    }
+
+    const firstDate = refined[0].date;
+    const excelDate = firstDate.slice(0, 7);
+
+    const exists = await prisma.excelUploadLog.findFirst({
+      where: {
+        date: excelDate,
+        rowCount: rowCount,
+      },
+    });
+
+    if (exists) {
+      return NextResponse.json(
+        { message: "이미 업로드한 엑셀 파일입니다." },
+        { status: 400 }
+      );
+    }
+
+    await prisma.excelUploadLog.create({
+      data: {
+        date: excelDate,
+        rowCount: rowCount,
+      },
+    });
 
     const rules = await loadCategoryRules();
 

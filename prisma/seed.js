@@ -109,6 +109,18 @@ async function main() {
   });
 
   console.log("카테고리 + 규칙 seed 완료!");
+
+
+  await prisma.excelUploadLog.createMany({
+    data: [
+      { date: "2025-06", rowCount: 56 },
+      { date: "2025-07", rowCount: 62 },
+      { date: "2025-08", rowCount: 61 },
+      { date: "2025-09", rowCount: 62 },
+    ],
+  });
+
+  
 }
 
 main()
