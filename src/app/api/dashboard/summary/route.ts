@@ -13,10 +13,9 @@ export async function GET(req: Request) {
     );
   }
 
-  const start = new Date(Date.UTC(year, month - 1, 1));
-  const end = new Date(Date.UTC(year, month, 1));
+  const start = new Date(year, month - 1, 1);
+  const end = new Date(year, month, 1);
 
-  // 1) 이번달 전체 거래 불러오기
   const transactions = await prisma.transaction.findMany({
     where: {
       date: {
@@ -33,7 +32,6 @@ export async function GET(req: Request) {
     },
   });
 
-  // 2) 총 수입 / 총 지출 계산
   let income = 0;
   let expense = 0;
 
@@ -44,8 +42,7 @@ export async function GET(req: Request) {
 
   const net = income - expense;
 
-  // 3) 가장 많이 사용된 카테고리 찾기 (지출 기준)
-  const categoryMap = new Map<number, number>(); // categoryId → amount 합계
+  const categoryMap = new Map<number, number>();
 
   for (const t of transactions) {
     if (t.type !== "EXPENSE") continue;
@@ -77,7 +74,6 @@ export async function GET(req: Request) {
     }
   }
 
-  // 4) 결과 반환
   return NextResponse.json({
     income,
     expense,

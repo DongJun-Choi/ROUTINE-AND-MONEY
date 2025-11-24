@@ -1,25 +1,36 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 
-export async function GET(request: Request) {
+export async function GET(req: Request) {
   try {
-    const { searchParams } = new URL(request.url);
+    const { searchParams } = new URL(req.url);
     const year = Number(searchParams.get("year"));
 
     if (!year)
       return NextResponse.json({ error: "year required" }, { status: 400 });
 
-    const monthly = await prisma.$queryRaw<
-      { month: string; total: number }[]
+    const start = new Date(Date.UTC(year, 0, 1));
+    const end = new Date(Date.UTC(year + 1, 0, 1));
+
+    const rows = await prisma.$queryRaw<
+      { month: number; expense: number }[]
     >`
-      SELECT 
-        TO_CHAR(DATE_TRUNC('month', date), 'YYYY-MM') AS month,
-        SUM(CASE WHEN type='EXPENSE' THEN amount ELSE 0 END) AS total
+      SELECT
+        EXTRACT(MONTH FROM date)::int AS month,
+        SUM(CASE WHEN type='EXPENSE' THEN amount ELSE 0 END)::int AS expense
       FROM "Transaction"
-      WHERE DATE_PART('year', date) = ${year}
+      WHERE date >= ${start} AND date < ${end}
       GROUP BY 1
-      ORDER BY 1 ASC;
+      ORDER BY 1;
     `;
+
+    const monthly = Array.from({ length: 12 }, (_, i) => {
+      const row = rows.find((r) => r.month === i + 1);
+      return {
+        month: i + 1,
+        expense: row?.expense ?? 0,
+      };
+    });
 
     return NextResponse.json(monthly);
   } catch (err) {

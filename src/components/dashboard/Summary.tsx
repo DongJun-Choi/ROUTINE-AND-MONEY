@@ -12,6 +12,7 @@ export default function Summary({ year, month }: { year: number; month: number }
   }, [year, month]);
 
   if (!summary) return <p>로딩 중...</p>;
+  if (!summary.topCategory) return <p>데이터 없음</p>;
 
   return (
     <div className="text-sm space-y-1">
