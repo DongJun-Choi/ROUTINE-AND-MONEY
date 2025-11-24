@@ -12,6 +12,7 @@ interface Transaction {
   merchant: string;
   amount: number;
   paymentType: string;
+  type: "INCOME" | "EXPENSE";
   categoryId: number | null;
   category?: {
     id: number;
@@ -81,17 +82,14 @@ export default function TransactionsPage() {
 
   const filteredData = useMemo(() => {
     return data.filter((t) => {
-      // 카테고리
       if (filters.categoryId !== null) {
         const ids = getCategoryIdsForFilter(filters.categoryId);
         if (!ids.includes(t.categoryId ?? -1)) return false;
       }
 
-      // 수입/지출
-      if (filters.type === "income" && t.amount < 0) return false;
-      if (filters.type === "expense" && t.amount > 0) return false;
+      if (filters.type === "income" && t.type !== "INCOME") return false;
+      if (filters.type === "expense" && t.type !== "EXPENSE") return false;
 
-      // 결제 방식
       if (filters.paymentType && t.paymentType !== filters.paymentType) return false;
 
       return true;
@@ -113,20 +111,23 @@ export default function TransactionsPage() {
 
     if (!dailyTotals[key]) dailyTotals[key] = { income: 0, expense: 0 };
 
-    if (t.amount < 0) dailyTotals[key].expense += t.amount;
-    else dailyTotals[key].income += t.amount;
+    if (t.type === "EXPENSE") {
+      dailyTotals[key].expense += t.amount;
+    } else {
+      dailyTotals[key].income += t.amount;
+    }
   });
 
   // 월 통계
   const monthlySummary = filteredData.reduce(
     (acc, t) => {
-      if (t.amount < 0) acc.expense += t.amount;
+      if (t.type === "EXPENSE") acc.expense += t.amount;
       else acc.income += t.amount;
       return acc;
     },
     { income: 0, expense: 0 }
   );
-  const total = monthlySummary.income + monthlySummary.expense;
+  const total = monthlySummary.income - monthlySummary.expense;
 
   // 날짜 이동
   function goToday() {
@@ -295,8 +296,11 @@ export default function TransactionsPage() {
                         </div>
 
                         <div className="text-right">
-                          <div className="font-bold text-lg">{t.amount.toLocaleString()}원</div>
-                          <PaymentTypeTag type={t.paymentType} />
+                          <div className={`font-bold text-lg ${t.type === "EXPENSE" ? "text-red-600" : "text-blue-600"}`}>
+                            {t.type === "EXPENSE" ? "-" : "+"}
+                            {t.amount.toLocaleString()}원
+                          </div>
+                          <PaymentTypeTag paymentType={t.paymentType} />
                         </div>
                       </div>
                     </div>
@@ -321,13 +325,13 @@ export default function TransactionsPage() {
   );
 }
 
-function PaymentTypeTag({ type }: { type: string }) {
+function PaymentTypeTag({ paymentType }: { paymentType: string }) {
   const colors = {
     CARD: "bg-blue-100 text-blue-600",
     POINT: "bg-purple-100 text-purple-600",
     MIXED: "bg-orange-100 text-orange-600",
   };
-  return <span className={`text-xs px-2 py-1 rounded-full ${colors[type]}`}>{type}</span>;
+  return <span className={`text-xs px-2 py-1 rounded-full ${colors[paymentType]}`}>{paymentType}</span>;
 }
 
 function formatDate(date: string) {

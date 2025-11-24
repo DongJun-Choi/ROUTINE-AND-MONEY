@@ -16,6 +16,7 @@ interface TransactionDetail {
   paymentType: "CARD" | "POINT" | "MIXED";
   memo?: string | null;
   categoryId: number | null;
+  type: "INCOME" | "EXPENSE";
 }
 
 interface Props {
@@ -78,9 +79,13 @@ export default function TransactionDetailModal({
     loadCategories();
 
     if (transaction) {
-      // 수정 모드
+      let signedAmount =
+        (transaction as any).type === "EXPENSE"
+          ? -transaction.amount
+          : transaction.amount;
+
       setMerchant(transaction.merchant);
-      setAmount(String(transaction.amount));
+      setAmount(String(signedAmount));
       setPaymentType(transaction.paymentType);
       setMemo(transaction.memo ?? "");
 
