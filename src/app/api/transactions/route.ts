@@ -51,21 +51,28 @@ export async function POST(req: Request) {
     const body = await req.json();
     const { date, merchant, amount, paymentType, memo, categoryId } = body;
 
-    if (!date || !merchant || !amount || !paymentType) {
+    if (!date || !merchant || amount == null || !paymentType) {
       return NextResponse.json(
         { message: "필수 값이 누락되었습니다." },
         { status: 400 }
       );
     }
 
+    const rawAmount = Number(amount);
+
+    const type = rawAmount >= 0 ? "INCOME" : "EXPENSE";
+
+    const normalizedAmount = Math.abs(rawAmount);
+
     const newTx = await prisma.transaction.create({
       data: {
         date: new Date(date),
         merchant,
-        amount: Number(amount),
+        amount: normalizedAmount,
         paymentType,
         memo: memo ?? null,
         categoryId: categoryId ? Number(categoryId) : null,
+        type: type,
       },
     });
 

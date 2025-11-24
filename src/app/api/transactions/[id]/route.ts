@@ -10,7 +10,7 @@ export async function PUT(
     const body = await req.json();
 
     const {
-      date,          // "2025-08-16"
+      date,
       merchant,
       amount,
       paymentType,
@@ -18,12 +18,19 @@ export async function PUT(
       memo,
     } = body;
 
+    const rawAmount = Number(amount);
+
+    const type = rawAmount >= 0 ? "INCOME" : "EXPENSE";
+
+    const normalizedAmount = Math.abs(rawAmount);
+
     await prisma.transaction.update({
       where: { id },
       data: {
         date: new Date(date),
         merchant,
-        amount: Number(amount),
+        amount: normalizedAmount,
+        type,
         paymentType,
         categoryId: categoryId ?? null,
         memo: memo ?? null,
