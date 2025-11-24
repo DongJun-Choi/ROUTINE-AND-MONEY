@@ -113,7 +113,7 @@ export default function UploadPage() {
                         {tx.paymentType}
                       </td>
                       <td className="py-2 px-3 text-center">
-                        {tx.categoryId ?? "미분류"}
+                        {tx.category?.name ?? "미분류"}
                       </td>
                     </tr>
                   ))}

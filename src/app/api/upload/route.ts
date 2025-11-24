@@ -72,10 +72,22 @@ export async function POST(req: Request) {
       skipDuplicates: true,
     });
 
+    const preview = await prisma.transaction.findMany({
+      where: {
+        date: {
+          gte: new Date(excelDate + "-01"),
+          lt: new Date(excelDate + "-31"),
+        },
+      },
+      include: {
+        category: true,
+      },
+    })
+
     return NextResponse.json({
       message: "업로드 및 저장 성공",
       count: refined.length,
-      preview: dbData,
+      preview,
     });
   } catch (error) {
     console.error("업로드 오류:", error);
