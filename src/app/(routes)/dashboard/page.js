@@ -5,6 +5,7 @@ import SectionBox from "@/components/dashboard/SectionBox";
 import Summary from "@/components/dashboard/Summary";
 import CategoryPie from "@/components/dashboard/CategoryPie";
 import DailyChart from "@/components/dashboard/DailyChart";
+import MonthlyChart from "@/components/dashboard/MonthlyChart";
 
 export default function DashboardPage() {
   const today = new Date();
@@ -52,17 +53,17 @@ export default function DashboardPage() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        
-        {/* 왼쪽: 그래프 */}
         <SectionBox title="📈 일별 지출 그래프">
           <div className="w-full h-[350px]">
             <DailyChart year={year} month={month} />
           </div>
         </SectionBox>
 
-        {/* 오른쪽: 비워둠 (여백용) */}
-        <div className="hidden md:block"></div>
-
+        <SectionBox title="📊 월별 지출 추이 (연 기준)">
+          <div className="w-full h-[350px]">
+            <MonthlyChart year={year} />
+          </div>
+        </SectionBox>
       </div>
     </div>
   );
