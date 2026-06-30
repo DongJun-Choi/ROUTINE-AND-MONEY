@@ -1,3 +1,9 @@
+interface Category {
+  id: number;
+  name: string;
+  parentId: number | null;
+}
+
 export default function DeleteCategoryModal({
   open,
   category,

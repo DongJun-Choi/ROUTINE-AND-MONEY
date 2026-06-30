@@ -1,8 +1,12 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 
-export async function PUT(req: Request, context: { params: { id: string } }) {
-  const id = Number(context.params.id);
+export async function PUT(
+  req: Request,
+  context: { params: Promise<{ id: string }> }
+) {
+  const { id: rawId } = await context.params;
+  const id = Number(rawId);
   const data = await req.json();
 
   const updated = await prisma.category.update({
@@ -13,7 +17,10 @@ export async function PUT(req: Request, context: { params: { id: string } }) {
   return NextResponse.json({ category: updated });
 }
 
-export async function DELETE(req: Request, context: { params: Promise<{ id: string }> }) {
+export async function DELETE(
+  req: Request,
+  context: { params: Promise<{ id: string }> }
+) {
   const { id } = await context.params;
   const categoryId = Number(id);
 
