@@ -1,5 +1,11 @@
 "use client";
 
+interface Category {
+  id: number;
+  name: string;
+  parentId: number | null;
+}
+
 export default function ParentCategorySelector({
   parents,
   selectedParent,

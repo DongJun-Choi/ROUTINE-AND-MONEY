@@ -3,9 +3,10 @@ import prisma from "@/lib/prisma";
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const id = Number(params.id);
+  const { id: rawId } = await params;
+  const id = Number(rawId);
 
   await prisma.categoryRule.delete({
     where: { id },

@@ -6,20 +6,29 @@ import CategoryTag from "@/components/CategoryTag";
 import TransactionDetailModal from "@/components/TransactionDetailModal";
 import FilterFloatingBox from "@/components/FilterFloatingBox";
 
+type PaymentType = "CARD" | "POINT" | "MIXED";
+
 interface Transaction {
   id: number;
   date: string;
   merchant: string;
   amount: number;
-  paymentType: string;
+  paymentType: PaymentType;
   type: "INCOME" | "EXPENSE";
   categoryId: number | null;
+  memo?: string | null;
   category?: {
     id: number;
     name: string;
     parentId: number | null;
     parent?: { id: number; name: string } | null;
   } | null;
+}
+
+interface Category {
+  id: number;
+  name: string;
+  parentId: number | null;
 }
 
 export default function TransactionsPage() {
@@ -47,7 +56,7 @@ export default function TransactionsPage() {
     paymentType: null as string | null,
   });
 
-  const [categories, setCategories] = useState<{ id: number; name: string }[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
 
   async function fetchData() {
     setLoading(true);
@@ -325,7 +334,7 @@ export default function TransactionsPage() {
   );
 }
 
-function PaymentTypeTag({ paymentType }: { paymentType: string }) {
+function PaymentTypeTag({ paymentType }: { paymentType: PaymentType }) {
   const colors = {
     CARD: "bg-blue-100 text-blue-600",
     POINT: "bg-purple-100 text-purple-600",
