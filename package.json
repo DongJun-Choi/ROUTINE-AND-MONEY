@@ -8,7 +8,10 @@
     "build": "next build",
     "start": "node scripts/run-with-mail.js start",
     "start:app": "next start",
-    "mail:worker": "node scripts/naver-mail-worker.js"
+    "mail:worker": "node scripts/naver-mail-worker.js",
+    "mail:test:filter": "ts-node --transpile-only src/test/mail/listMailByFilters.ts",
+    "mail:test:date": "ts-node --transpile-only src/test/mail/listMailByDate.ts",
+    "mail:test:mailboxes": "ts-node --transpile-only src/test/mail/listMailboxes.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.19.0",
