@@ -1,4 +1,4 @@
-import type { Transaction } from "@/lib/excel/normalizeExcel";
+import type { Transaction } from "../excel/normalizeExcel";
 
 function decodeHtmlEntities(value: string): string {
   return value

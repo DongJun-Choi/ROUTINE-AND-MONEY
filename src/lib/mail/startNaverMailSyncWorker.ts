@@ -1,8 +1,8 @@
 import {
   canStartNaverMailSync,
   getNaverMailSyncConfig,
-} from "@/lib/mail/naverMailConfig";
-import { syncNaverMail } from "@/lib/mail/syncNaverMail";
+} from "./naverMailConfig";
+import { syncNaverMail } from "./syncNaverMail";
 
 type MailWorkerGlobal = typeof globalThis & {
   __naverMailSyncStarted__?: boolean;
@@ -21,12 +21,9 @@ async function runSyncCycle() {
 
   try {
     const result = await syncNaverMail();
-
-    if (result.scanned > 0) {
-      console.info(
-        `[naver-mail-sync] 스캔 ${result.scanned}건, 신규 ${result.imported}건, 중복 ${result.duplicates}건, 제외 ${result.skipped}건`
-      );
-    }
+    console.info(
+      `[naver-mail-sync] 스캔 ${result.scanned}건, 신규 ${result.imported}건, 중복 ${result.duplicates}건, 제외 ${result.skipped}건`
+    );
   } catch (error) {
     console.error("[naver-mail-sync] 동기화 실패", error);
   } finally {
@@ -49,6 +46,7 @@ export function startNaverMailSyncWorker() {
   }
 
   mailWorkerGlobal.__naverMailSyncStarted__ = true;
+  console.info("[naver-mail-sync] 워커 시작");
 
   void runSyncCycle();
 

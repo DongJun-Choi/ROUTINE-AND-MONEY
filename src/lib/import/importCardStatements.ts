@@ -1,12 +1,12 @@
-import { parseExcel } from "@/lib/excel/parseExcel";
+import { parseExcel } from "../excel/parseExcel";
 import {
   normalizeExcelData,
   type Transaction as NormalizedTransaction,
-} from "@/lib/excel/normalizeExcel";
-import { loadCategoryRules, findCategoryId } from "@/lib/autoCategory";
-import prisma from "@/lib/prisma";
-import { decryptVestmailHtml } from "@/lib/vestmail/decryptVestmailHtml";
-import { normalizeVestmailHtmlData } from "@/lib/vestmail/normalizeVestmailHtml";
+} from "../excel/normalizeExcel";
+import { loadCategoryRules, findCategoryId } from "../autoCategory";
+import prisma from "../prisma";
+import { decryptVestmailHtml } from "../vestmail/decryptVestmailHtml";
+import { normalizeVestmailHtmlData } from "../vestmail/normalizeVestmailHtml";
 
 export interface MailImportSource {
   provider: string;

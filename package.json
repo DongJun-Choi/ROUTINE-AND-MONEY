@@ -3,9 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "node scripts/run-with-mail.js dev",
+    "dev:app": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "node scripts/run-with-mail.js start",
+    "start:app": "next start",
+    "mail:worker": "node scripts/naver-mail-worker.js"
   },
   "dependencies": {
     "@prisma/client": "^6.19.0",

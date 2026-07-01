@@ -3,11 +3,11 @@ import {
   getImportedStatementMonths,
   importCardStatement,
   type MailImportSource,
-} from "@/lib/import/importCardStatements";
+} from "../import/importCardStatements";
 import {
   canStartNaverMailSync,
   getNaverMailSyncConfig,
-} from "@/lib/mail/naverMailConfig";
+} from "./naverMailConfig";
 
 type ParsedMailAttachment = {
   filename?: string | null;
