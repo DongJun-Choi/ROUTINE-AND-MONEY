@@ -59,8 +59,6 @@ function isKbStatementSubject(subject: string | null | undefined) {
 function buildSearchQuery(config: ReturnType<typeof getNaverMailSyncConfig>) {
   const query: SearchObject = {};
 
-  query.seen = false;
-
   if (config.searchFrom) {
     query.from = config.searchFrom;
   }

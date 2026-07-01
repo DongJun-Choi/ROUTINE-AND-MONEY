@@ -63,7 +63,7 @@ export function getNaverMailSyncConfig(): NaverMailSyncConfig {
       "KB\uAD6D\uBBFC\uCCB4\uD06C\uCE74\uB4DC \uB0B4\uC5ED\uC11C",
     searchSinceDays: parseNumber(
       process.env.NAVER_MAIL_SEARCH_SINCE_DAYS,
-      14
+      30
     ),
     markAsSeen: parseBoolean(process.env.NAVER_MAIL_MARK_AS_SEEN, false),
   };
