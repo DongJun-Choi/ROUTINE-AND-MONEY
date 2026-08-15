@@ -101,8 +101,8 @@ export default function CategoryRuleManager() {
         <label className="rule-search-field">
           규칙 검색
           <span className="relative block">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={17} />
-            <input type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="키워드 검색" className="w-full rounded-xl border border-gray-200 py-2.5 pl-10 pr-3 text-sm outline-none focus:border-violet-400" />
+            <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={17} />
+            <input type="search" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="키워드 검색" className="w-full rounded-xl border border-gray-200 py-2.5 text-sm outline-none focus:border-violet-400" />
           </span>
         </label>
       </div>
