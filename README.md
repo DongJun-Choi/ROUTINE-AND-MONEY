@@ -71,6 +71,32 @@
 
 - **xlsx** – 엑셀 파싱
 
+## Docker PostgreSQL 실행
+
+Docker PostgreSQL은 기본 주소인 `localhost:5432`에서 실행합니다. 포트 충돌을 막기 위해 기존 Windows PostgreSQL 서비스는 중지해야 합니다. `docker-compose.yml`에 비밀번호를 저장하지 않으며, 실행 스크립트가 기존 `.env`의 `DATABASE_URL`에서 접속 정보를 읽어 현재 프로세스에만 전달합니다.
+
+```powershell
+.\scripts\docker-db.ps1 up -d
+.\scripts\docker-db.ps1 ps
+.\scripts\docker-db.ps1 down
+```
+
+일반 개발 시에는 `npm run dev`만 실행하면 Docker PostgreSQL의 시작과 헬스체크를 먼저 완료한 뒤 Next.js 앱과 메일 동기화 워커를 실행합니다. Docker Desktop은 미리 실행되어 있어야 합니다.
+
+```powershell
+npm run dev
+```
+
+DB만 관리할 때는 다음 npm 명령을 사용할 수 있습니다.
+
+```powershell
+npm run db:up
+npm run db:status
+npm run db:down
+```
+
+애플리케이션은 기존 `.env`의 `DATABASE_URL`을 변경하지 않고 Docker PostgreSQL에 연결할 수 있습니다. 원본 데이터 백업은 복구를 위해 보관하고, Docker 데이터 볼륨을 제거하는 `docker compose down -v`는 사용하지 않습니다.
+
 ## 프로젝트 파일 구조
 
 ```jsx
