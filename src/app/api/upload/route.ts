@@ -1,13 +1,11 @@
 import { NextResponse } from "next/server";
-import { parseExcel } from "@/lib/excel/parseExcel";
-import { normalizeExcelData } from "@/lib/excel/normalizeExcel";
-import prisma from "@/lib/prisma";
-import { loadCategoryRules, findCategoryId } from "@/lib/autoCategory";
+import { importCardStatement } from "@/lib/import/importCardStatements";
 
 export async function POST(req: Request) {
   try {
     const formData = await req.formData();
     const file = formData.get("file") as File | null;
+    const password = String(formData.get("password") ?? "");
 
     if (!file) {
       return NextResponse.json(
@@ -16,78 +14,23 @@ export async function POST(req: Request) {
       );
     }
 
-    const buffer = Buffer.from(await file.arrayBuffer());
-    const rows = parseExcel(buffer);
-    const rowCount = rows.length;
+    const result = await importCardStatement({
+      fileName: file.name,
+      buffer: Buffer.from(await file.arrayBuffer()),
+      password,
+    });
 
-    const refined = normalizeExcelData(rows);
-    if (refined.length === 0) {
+    if (result.duplicate) {
       return NextResponse.json(
-        { message: "정상 거래가 없습니다." },
+        { message: "이미 업로드한 거래 파일입니다." },
         { status: 400 }
       );
     }
-
-    const firstDate = refined[0].date;
-    const excelDate = firstDate.slice(0, 7);
-
-    const exists = await prisma.excelUploadLog.findFirst({
-      where: {
-        date: excelDate,
-        rowCount: rowCount,
-      },
-    });
-
-    if (exists) {
-      return NextResponse.json(
-        { message: "이미 업로드한 엑셀 파일입니다." },
-        { status: 400 }
-      );
-    }
-
-    await prisma.excelUploadLog.create({
-      data: {
-        date: excelDate,
-        rowCount: rowCount,
-      },
-    });
-
-    const rules = await loadCategoryRules();
-
-    const dbData = refined.map((t) => {
-      const categoryId = findCategoryId(t.merchant, rules);
-
-      return {
-        date: new Date(t.date),
-        merchant: t.merchant,
-        amount: Math.abs(t.amount),
-        type: "EXPENSE",
-        paymentType: t.paymentType,
-        categoryId: categoryId,
-      };
-    });
-
-    await prisma.transaction.createMany({
-      data: dbData,
-      skipDuplicates: true,
-    });
-
-    const preview = await prisma.transaction.findMany({
-      where: {
-        date: {
-          gte: new Date(excelDate + "-01"),
-          lt: new Date(excelDate + "-31"),
-        },
-      },
-      include: {
-        category: true,
-      },
-    })
 
     return NextResponse.json({
       message: "업로드 및 저장 성공",
-      count: refined.length,
-      preview,
+      count: result.count,
+      preview: result.preview,
     });
   } catch (error) {
     console.error("업로드 오류:", error);

@@ -53,3 +53,19 @@ model ExcelUploadLog {
 
   @@unique([date, rowCount])
 }
+
+model MailImportLog {
+  id              Int      @id @default(autoincrement())
+  provider        String
+  mailbox         String
+  uid             Int
+  messageId       String?
+  subject         String?
+  attachmentName  String?
+  statementMonth  String?
+  rowCount        Int?
+  duplicateUpload Boolean  @default(false)
+  createdAt       DateTime @default(now())
+
+  @@unique([provider, mailbox, uid])
+}

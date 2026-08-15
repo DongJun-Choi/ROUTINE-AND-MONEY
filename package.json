@@ -3,13 +3,24 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "db:up": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/docker-db.ps1 up -d --wait",
+    "db:down": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/docker-db.ps1 down",
+    "db:status": "powershell -NoProfile -ExecutionPolicy Bypass -File scripts/docker-db.ps1 ps",
+    "dev": "npm run db:up && node scripts/run-with-mail.js dev",
+    "dev:app": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "npm run db:up && node scripts/run-with-mail.js start",
+    "start:app": "next start",
+    "mail:worker": "node scripts/naver-mail-worker.js",
+    "mail:test:filter": "ts-node --transpile-only src/test/mail/listMailByFilters.ts",
+    "mail:test:date": "ts-node --transpile-only src/test/mail/listMailByDate.ts",
+    "mail:test:mailboxes": "ts-node --transpile-only src/test/mail/listMailboxes.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.19.0",
     "chart.js": "^4.5.1",
+    "imapflow": "^1.4.3",
+    "mailparser": "^3.9.12",
     "next": "15.5.3",
     "react": "19.1.0",
     "react-chartjs-2": "^5.3.1",
