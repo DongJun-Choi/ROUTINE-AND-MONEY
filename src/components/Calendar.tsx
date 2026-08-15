@@ -66,13 +66,13 @@ export default function Calendar({
             </div>
 
             {/* 날짜 박스 */}
-            <div className="grid grid-cols-7 gap-2">
+            <div className="grid grid-cols-7 gap-1.5 sm:gap-2">
                 {daysArray.map((cell, idx) => (
                     <div
                         key={idx}
                         onClick={() => cell.date && onSelectDate?.(cell.date)}
                         className={`
-                            min-h-[80px] border rounded-lg p-2 flex flex-col
+                            min-h-[56px] sm:min-h-[80px] border rounded-lg p-1.5 sm:p-2 flex flex-col
                             ${cell.date ? "cursor-pointer bg-white hover:bg-gray-50" : "bg-gray-100"}
                             ${cell.date === selectedDate ? "ring-2 ring-blue-500" : ""}
                         `}
