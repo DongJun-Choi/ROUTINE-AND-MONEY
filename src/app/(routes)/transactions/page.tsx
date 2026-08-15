@@ -23,6 +23,13 @@ interface Transaction {
     parentId: number | null;
     parent?: { id: number; name: string } | null;
   } | null;
+  splits?: Array<{
+    id: number;
+    amount: number;
+    label?: string | null;
+    categoryId: number | null;
+    category?: { id: number; name: string; parentId: number | null; parent?: { id: number; name: string } | null } | null;
+  }>;
 }
 
 interface Category {
@@ -98,7 +105,8 @@ export default function TransactionsPage() {
       }
       if (filters.categoryId !== null) {
         const ids = getCategoryIdsForFilter(filters.categoryId);
-        if (!ids.includes(t.categoryId ?? -1)) return false;
+        const transactionCategoryIds = t.splits?.length ? t.splits.map((split) => split.categoryId ?? -1) : [t.categoryId ?? -1];
+        if (!transactionCategoryIds.some((categoryId) => ids.includes(categoryId))) return false;
       }
 
       if (filters.type === "income" && t.type !== "INCOME") return false;
@@ -312,7 +320,7 @@ export default function TransactionsPage() {
                         <div>
                           <div className="text-gray-900 font-medium">{t.merchant}</div>
                           <div className="mt-1">
-                            <CategoryTag name={t.category?.name ?? null} parentName={t.category?.parent?.name ?? null} />
+                            {t.splits?.length ? <div className="flex flex-wrap gap-1">{t.splits.map((split) => <span key={split.id} className="inline-flex items-center gap-1"><CategoryTag name={split.category?.name ?? null} parentName={split.category?.parent?.name ?? null} /><small className="text-[10px] text-gray-500">{split.amount.toLocaleString()}원</small></span>)}</div> : <CategoryTag name={t.category?.name ?? null} parentName={t.category?.parent?.name ?? null} />}
                           </div>
                         </div>
 
