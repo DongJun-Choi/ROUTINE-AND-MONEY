@@ -10,10 +10,10 @@ export async function PUT(
   const body = await req.json();
   const { categoryId } = body;
 
-  await prisma.transaction.update({
-    where: { id: transactionId },
-    data: { categoryId },
-  });
+  await prisma.$transaction([
+    prisma.transaction.update({ where: { id: transactionId }, data: { categoryId } }),
+    prisma.transactionSplit.deleteMany({ where: { transactionId } }),
+  ]);
 
   return NextResponse.json({ success: true });
 }
