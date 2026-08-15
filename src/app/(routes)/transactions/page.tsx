@@ -51,6 +51,7 @@ export default function TransactionsPage() {
   const years = Array.from({ length: 6 }, (_, i) => currentYear - i);
 
   const [filters, setFilters] = useState({
+    query: "",
     categoryId: null as number | null,
     type: null as "income" | "expense" | null,
     paymentType: null as string | null,
@@ -91,6 +92,10 @@ export default function TransactionsPage() {
 
   const filteredData = useMemo(() => {
     return data.filter((t) => {
+      const query = filters.query.trim().toLocaleLowerCase("ko-KR");
+      if (query && !`${t.merchant} ${t.memo ?? ""}`.toLocaleLowerCase("ko-KR").includes(query)) {
+        return false;
+      }
       if (filters.categoryId !== null) {
         const ids = getCategoryIdsForFilter(filters.categoryId);
         if (!ids.includes(t.categoryId ?? -1)) return false;
@@ -182,6 +187,7 @@ export default function TransactionsPage() {
       onApply={(newFilters) => setFilters(newFilters)}
       onReset={() =>
         setFilters({
+          query: "",
           categoryId: null,
           type: null,
           paymentType: null,
@@ -278,6 +284,12 @@ export default function TransactionsPage() {
       {/* 리스트 */}
       <div ref={listRef} className="overflow-y-scroll max-h-[520px] space-y-6 pr-1">
         {loading && <p>불러오는 중...</p>}
+
+        {!loading && filteredData.length === 0 && (
+          <div className="podo-panel p-8 text-center text-sm text-gray-500">
+            조건에 맞는 거래 내역이 없습니다.
+          </div>
+        )}
 
         {!loading &&
           Object.entries(groupedByDate)

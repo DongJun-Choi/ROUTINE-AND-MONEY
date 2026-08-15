@@ -12,6 +12,7 @@ interface Category {
 interface Props {
   categories: Category[];
   onApply: (filters: {
+    query: string;
     categoryId: number | null;
     type: "income" | "expense" | null;
     paymentType: string | null;
@@ -25,6 +26,7 @@ export default function FilterFloatingBox({
   onReset,
 }: Props) {
   const [categoryId, setCategoryId] = useState<number | null>(null);
+  const [query, setQuery] = useState("");
   const [type, setType] = useState<"income" | "expense" | null>(null);
   const [paymentType, setPaymentType] = useState<string | "">("");
 
@@ -32,6 +34,7 @@ export default function FilterFloatingBox({
 
   function applyFilter() {
     onApply({
+      query: query.trim(),
       categoryId,
       type,
       paymentType: paymentType === "" ? null : paymentType,
@@ -40,6 +43,7 @@ export default function FilterFloatingBox({
 
   function resetFilter() {
     setCategoryId(null);
+    setQuery("");
     setType(null);
     setPaymentType("");
     setResetSignal((p) => p + 1); // ← 자식 컴포넌트 초기화
@@ -48,8 +52,20 @@ export default function FilterFloatingBox({
   }
 
   return (
-    <div className="fixed right-8 top-8 w-64 bg-white rounded-xl shadow-lg border border-[#e2e1e7] p-4 z-30 hidden lg:block">
+    <div className="podo-panel mb-5 p-4 lg:fixed lg:right-8 lg:top-8 lg:z-30 lg:mb-0 lg:w-64 lg:shadow-lg">
       <h2 className="text-base font-semibold mb-4">필터</h2>
+
+      <label className="mb-4 block">
+        <span className="mb-1 block text-sm font-medium">내역 검색</span>
+        <input
+          type="search"
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
+          onKeyDown={(event) => { if (event.key === "Enter") applyFilter(); }}
+          placeholder="가맹점 또는 메모"
+          className="w-full rounded-lg border px-3 py-2 text-sm"
+        />
+      </label>
 
       {/* 카테고리 */}
       <div className="mb-4">

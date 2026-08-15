@@ -51,6 +51,8 @@ export default function TransactionDetailModal({
   const [categories, setCategories] = useState<Category[]>([]);
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [createRule, setCreateRule] = useState(false);
+  const [ruleKeyword, setRuleKeyword] = useState("");
 
   const [parentSelected, setParentSelected] = useState<number | null>(null);
   const [childSelected, setChildSelected] = useState<number | null>(null);
@@ -60,6 +62,7 @@ export default function TransactionDetailModal({
     const res = await fetch("/api/categories");
     const data = await res.json();
     setCategories(data.categories);
+    return data.categories as Category[];
   }
 
   /** 부모/자식 카테고리 분류 */
@@ -76,7 +79,12 @@ export default function TransactionDetailModal({
   useEffect(() => {
     if (!open) return;
 
-    loadCategories();
+    void loadCategories().then((loadedCategories) => {
+      if (!transaction) return;
+      const selected = loadedCategories.find((category) => category.id === transaction.categoryId);
+      setChildSelected(selected?.parentId ? selected.id : null);
+      setParentSelected(selected?.parentId ?? selected?.id ?? null);
+    });
 
     if (transaction) {
       let signedAmount =
@@ -85,6 +93,8 @@ export default function TransactionDetailModal({
           : transaction.amount;
 
       setMerchant(transaction.merchant);
+      setRuleKeyword(transaction.merchant);
+      setCreateRule(false);
       setAmount(String(signedAmount));
       setPaymentType(transaction.paymentType);
       setMemo(transaction.memo ?? "");
@@ -97,10 +107,6 @@ export default function TransactionDetailModal({
 
       setCategoryId(transaction.categoryId ?? "");
 
-      const c = categories.find(cat => cat.id === transaction.categoryId);
-      setChildSelected(c?.id ?? null);
-      setParentSelected(c?.parentId ?? c?.id ?? null);
-
     } else {
       // 추가 모드: 초기값
       const today = new Date();
@@ -109,6 +115,8 @@ export default function TransactionDetailModal({
       const dd = String(today.getDate()).padStart(2, "0");
 
       setMerchant("");
+      setRuleKeyword("");
+      setCreateRule(false);
       setAmount("");
       setPaymentType("CARD");
       setMemo("");
@@ -160,6 +168,17 @@ export default function TransactionDetailModal({
     setSaving(false);
 
     if (res.ok) {
+      if (createRule && finalCategoryId && ruleKeyword.trim()) {
+        const ruleResponse = await fetch("/api/category-rules/add", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ keyword: ruleKeyword.trim(), categoryId: finalCategoryId }),
+        });
+
+        if (!ruleResponse.ok && ruleResponse.status !== 409) {
+          alert("거래는 저장했지만 자동 분류 규칙 생성에 실패했습니다.");
+        }
+      }
       onSaved();
       onClose();
     } else {
@@ -332,6 +351,34 @@ export default function TransactionDetailModal({
                   {child.name}
                 </button>
               ))}
+            </div>
+          )}
+
+          {Number(amount) < 0 && (childSelected !== null || parentSelected !== null) && (
+            <div className="mt-4 rounded-xl border border-violet-200 bg-violet-50 p-3">
+              <label className="flex cursor-pointer items-center justify-between gap-3 text-sm font-medium text-violet-950">
+                <span>이 가맹점의 자동 분류 규칙 만들기</span>
+                <input
+                  type="checkbox"
+                  checked={createRule}
+                  onChange={(event) => {
+                    setCreateRule(event.target.checked);
+                    if (event.target.checked && !ruleKeyword.trim()) setRuleKeyword(merchant);
+                  }}
+                  className="h-4 w-4 accent-violet-600"
+                />
+              </label>
+              {createRule && (
+                <label className="mt-3 block text-xs text-violet-800">
+                  가맹점명에 포함될 키워드
+                  <input
+                    value={ruleKeyword}
+                    onChange={(event) => setRuleKeyword(event.target.value)}
+                    placeholder="예: 스타벅스"
+                    className="mt-1 w-full rounded-lg border border-violet-200 bg-white px-3 py-2 text-sm text-gray-900 outline-none focus:border-violet-500"
+                  />
+                </label>
+              )}
             </div>
           )}
         </div>
