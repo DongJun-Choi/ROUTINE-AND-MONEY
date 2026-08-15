@@ -43,14 +43,13 @@ export default function UploadPage() {
   };
 
   return (
-    <div className="flex justify-center px-4 py-12">
-      <div className="w-full max-w-lg rounded-xl border border-gray-200 bg-white p-8 shadow-lg">
-        <h1 className="mb-6 text-center text-2xl font-bold">
-          카드 내역 파일 업로드
-        </h1>
+    <div className="page-container">
+      <div className="page-heading"><h1>내역 가져오기</h1><p>카드 명세서 또는 보안메일 파일을 업로드해 거래를 정리하세요.</p></div>
+      <div className="podo-panel mx-auto w-full max-w-2xl p-6 md:p-8">
+        <h2 className="mb-6 text-lg font-semibold">카드 내역 파일 업로드</h2>
 
         <div className="flex flex-col items-center gap-4">
-          <label className="w-full cursor-pointer rounded-lg border-2 border-dashed border-gray-300 py-10 text-center transition hover:border-blue-400">
+          <label className="w-full cursor-pointer rounded-xl border border-dashed border-[#c9c5d2] bg-[#faf9fc] py-12 text-center transition hover:border-[#4e3a83]">
             <input
               type="file"
               accept=".xlsx,.xls,.html,.htm"
@@ -71,7 +70,7 @@ export default function UploadPage() {
                 </>
               ) : (
                 <>
-                  <p className="text-lg">파일을 선택하거나 클릭해 주세요.</p>
+                  <p className="text-base font-medium text-[#302b38]">파일을 선택하거나 여기에 놓아주세요.</p>
                   <p className="mt-1 text-sm">
                     .xlsx / .xls / .html / .htm 지원
                   </p>
@@ -93,7 +92,7 @@ export default function UploadPage() {
           <button
             onClick={handleUpload}
             disabled={!file || uploading}
-            className="mt-2 w-full rounded-lg bg-blue-600 py-3 font-semibold text-white transition hover:bg-blue-700 disabled:bg-gray-300"
+            className="mt-2 w-full rounded-lg bg-[#4e3a83] py-3 font-semibold text-white transition hover:bg-[#3e2e6d] disabled:cursor-not-allowed disabled:bg-gray-300"
           >
             {uploading ? "업로드 중.." : "업로드하기"}
           </button>

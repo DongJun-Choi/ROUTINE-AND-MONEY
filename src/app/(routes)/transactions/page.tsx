@@ -188,16 +188,16 @@ export default function TransactionsPage() {
         })
       }
     />
-    <div className="max-w-3xl mx-auto px-4 pb-20">
+    <div className="page-container pb-20 lg:pr-72">
 
       {/* 헤더 */}
-      <h1 className="text-2xl font-bold mb-2">📒 가계부</h1>
+      <div className="page-heading"><h1>거래 내역</h1><p>날짜별 카드 이용 내역과 수입·지출을 확인하세요.</p></div>
 
       {/* 월 이동 */}
       <div className="flex items-center justify-between mb-4 mt-4">
         <button onClick={goPrevMonth} className="px-3 py-1 rounded-lg bg-gray-100 hover:bg-gray-200">◀</button>
 
-        <h2 className="text-xl font-bold">
+        <h2 className="text-base font-semibold">
           {year}년 {month}월
         </h2>
 
@@ -217,8 +217,8 @@ export default function TransactionsPage() {
       />
 
       {/* 월 요약 */}
-      <div className="mt-6 mb-8 p-5 rounded-2xl bg-gray-50 border shadow-sm">
-        <div className="text-lg font-semibold mb-2">📊 이번 달 요약</div>
+      <div className="podo-panel mt-6 mb-8 p-5">
+        <div className="text-base font-semibold mb-2">이번 달 요약</div>
 
         <div className="flex flex-col gap-1 text-sm">
           <span className="text-red-600 font-semibold">
@@ -294,7 +294,7 @@ export default function TransactionsPage() {
                         setSelectedTx(t);
                         setDetailOpen(true);
                       }}
-                      className="cursor-pointer bg-white rounded-xl shadow-sm hover:shadow-md p-4 border transition"
+                      className="podo-panel cursor-pointer p-4 transition hover:border-[#bdb7cb] hover:shadow-sm"
                     >
                       <div className="flex items-center justify-between">
                         <div>

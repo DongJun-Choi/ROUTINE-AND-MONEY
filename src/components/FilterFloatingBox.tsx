@@ -48,8 +48,8 @@ export default function FilterFloatingBox({
   }
 
   return (
-    <div className="fixed right-6 top-32 w-64 bg-white rounded-xl shadow-lg border p-4 z-40 hidden lg:block">
-      <h2 className="text-lg font-semibold mb-4">🔎 필터</h2>
+    <div className="fixed right-8 top-8 w-64 bg-white rounded-xl shadow-lg border border-[#e2e1e7] p-4 z-30 hidden lg:block">
+      <h2 className="text-base font-semibold mb-4">필터</h2>
 
       {/* 카테고리 */}
       <div className="mb-4">

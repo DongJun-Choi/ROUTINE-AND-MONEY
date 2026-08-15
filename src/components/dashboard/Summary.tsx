@@ -1,39 +1,23 @@
 "use client";
 
+import { PiggyBank, TrendingDown, TrendingUp, WalletCards } from "lucide-react";
 import { useEffect, useState } from "react";
 
+interface SummaryData { expense: number; income: number; net: number; count: number; topCategory?: { name: string; amount: number } | null }
+
 export default function Summary({ year, month }: { year: number; month: number }) {
-  const [summary, setSummary] = useState<any>(null);
+  const [summary, setSummary] = useState<SummaryData | null>(null);
+  const [failed, setFailed] = useState(false);
 
   useEffect(() => {
-    fetch(`/api/dashboard/summary?year=${year}&month=${month}`)
-      .then((res) => res.json())
-      .then((d) => setSummary(d));
+    setFailed(false);
+    fetch(`/api/dashboard/summary?year=${year}&month=${month}`).then((res) => { if (!res.ok) throw new Error(); return res.json(); }).then(setSummary).catch(() => setFailed(true));
   }, [year, month]);
 
-  if (!summary) return <p>로딩 중...</p>;
-  if (!summary.topCategory) return <p>데이터 없음</p>;
+  const income = summary?.income ?? 0;
+  const expense = summary?.expense ?? 0;
+  const net = summary?.net ?? income - expense;
+  const note = failed ? "데이터를 불러오지 못했습니다" : summary ? `${summary.count}건의 거래` : "불러오는 중...";
 
-  return (
-    <div className="text-sm space-y-1">
-      <p>지출: <span className="text-red-600 font-semibold">-{summary.expense.toLocaleString()}원</span></p>
-      <p>수입: <span className="text-blue-600 font-semibold">+{summary.income.toLocaleString()}원</span></p>
-
-      <p>
-        순수익:{" "}
-        <span className={summary.net < 0 ? "text-red-600" : "text-blue-600"}>
-          {summary.net < 0 ? "-" : "+"}
-          {Math.abs(summary.net).toLocaleString()}원
-        </span>
-      </p>
-
-      <p>거래 건수: <strong>{summary.count}건</strong></p>
-
-      <p>
-        가장 많이 사용한 카테고리:{" "}
-        <strong>{summary.topCategory.name}</strong>(
-        {summary.topCategory.amount.toLocaleString()}원)
-      </p>
-    </div>
-  );
+  return <div className="summary-grid"><section className="summary-card"><header><h2>{month}월 수입</h2><TrendingUp size={17} className="income" /></header><strong className="income">+{income.toLocaleString()}원</strong><p>{note}</p></section><section className="summary-card"><header><h2>{month}월 지출</h2><TrendingDown size={17} className="expense" /></header><strong className="expense">-{expense.toLocaleString()}원</strong><p>{summary?.topCategory ? `${summary.topCategory.name} 지출이 가장 많아요` : note}</p></section><section className="summary-card"><header><h2>{month}월 순수익</h2><PiggyBank size={17} className="net" /></header><strong className={net < 0 ? "expense" : "net"}>{net < 0 ? "-" : "+"}{Math.abs(net).toLocaleString()}원</strong><p>수입에서 지출을 제외한 금액</p></section><section className="summary-card"><header><h2>{month}월 잔액</h2><WalletCards size={17} className="income" /></header><div className="balance-list"><span>수입 <b>+{income.toLocaleString()}원</b></span><span>지출 <b>-{expense.toLocaleString()}원</b></span><span className="total">잔액 <b>{net < 0 ? "-" : "+"}{Math.abs(net).toLocaleString()}원</b></span></div></section></div>;
 }
