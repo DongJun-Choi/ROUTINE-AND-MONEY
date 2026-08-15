@@ -1,154 +1,86 @@
-## 루틴 & 머니 프로젝트
+# 루틴 & 머니
 
-은행에서 제공하는 **카드 이용내역 엑셀 파일을 업로드하기만 하면** 자동으로 거래 내역을 분석하고, 카테고리를 분류하며, 월별∙일별∙카테고리별 소비 패턴을 시각화하는 **개인 재무 관리 웹 애플리케이션**입니다.
+카드 이용 내역을 가져와 거래를 분류하고 월별·일별·카테고리별 소비 패턴을 보여 주는 개인 재무 관리 웹 애플리케이션입니다.
 
-이 프로젝트는 **"반복적인 가계부 기록 작업을 자동화"**하고 **사용자의 소비 습관을 직관적으로 분석**할 수 있도록 설계되었습니다.
+주요 기능:
 
----
+- 엑셀 및 보안메일 HTML 카드 명세서 업로드
+- 네이버 메일 카드 명세서 자동 수집
+- 거래 내역과 카테고리 관리
+- 키워드 기반 자동 분류
+- 소비 내역 대시보드
 
-## 주요 기능 요약
+## 처음 설치
 
-### 1. 엑셀 기반 자동 가계부 생성
+Node.js, npm, Docker Desktop, Windows PowerShell이 필요합니다.
 
-- 엑셀 파일 업로드 (xlsx / xls)
-- 엑셀의 거래 내역 자동 파싱
-- 날짜·금액·정상거래 여부 등 정제(normalize)
-- 포인트 결제·혼합 결제 자동 처리
-- 월 단위 중복 업로드 방지 (ExcelUploadLog 활용)
-- 자동 카테고리 분류 (CategoryRule 기반)
-- 업로드 후 즉시 내역 프리뷰 제공
+```powershell
+git clone https://github.com/DongJun-Choi/ROUTINE-AND-MONEY.git
+cd ROUTINE-AND-MONEY
+npm install
+Copy-Item .env.example .env
+```
 
-### 2. 거래 내역 관리 (CRUD)
+## 환경 변수
 
-- 거래 조회 (연/월 기반)
-- 거래 추가, 수정, 삭제
-- 메모 관리
-- 거래당 카테고리 변경 기능
-- 카테고리 전체 일괄 이동(old → new)
-- 카테고리·결제수단·금액 필터 기능
+`.env`에 PostgreSQL 접속 정보를 입력합니다. Docker DB는 기본 포트 `5432`를 사용합니다.
 
-### 3. 소비 패턴 분석 및 대시보드
+```env
+DATABASE_URL=postgresql://postgres:YOUR_PASSWORD@localhost:5432/routine_money
+```
 
-- 월 요약(수입, 지출, 순지출, 최다 카테고리)
-- 카테고리별 소비 비율(도넛 차트)
-- 일별 지출 변화(Line Chart)
-- 연 기준 월별 지출 트렌드(Bar Chart)
-- 연/월 선택 UI 제공
+네이버 메일 자동 수집을 사용하지 않으면 다음 값만 추가합니다.
 
-### 4. 카테고리 관리
+```env
+NAVER_MAIL_SYNC_ENABLED=false
+```
 
-- 대분류 / 소분류 계층 구조
-- 카테고리 CRUD 기능
-- 부모 카테고리 삭제 제한
-- 사용 중인 카테고리 삭제 제한 처리
-- 카테고리 태그 UI
+자동 수집을 사용한다면 아래 값도 반드시 입력합니다.
 
-### 5. 자동 분류 룰 (CategoryRule)
+```env
+NAVER_MAIL_SYNC_ENABLED=true
+NAVER_MAIL_USER=your_naver_id
+NAVER_MAIL_PASSWORD=your_naver_password
+NAVER_MAIL_ATTACHMENT_PASSWORD=your_attachment_password
+```
 
-- 키워드 기반 자동 분류 시스템
-- 키워드 normalize(공백/소문자 처리)
-- 룰 CRUD 기능
+실제 비밀번호가 들어 있는 `.env`는 커밋하지 않습니다.
 
----
+## Docker DB 실행
 
-## 기술 스택
+Docker Desktop을 먼저 실행합니다. Windows PostgreSQL이 `5432` 포트를 사용 중이라면 관리자 PowerShell에서 중지합니다.
 
-### Frontend
+```powershell
+Stop-Service -Name postgresql-x64-16
+```
 
-- **Next.js 14 (App Router)**
-- **React**
-- **TypeScript**
-- **Tailwind CSS**
-- **Chart.js (react-chartjs-2)**
+Docker PostgreSQL을 시작하고 최초 마이그레이션을 적용합니다.
 
-### Backend
+```powershell
+npm run db:up
+npx prisma migrate deploy
+```
 
-- **Next.js Route Handlers (API Routes)**
-- **Prisma ORM**
-- **PostgreSQL**
+DB 관리 명령:
 
-### 기타
+```powershell
+npm run db:status
+npm run db:down
+```
 
-- **xlsx** – 엑셀 파싱
+`db:down`은 컨테이너만 중지하며 데이터 볼륨은 유지합니다. 데이터가 삭제되는 `docker compose down -v`는 사용하지 않습니다.
 
-## 프로젝트 파일 구조
+## 프로젝트 실행
 
-```jsx
-src/
- ├─ app/                          # Next.js App Router (페이지 + Backend API)
- │   ├─ globals.css               # 전역 스타일
- │   ├─ page.tsx                  # 기본 루트 페이지
- │   │
- │   ├─ category/                 # 카테고리 관리 페이지
- │   │    └─ page.tsx
- │   │
- │   ├─ dashboard/                # 대시보드 페이지
- │   │    └─ page.js
- │   │
- │   ├─ transactions/             # 거래 내역 페이지
- │   │    └─ page.tsx
- │   │
- │   ├─ upload/                   # 엑셀 업로드 페이지
- │   │    └─ page.tsx
- │   │
- │   ├─ actions/                  # 서버 액션(현재 비어 있음)
- │   │    └─ .gitkeep
- │   │
- │   └─ api/                      # RESTful API (백엔드 핵심)
- │        ├─ categories/
- │        │    └─ [id]/           # 카테고리 수정/삭제 API
- │        │
- │        ├─ category-rules/
- │        │    ├─ add/            # 룰 추가
- │        │    └─ [id]/           # 룰 삭제
- │        │
- │        ├─ dashboard/           # 대시보드 집계 API
- │        │    ├─ category/
- │        │    ├─ daily/
- │        │    ├─ monthly/
- │        │    └─ summary/
- │        │
- │        ├─ transactions/        # 거래 CRUD + 카테고리 이동 API
- │        │    ├─ move-category/
- │        │    └─ [id]/           # 거래 수정/삭제
- │        │         └─ category/  # 거래 카테고리 변경
- │        │
- │        └─ upload/              # 엑셀 업로드 API
- │
- ├─ components/                   # 프론트 UI 컴포넌트
- │   │
- │   ├─ Calendar.tsx
- │   ├─ CategoryModal.tsx
- │   ├─ CategoryTag.tsx
- │   ├─ FilterCategorySelector.tsx
- │   ├─ FilterFloatingBox.tsx
- │   ├─ TransactionDetailModal.tsx
- │   │
- │   ├─ category/                 # 카테고리 관리 관련 UI
- │   │    ├─ ChildCategoryItem.tsx
- │   │    ├─ ChildCategoryList.tsx
- │   │    ├─ DeleteCategoryModal.tsx
- │   │    ├─ ParentCategorySelector.tsx
- │   │    └─ category-rule/
- │   │         └─ CategoryRuleManager.tsx
- │   │
- │   └─ dashboard/                # 대시보드 컴포넌트
- │        ├─ CategoryPie.tsx
- │        ├─ DailyChart.tsx
- │        ├─ MonthlyChart.tsx
- │        ├─ SectionBox.tsx
- │        └─ Summary.tsx
- │
- ├─ hooks/                        # 커스텀 훅 (현재 비어 있음)
- │
- ├─ lib/                          # 백엔드/공용 로직
- │   ├─ prisma.ts                 # Prisma Client
- │   ├─ autoCategory.ts           # 자동 분류 로직
- │   │
- │   └─ excel/                    # 엑셀 파싱 및 정제
- │        ├─ parseExcel.ts
- │        └─ normalizeExcel.ts
- │
- └─ test/                         # 테스트용 디렉터리(현재 비어 있음)
+```powershell
+npm run dev
+```
 
+`npm run dev`는 Docker DB를 먼저 시작한 뒤 Next.js 개발 서버와 메일 워커를 실행합니다. 브라우저에서 [http://localhost:3000](http://localhost:3000)에 접속합니다.
+
+빌드 및 프로덕션 실행:
+
+```powershell
+npm run build
+npm run start
 ```
