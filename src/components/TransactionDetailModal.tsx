@@ -34,7 +34,7 @@ interface Props {
 const paymentTypeLabels: Record<string, string> = {
   CARD: "카드 결제",
   POINT: "포인트",
-  MIX합결제: "혼합 결제",
+  MIXED: "혼합 결제",
 };
 
 export default function TransactionDetailModal({
@@ -190,7 +190,8 @@ export default function TransactionDetailModal({
       onSaved();
       onClose();
     } else {
-      alert("저장에 실패했습니다.");
+      const result = await res.json().catch(() => null);
+      alert(result?.message ?? "저장에 실패했습니다.");
     }
   };
 

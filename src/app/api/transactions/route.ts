@@ -68,7 +68,7 @@ export async function POST(req: Request) {
     const type = rawAmount >= 0 ? "INCOME" : "EXPENSE";
 
     const normalizedAmount = Math.abs(rawAmount);
-    const normalizedSplits = normalizeTransactionSplits(splits, normalizedAmount);
+    const normalizedSplits = normalizeTransactionSplits(splits, normalizedAmount, type);
 
     const newTx = await prisma.transaction.create({
       data: {

@@ -26,7 +26,7 @@ export async function PUT(
     const type = rawAmount >= 0 ? "INCOME" : "EXPENSE";
 
     const normalizedAmount = Math.abs(rawAmount);
-    const normalizedSplits = normalizeTransactionSplits(splits, normalizedAmount);
+    const normalizedSplits = normalizeTransactionSplits(splits, normalizedAmount, type);
 
     await prisma.$transaction(async (tx) => {
       await tx.transaction.update({
