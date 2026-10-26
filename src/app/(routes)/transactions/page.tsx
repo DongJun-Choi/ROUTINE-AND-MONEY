@@ -2,9 +2,9 @@
 
 import { Plus } from "lucide-react";
 import { useMemo, useState } from "react";
-import TransactionDetailModal from "@/components/TransactionDetailModal";
 import PaymentBreakdownCard from "@/components/transactions/PaymentBreakdownCard";
 import TransactionCalendar from "@/components/transactions/TransactionCalendar";
+import TransactionDetailDrawer from "@/components/transactions/TransactionDetailDrawer";
 import TransactionFilterPanel from "@/components/transactions/TransactionFilterPanel";
 import TransactionListCard from "@/components/transactions/TransactionListCard";
 import TransactionSummaryStrip from "@/components/transactions/TransactionSummaryStrip";
@@ -120,16 +120,14 @@ export default function TransactionsPage() {
         />
       </div>
 
-      {/* 거래 상세 모달은 다음 단계에서 새 디자인으로 옮기기 전까지 이전 스타일을 쓴다. */}
-      <div className="legacy-ui">
-        <TransactionDetailModal
-          open={detail.open}
-          onClose={() => setDetail({ open: false, transaction: null })}
-          transaction={detail.transaction}
-          onSaved={reload}
-          onDeleted={reload}
-        />
-      </div>
+      <TransactionDetailDrawer
+        open={detail.open}
+        transaction={detail.transaction}
+        categories={categories}
+        onClose={() => setDetail({ open: false, transaction: null })}
+        onSaved={reload}
+        onDeleted={reload}
+      />
     </div>
   );
 }

@@ -1,4 +1,12 @@
-import type { CategoryWithParent, PaymentType, Transaction } from "@/lib/types";
+import type { Category, CategoryWithParent, PaymentType, Transaction } from "@/lib/types";
+
+export function categoryPathById(categories: Category[], categoryId: number | null): string | null {
+  if (categoryId === null) return null;
+  const category = categories.find((item) => item.id === categoryId);
+  if (!category) return null;
+  const parent = category.parentId === null ? null : categories.find((item) => item.id === category.parentId);
+  return parent ? `${parent.name} › ${category.name}` : category.name;
+}
 
 export const paymentTypeShortLabel: Record<PaymentType, string> = {
   CARD: "카드",

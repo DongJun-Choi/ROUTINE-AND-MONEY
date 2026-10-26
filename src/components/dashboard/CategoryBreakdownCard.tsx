@@ -1,5 +1,6 @@
 import { Info } from "lucide-react";
 import DonutChart from "@/components/charts/DonutChart";
+import { vizColor } from "@/components/charts/vizColor";
 import { Card, CardHeader } from "@/components/ui/Card";
 import type { CategoryGroup, DashboardView } from "@/lib/dashboard/stats";
 import { formatNumber, formatPercent } from "@/lib/format";
@@ -11,9 +12,6 @@ interface CategoryBreakdownCardProps {
   insight: DashboardView["categoryInsight"];
   className?: string;
 }
-
-// 카테고리 색은 지출 순위대로 토큰 보드의 차트 순서(--viz-1~6)를 따른다.
-const vizColor = (index: number) => `var(--viz-${Math.min(index + 1, 6)})`;
 
 function InsightText({ insight }: { insight: NonNullable<DashboardView["categoryInsight"]> }) {
   const magnitude = Math.round(Math.abs(insight.changePercent));

@@ -34,6 +34,14 @@ export function formatShortWon(value: number): string {
   return formatNumber(value);
 }
 
+// 받침 유무에 따라 '로/으로'를 고른다. ㄹ 받침은 '로'를 쓰고, 한글로 끝나지 않으면 둘 다 적는다.
+export function withRoParticle(word: string): string {
+  const last = word.charCodeAt(word.length - 1);
+  if (Number.isNaN(last) || last < 0xac00 || last > 0xd7a3) return `${word}(으)로`;
+  const finalConsonant = (last - 0xac00) % 28;
+  return `${word}${finalConsonant === 0 || finalConsonant === 8 ? "로" : "으로"}`;
+}
+
 export function formatPercent(ratio: number): string {
   return `${Math.round(ratio * 100)}%`;
 }
