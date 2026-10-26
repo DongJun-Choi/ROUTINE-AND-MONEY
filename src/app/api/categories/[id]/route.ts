@@ -38,9 +38,11 @@ export async function DELETE(
       );
     }
 
-    const count = await prisma.transaction.count({
-      where: { categoryId },
-    });
+    const [transactionCount, splitCount] = await Promise.all([
+      prisma.transaction.count({ where: { categoryId } }),
+      prisma.transactionSplit.count({ where: { categoryId } }),
+    ]);
+    const count = transactionCount + splitCount;
 
     if (count > 0) {
       return NextResponse.json({

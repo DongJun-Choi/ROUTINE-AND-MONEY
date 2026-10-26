@@ -1,6 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import CategorySplitModal, { SplitDraft } from "@/components/CategorySplitModal";
+import NWaySplitModal from "@/components/NWaySplitModal";
+import { Split, Users } from "lucide-react";
 
 interface Category {
   id: number;
@@ -17,6 +20,7 @@ interface TransactionDetail {
   memo?: string | null;
   categoryId: number | null;
   type: "INCOME" | "EXPENSE";
+  splits?: Array<{ amount: number; categoryId: number | null; label?: string | null }>;
 }
 
 interface Props {
@@ -30,7 +34,7 @@ interface Props {
 const paymentTypeLabels: Record<string, string> = {
   CARD: "카드 결제",
   POINT: "포인트",
-  MIX합결제: "혼합 결제",
+  MIXED: "혼합 결제",
 };
 
 export default function TransactionDetailModal({
@@ -45,12 +49,18 @@ export default function TransactionDetailModal({
   const [amount, setAmount] = useState("");
   const [paymentType, setPaymentType] =
     useState<"CARD" | "POINT" | "MIXED">("CARD");
+  const [transactionType, setTransactionType] = useState<"INCOME" | "EXPENSE">("EXPENSE");
   const [memo, setMemo] = useState("");
   const [categoryId, setCategoryId] = useState<number | "">("");
 
   const [categories, setCategories] = useState<Category[]>([]);
   const [saving, setSaving] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [nWayOpen, setNWayOpen] = useState(false);
+  const [categorySplitOpen, setCategorySplitOpen] = useState(false);
+  const [splits, setSplits] = useState<SplitDraft[]>([]);
+  const [createRule, setCreateRule] = useState(false);
+  const [ruleKeyword, setRuleKeyword] = useState("");
 
   const [parentSelected, setParentSelected] = useState<number | null>(null);
   const [childSelected, setChildSelected] = useState<number | null>(null);
@@ -60,6 +70,7 @@ export default function TransactionDetailModal({
     const res = await fetch("/api/categories");
     const data = await res.json();
     setCategories(data.categories);
+    return data.categories as Category[];
   }
 
   /** 부모/자식 카테고리 분류 */
@@ -76,16 +87,20 @@ export default function TransactionDetailModal({
   useEffect(() => {
     if (!open) return;
 
-    loadCategories();
+    void loadCategories().then((loadedCategories) => {
+      if (!transaction) return;
+      const selected = loadedCategories.find((category) => category.id === transaction.categoryId);
+      setChildSelected(selected?.parentId ? selected.id : null);
+      setParentSelected(selected?.parentId ?? selected?.id ?? null);
+    });
 
     if (transaction) {
-      let signedAmount =
-        (transaction as any).type === "EXPENSE"
-          ? -transaction.amount
-          : transaction.amount;
-
       setMerchant(transaction.merchant);
-      setAmount(String(signedAmount));
+      setRuleKeyword(transaction.merchant);
+      setCreateRule(false);
+      setSplits((transaction.splits ?? []).map((split) => ({ amount: split.amount, categoryId: split.categoryId, label: split.label ?? "" })));
+      setAmount(String(transaction.amount));
+      setTransactionType(transaction.type);
       setPaymentType(transaction.paymentType);
       setMemo(transaction.memo ?? "");
 
@@ -97,10 +112,6 @@ export default function TransactionDetailModal({
 
       setCategoryId(transaction.categoryId ?? "");
 
-      const c = categories.find(cat => cat.id === transaction.categoryId);
-      setChildSelected(c?.id ?? null);
-      setParentSelected(c?.parentId ?? c?.id ?? null);
-
     } else {
       // 추가 모드: 초기값
       const today = new Date();
@@ -109,8 +120,12 @@ export default function TransactionDetailModal({
       const dd = String(today.getDate()).padStart(2, "0");
 
       setMerchant("");
+      setRuleKeyword("");
+      setCreateRule(false);
+      setSplits([]);
       setAmount("");
       setPaymentType("CARD");
+      setTransactionType("EXPENSE");
       setMemo("");
       setCategoryId("");
       setDate(`${yyyy}-${mm}-${dd}`);
@@ -139,10 +154,11 @@ export default function TransactionDetailModal({
     const payload = {
       date,
       merchant,
-      amount: Number(amount),
+      amount: transactionType === "EXPENSE" ? -Math.abs(Number(amount)) : Math.abs(Number(amount)),
       paymentType,
       categoryId: finalCategoryId,
       memo,
+      splits,
     };
 
     const res = transaction
@@ -160,10 +176,22 @@ export default function TransactionDetailModal({
     setSaving(false);
 
     if (res.ok) {
+      if (createRule && finalCategoryId && ruleKeyword.trim()) {
+        const ruleResponse = await fetch("/api/category-rules/add", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ keyword: ruleKeyword.trim(), categoryId: finalCategoryId }),
+        });
+
+        if (!ruleResponse.ok && ruleResponse.status !== 409) {
+          alert("거래는 저장했지만 자동 분류 규칙 생성에 실패했습니다.");
+        }
+      }
       onSaved();
       onClose();
     } else {
-      alert("저장에 실패했습니다.");
+      const result = await res.json().catch(() => null);
+      alert(result?.message ?? "저장에 실패했습니다.");
     }
   };
 
@@ -194,8 +222,8 @@ export default function TransactionDetailModal({
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/40">
-      <div className="w-full max-w-md rounded-2xl bg-white shadow-lg p-5">
+    <div className="fixed inset-0 z-40 flex items-center justify-center bg-black/40 p-4">
+      <div className="max-h-[calc(100dvh-2rem)] w-full max-w-md overflow-y-auto overscroll-contain rounded-2xl bg-white p-5 shadow-lg">
 
         {/* 헤더 */}
         <div className="flex items-center justify-between mb-3">
@@ -235,24 +263,29 @@ export default function TransactionDetailModal({
               <input
                 className="w-32 text-right bg-white border rounded px-2 py-1 text-sm"
                 value={amount}
-                onChange={(e) => {
-                  let v = e.target.value;
-
-                  v = v.replace(/[^0-9-]/g, "");
-                  if ((v.match(/-/g) || []).length > 1) {
-                    v = "-" + v.replace(/-/g, "");
-                  }
-                  if (v.includes("-") && v.indexOf("-") !== 0) {
-                    v = "-" + v.replace(/-/g, "");
-                  }
-
-                  setAmount(v);
-                }}
+                inputMode="numeric"
+                onChange={(e) => setAmount(e.target.value.replace(/[^0-9]/g, ""))}
               />
               <div className="text-[11px] text-gray-400 mt-0.5">
                 {formattedAmount}
               </div>
             </div>
+          </div>
+          {transactionType === "EXPENSE" && Number(amount) > 0 && (
+            <div className="mt-3 flex flex-wrap gap-2 border-t border-gray-200 pt-3">
+              <button type="button" onClick={() => setNWayOpen(true)} className="flex items-center gap-1.5 rounded-lg border bg-white px-3 py-2 text-xs text-gray-700 hover:border-violet-400 hover:text-violet-700"><Users size={15} />n빵 계산</button>
+              <button type="button" onClick={() => setCategorySplitOpen(true)} className="flex items-center gap-1.5 rounded-lg border bg-white px-3 py-2 text-xs text-gray-700 hover:border-violet-400 hover:text-violet-700"><Split size={15} />카테고리 나누기{splits.length > 0 ? ` (${splits.length})` : ""}</button>
+              {splits.length > 0 && <button type="button" onClick={() => setSplits([])} className="text-xs text-red-500">분할 해제</button>}
+            </div>
+          )}
+        </div>
+
+        {/* 거래 유형 */}
+        <div className="mb-4">
+          <div className="text-sm font-medium mb-2">거래 유형</div>
+          <div className="grid grid-cols-2 gap-2">
+            <button type="button" onClick={() => setTransactionType("EXPENSE")} className={`rounded-lg border px-3 py-2 text-sm ${transactionType === "EXPENSE" ? "border-red-400 bg-red-50 text-red-600" : "bg-white text-gray-600"}`}>지출</button>
+            <button type="button" onClick={() => { setTransactionType("INCOME"); setSplits([]); setCreateRule(false); }} className={`rounded-lg border px-3 py-2 text-sm ${transactionType === "INCOME" ? "border-blue-400 bg-blue-50 text-blue-600" : "bg-white text-gray-600"}`}>수입</button>
           </div>
         </div>
 
@@ -280,8 +313,9 @@ export default function TransactionDetailModal({
         {/* 카테고리 */}
         <div className="mb-4">
           <div className="text-sm font-medium mb-2">카테고리</div>
+          {splits.length > 0 && <div className="mb-3 rounded-lg bg-violet-50 px-3 py-2 text-xs text-violet-700">혼합 카테고리 {splits.length}개가 적용되어 있습니다. 위의 ‘카테고리 나누기’에서 수정하거나 분할을 해제하세요.</div>}
 
-          <div className="flex flex-wrap gap-2 mb-3">
+          <div className={`flex flex-wrap gap-2 mb-3 ${splits.length > 0 ? "pointer-events-none opacity-40" : ""}`}>
             {parents.map(parent => (
               <button
                 key={parent.id}
@@ -332,6 +366,34 @@ export default function TransactionDetailModal({
                   {child.name}
                 </button>
               ))}
+            </div>
+          )}
+
+          {transactionType === "EXPENSE" && (childSelected !== null || parentSelected !== null) && (
+            <div className="mt-4 rounded-xl border border-violet-200 bg-violet-50 p-3">
+              <label className="flex cursor-pointer items-center justify-between gap-3 text-sm font-medium text-violet-950">
+                <span>이 가맹점의 자동 분류 규칙 만들기</span>
+                <input
+                  type="checkbox"
+                  checked={createRule}
+                  onChange={(event) => {
+                    setCreateRule(event.target.checked);
+                    if (event.target.checked && !ruleKeyword.trim()) setRuleKeyword(merchant);
+                  }}
+                  className="h-4 w-4 accent-violet-600"
+                />
+              </label>
+              {createRule && (
+                <label className="mt-3 block text-xs text-violet-800">
+                  가맹점명에 포함될 키워드
+                  <input
+                    value={ruleKeyword}
+                    onChange={(event) => setRuleKeyword(event.target.value)}
+                    placeholder="예: 스타벅스"
+                    className="mt-1 w-full rounded-lg border border-violet-200 bg-white px-3 py-2 text-sm text-gray-900 outline-none focus:border-violet-500"
+                  />
+                </label>
+              )}
             </div>
           )}
         </div>
@@ -397,6 +459,30 @@ export default function TransactionDetailModal({
         </div>
 
       </div>
+      <NWaySplitModal
+        open={nWayOpen}
+        amount={Math.abs(Number(amount) || 0)}
+        onClose={() => setNWayOpen(false)}
+        onApply={(share) => {
+          setAmount(String(share));
+          setSplits([]);
+          setNWayOpen(false);
+        }}
+      />
+      <CategorySplitModal
+        open={categorySplitOpen}
+        totalAmount={Math.abs(Number(amount) || 0)}
+        categories={categories}
+        initialSplits={splits}
+        onClose={() => setCategorySplitOpen(false)}
+        onApply={(nextSplits) => {
+          setSplits(nextSplits);
+          setParentSelected(null);
+          setChildSelected(null);
+          setCreateRule(false);
+          setCategorySplitOpen(false);
+        }}
+      />
     </div>
   );
 }

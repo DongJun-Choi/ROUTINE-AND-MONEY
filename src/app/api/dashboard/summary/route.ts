@@ -29,6 +29,7 @@ export async function GET(req: Request) {
           parent: true,
         },
       },
+      splits: { include: { category: { include: { parent: true } } } },
     },
   });
 
@@ -47,11 +48,11 @@ export async function GET(req: Request) {
   for (const t of transactions) {
     if (t.type !== "EXPENSE") continue;
 
-    const cid = t.categoryId;
-    if (cid == null) continue;
-
-    const prev = categoryMap.get(cid) ?? 0;
-    categoryMap.set(cid, prev + t.amount);
+    const allocations = t.splits.length > 0 ? t.splits : [{ amount: t.amount, categoryId: t.categoryId }];
+    for (const allocation of allocations) {
+      if (allocation.categoryId == null) continue;
+      categoryMap.set(allocation.categoryId, (categoryMap.get(allocation.categoryId) ?? 0) + allocation.amount);
+    }
   }
 
   let topCategoryId: number | null = null;
@@ -66,7 +67,9 @@ export async function GET(req: Request) {
 
   let topCategoryName = "미분류";
   if (topCategoryId !== null) {
-    const c = transactions.find(t => t.categoryId === topCategoryId)?.category;
+    const directCategory = transactions.find(t => t.categoryId === topCategoryId)?.category;
+    const splitCategory = transactions.flatMap((t) => t.splits).find((split) => split.categoryId === topCategoryId)?.category;
+    const c = directCategory ?? splitCategory;
     if (c) {
       topCategoryName = c.parent
         ? `${c.parent.name} > ${c.name}`

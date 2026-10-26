@@ -16,8 +16,7 @@ export async function GET(req: Request) {
   const start = new Date(year, month - 1, 1);
   const end = new Date(year, month, 1);
 
-  const data = await prisma.transaction.groupBy({
-    by: ["categoryId"],
+  const transactions = await prisma.transaction.findMany({
     where: {
       type: "EXPENSE",
       date: {
@@ -25,9 +24,7 @@ export async function GET(req: Request) {
         lt: end,
       },
     },
-    _sum: {
-      amount: true,
-    },
+    select: { amount: true, categoryId: true, splits: { select: { amount: true, categoryId: true } } },
   });
 
   const categories = await prisma.category.findMany({
@@ -38,13 +35,19 @@ export async function GET(req: Request) {
     categories.map((c) => [c.id, c])
   );
 
-  const result = data.map((item) => {
-    const category = categoryMap[item.categoryId ?? ""] ?? null;
+  const totals = new Map<number | null, number>();
+  for (const transaction of transactions) {
+    const allocations = transaction.splits.length > 0 ? transaction.splits : [{ amount: transaction.amount, categoryId: transaction.categoryId }];
+    for (const allocation of allocations) totals.set(allocation.categoryId, (totals.get(allocation.categoryId) ?? 0) + allocation.amount);
+  }
+
+  const result = [...totals.entries()].map(([categoryId, amount]) => {
+    const category = categoryMap[categoryId ?? ""] ?? null;
     return {
-      categoryId: item.categoryId,
+      categoryId,
       categoryName: category?.name ?? "미분류",
       parentId: category?.parentId ?? null,
-      amount: item._sum.amount ?? 0,
+      amount,
     };
   });
 

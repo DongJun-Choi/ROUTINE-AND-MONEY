@@ -1,5 +1,6 @@
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
+import { normalizeTransactionSplits } from "@/lib/transactionSplits";
 
 export async function GET(req: Request) {
   try {
@@ -31,7 +32,11 @@ export async function GET(req: Request) {
           include: {
             parent: true,
           }
-        }
+        },
+        splits: {
+          include: { category: { include: { parent: true } } },
+          orderBy: { id: "asc" },
+        },
       },
       orderBy: { date: "desc" },
     });
@@ -49,7 +54,7 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { date, merchant, amount, paymentType, memo, categoryId } = body;
+    const { date, merchant, amount, paymentType, memo, categoryId, splits } = body;
 
     if (!date || !merchant || amount == null || !paymentType) {
       return NextResponse.json(
@@ -63,6 +68,7 @@ export async function POST(req: Request) {
     const type = rawAmount >= 0 ? "INCOME" : "EXPENSE";
 
     const normalizedAmount = Math.abs(rawAmount);
+    const normalizedSplits = normalizeTransactionSplits(splits, normalizedAmount, type);
 
     const newTx = await prisma.transaction.create({
       data: {
@@ -71,14 +77,18 @@ export async function POST(req: Request) {
         amount: normalizedAmount,
         paymentType,
         memo: memo ?? null,
-        categoryId: categoryId ? Number(categoryId) : null,
+        categoryId: normalizedSplits.length > 0 ? null : categoryId ? Number(categoryId) : null,
         type: type,
+        splits: normalizedSplits.length > 0 ? { create: normalizedSplits } : undefined,
       },
     });
 
     return NextResponse.json(newTx, { status: 201 });
   } catch (err) {
     console.error("Error creating transaction:", err);
+    if (err instanceof Error && err.message.includes("분할")) {
+      return NextResponse.json({ message: err.message }, { status: 400 });
+    }
     return NextResponse.json(
       { message: "Error creating transaction" },
       { status: 500 }
