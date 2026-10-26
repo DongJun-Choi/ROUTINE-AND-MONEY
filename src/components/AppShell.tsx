@@ -96,7 +96,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
     <div className="min-h-screen">
       <Sidebar pathname={pathname} />
       <MobileTopBar />
-      <main className="app-content min-w-0 px-4 pt-5 pb-28 lg:ml-[248px] lg:px-10 lg:pt-8 lg:pb-12">
+      <main className="min-w-0 px-4 pt-5 pb-28 lg:ml-[248px] lg:px-10 lg:pt-8 lg:pb-12">
         <div className="mx-auto w-full max-w-[1600px]">{children}</div>
       </main>
       <BottomTabs pathname={pathname} />

@@ -1,4 +1,10 @@
-import type { CategoryWithParent, Transaction } from "@/lib/types";
+import type { CategoryWithParent, PaymentType, Transaction } from "@/lib/types";
+
+export const paymentTypeShortLabel: Record<PaymentType, string> = {
+  CARD: "카드",
+  POINT: "포인트",
+  MIXED: "복합",
+};
 
 export function categoryPath(category: CategoryWithParent | null | undefined): string | null {
   if (!category) return null;
