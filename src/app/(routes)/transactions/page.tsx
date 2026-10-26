@@ -23,6 +23,13 @@ interface Transaction {
     parentId: number | null;
     parent?: { id: number; name: string } | null;
   } | null;
+  splits?: Array<{
+    id: number;
+    amount: number;
+    label?: string | null;
+    categoryId: number | null;
+    category?: { id: number; name: string; parentId: number | null; parent?: { id: number; name: string } | null } | null;
+  }>;
 }
 
 interface Category {
@@ -51,6 +58,7 @@ export default function TransactionsPage() {
   const years = Array.from({ length: 6 }, (_, i) => currentYear - i);
 
   const [filters, setFilters] = useState({
+    query: "",
     categoryId: null as number | null,
     type: null as "income" | "expense" | null,
     paymentType: null as string | null,
@@ -91,9 +99,14 @@ export default function TransactionsPage() {
 
   const filteredData = useMemo(() => {
     return data.filter((t) => {
+      const query = filters.query.trim().toLocaleLowerCase("ko-KR");
+      if (query && !`${t.merchant} ${t.memo ?? ""}`.toLocaleLowerCase("ko-KR").includes(query)) {
+        return false;
+      }
       if (filters.categoryId !== null) {
         const ids = getCategoryIdsForFilter(filters.categoryId);
-        if (!ids.includes(t.categoryId ?? -1)) return false;
+        const transactionCategoryIds = t.splits?.length ? t.splits.map((split) => split.categoryId ?? -1) : [t.categoryId ?? -1];
+        if (!transactionCategoryIds.some((categoryId) => ids.includes(categoryId))) return false;
       }
 
       if (filters.type === "income" && t.type !== "INCOME") return false;
@@ -182,6 +195,7 @@ export default function TransactionsPage() {
       onApply={(newFilters) => setFilters(newFilters)}
       onReset={() =>
         setFilters({
+          query: "",
           categoryId: null,
           type: null,
           paymentType: null,
@@ -279,6 +293,12 @@ export default function TransactionsPage() {
       <div ref={listRef} className="overflow-y-scroll max-h-[520px] space-y-6 pr-1">
         {loading && <p>불러오는 중...</p>}
 
+        {!loading && filteredData.length === 0 && (
+          <div className="podo-panel p-8 text-center text-sm text-gray-500">
+            조건에 맞는 거래 내역이 없습니다.
+          </div>
+        )}
+
         {!loading &&
           Object.entries(groupedByDate)
             .sort(([a], [b]) => (a < b ? 1 : -1))
@@ -300,7 +320,7 @@ export default function TransactionsPage() {
                         <div>
                           <div className="text-gray-900 font-medium">{t.merchant}</div>
                           <div className="mt-1">
-                            <CategoryTag name={t.category?.name ?? null} parentName={t.category?.parent?.name ?? null} />
+                            {t.splits?.length ? <div className="flex flex-wrap gap-1">{t.splits.map((split) => <span key={split.id} className="inline-flex items-center gap-1"><CategoryTag name={split.category?.name ?? null} parentName={split.category?.parent?.name ?? null} /><small className="text-[10px] text-gray-500">{split.amount.toLocaleString()}원</small></span>)}</div> : <CategoryTag name={t.category?.name ?? null} parentName={t.category?.parent?.name ?? null} />}
                           </div>
                         </div>
 

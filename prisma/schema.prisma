@@ -16,6 +16,7 @@ model Category {
   createdAt DateTime     @default(now())
   updatedAt DateTime     @updatedAt
   transactions Transaction[]
+  transactionSplits TransactionSplit[]
   rules        CategoryRule[]
 }
 
@@ -31,6 +32,22 @@ model Transaction {
   type         String
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
+  splits       TransactionSplit[]
+}
+
+model TransactionSplit {
+  id            Int         @id @default(autoincrement())
+  transactionId Int
+  transaction   Transaction @relation(fields: [transactionId], references: [id], onDelete: Cascade)
+  categoryId    Int?
+  category      Category?   @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  amount        Int
+  label         String?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+
+  @@index([transactionId])
+  @@index([categoryId])
 }
 
 model CategoryRule {
