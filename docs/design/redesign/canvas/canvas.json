@@ -17,13 +17,20 @@
     "Main-Dark.dc.html": { "x": 4560, "y": 0, "w": 1440, "h": 1320, "title": "대시보드 · 다크", "expand": "fill", "is_interactive": true },
     "Transactions-Dark.dc.html": { "x": 6080, "y": 0, "w": 1440, "h": 1240, "title": "가계부 · 다크", "expand": "fill", "is_interactive": true },
     "Upload-Dark.dc.html": { "x": 4560, "y": 1440, "w": 1440, "h": 1320, "title": "명세서 가져오기 · 다크", "expand": "fill", "is_interactive": true },
-    "Category-Dark.dc.html": { "x": 6080, "y": 1440, "w": 1440, "h": 1080, "title": "카테고리 · 다크", "expand": "fill", "is_interactive": true }
+    "Category-Dark.dc.html": { "x": 6080, "y": 1440, "w": 1440, "h": 1080, "title": "카테고리 · 다크", "expand": "fill", "is_interactive": true },
+    "TransactionDetail.dc.html": { "x": 4560, "y": 3300, "w": 1440, "h": 1240, "title": "가계부 · 거래 상세", "expand": "fill", "is_interactive": true },
+    "SplitNWay.dc.html": { "x": 6080, "y": 3300, "w": 560, "h": 700, "title": "거래 상세 · n빵 계산", "is_interactive": true },
+    "SplitCategory.dc.html": { "x": 6720, "y": 3300, "w": 800, "h": 820, "title": "거래 상세 · 카테고리 나누기", "is_interactive": true },
+    "Mobile-Main.dc.html": { "x": 4560, "y": 4960, "w": 390, "h": 1720, "title": "모바일 · 대시보드", "is_interactive": true },
+    "Mobile-Transactions.dc.html": { "x": 5030, "y": 4960, "w": 390, "h": 1480, "title": "모바일 · 가계부", "is_interactive": true }
   },
-  "order": ["Main.dc.html", "Transactions.dc.html", "Upload.dc.html", "Category.dc.html", "Tokens.dc.html", "Current-Dashboard.dc.html", "Current-Transactions.dc.html", "Current-Upload.dc.html", "Current-Category.dc.html", "Main-Dark.dc.html", "Transactions-Dark.dc.html", "Upload-Dark.dc.html", "Category-Dark.dc.html"],
+  "order": ["Main.dc.html", "Transactions.dc.html", "Upload.dc.html", "Category.dc.html", "Tokens.dc.html", "Current-Dashboard.dc.html", "Current-Transactions.dc.html", "Current-Upload.dc.html", "Current-Category.dc.html", "Main-Dark.dc.html", "Transactions-Dark.dc.html", "Upload-Dark.dc.html", "Category-Dark.dc.html", "TransactionDetail.dc.html", "SplitNWay.dc.html", "SplitCategory.dc.html", "Mobile-Main.dc.html", "Mobile-Transactions.dc.html"],
   "notes": {
     "heading": { "x": 0, "y": -300, "text": "루틴앤머니 리디자인 · Slate Minimal", "kind": "title1", "maxW": 4240 },
     "dark": { "x": 4560, "y": -300, "text": "다크 모드", "kind": "title1", "maxW": 2960 },
-    "asis": { "x": 0, "y": 3000, "text": "현재 화면 · 지금 코드 그대로 재현", "kind": "title1", "maxW": 2960 }
+    "asis": { "x": 0, "y": 3000, "text": "현재 화면 · 지금 코드 그대로 재현", "kind": "title1", "maxW": 2960 },
+    "extra": { "x": 4560, "y": 3000, "text": "거래 상세 · 금액 나누기", "kind": "title1", "maxW": 2960 },
+    "mobile": { "x": 4560, "y": 4660, "text": "모바일", "kind": "title1", "maxW": 2960 }
   },
   "designSystems": []
 }

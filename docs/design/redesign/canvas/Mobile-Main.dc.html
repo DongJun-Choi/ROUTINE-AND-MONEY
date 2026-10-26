@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>모바일 대시보드</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+KR:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F8FAFC;font-family:'Inter','Noto Sans KR',system-ui,sans-serif}
+*{box-sizing:border-box}
+button,input,select{font:inherit}
+a{color:#1D4ED8;text-decoration:none}a:hover{color:#1E40AF}
+:focus-visible{outline:3px solid rgba(29,78,216,0.35);outline-offset:2px}
+</style>
+</helmet>
+<div style="width: 390px; height: 1720px; display: flex; flex-direction: column; background: #F8FAFC; color: #0F172A; font-family: 'Inter', 'Noto Sans KR', system-ui, sans-serif; font-variant-numeric: tabular-nums; letter-spacing: -0.005em">
+
+<header style="display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 60px; padding: 8px 16px; background: #FFFFFF; border-bottom: 1px solid #E2E8F0">
+<div style="display: flex; align-items: center; gap: 10px">
+<span aria-hidden="true" style="width: 32px; height: 32px; border-radius: 10px; background: #1D4ED8; color: #FFFFFF; display: flex; align-items: center; justify-content: center; flex: 0 0 auto"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18.5 14.5A7 7 0 1 1 17 7.4"></path><path d="M18 3.5v4.2h-4.2"></path><circle cx="12" cy="12" r="2.2"></circle></svg></span>
+<span style="font-size: 16px; line-height: 22px; font-weight: 700; letter-spacing: -0.02em">루틴&amp;머니</span>
+</div>
+<a href="Upload.dc.html" aria-label="명세서 가져오기" style="width: 44px; height: 44px; border-radius: 10px; border: 1px solid #E2E8F0; background: #FFFFFF; color: #0F172A; display: flex; align-items: center; justify-content: center">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V4"></path><path d="m7 9 5-5 5 5"></path><path d="M4 15v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4"></path></svg>
+</a>
+</header>
+
+<main style="flex: 1 1 auto; min-width: 0; padding: 20px 16px 24px; display: flex; flex-direction: column; gap: 16px">
+
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h1 style="margin: 0; font-size: 24px; line-height: 32px; font-weight: 700; letter-spacing: -0.02em">대시보드</h1>
+<p style="margin: 0; font-size: 13px; line-height: 18px; color: #64748B">10월 카드 사용 흐름이에요. 거래 86건이 반영되어 있어요.</p>
+</div>
+
+<div role="group" aria-label="조회 월" style="display: flex; align-items: center; justify-content: space-between; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 12px; padding: 1px">
+<button type="button" aria-label="이전 달" style="width: 44px; height: 44px; border: 0; background: transparent; border-radius: 10px; color: #334155; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6"></path></svg>
+</button>
+<span style="font-size: 15px; font-weight: 600; white-space: nowrap">2026년 10월</span>
+<button type="button" aria-label="다음 달" style="width: 44px; height: 44px; border: 0; background: transparent; border-radius: 10px; color: #334155; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"></path></svg>
+</button>
+</div>
+
+<section aria-label="이번 달 요약" style="display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; margin: 0 -16px; padding: 0 16px 4px; scroll-padding: 0 16px; scrollbar-width: none">
+<div style="flex: 0 0 260px; scroll-snap-align: start; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 16px; box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.04), 0 1px 2px -1px rgba(15, 23, 42, 0.02); padding: 20px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px">
+<h2 style="margin: 0; font-size: 14px; line-height: 20px; font-weight: 600; color: #64748B">이번 달 지출</h2>
+<span style="display: inline-flex; align-items: center; gap: 4px; height: 24px; padding: 0 10px; border-radius: 9999px; background: #ECFDF5; color: #047857; border: 1px solid #A7F3D0; font-size: 12px; font-weight: 600; white-space: nowrap">
+<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 7 7 7 4-4 7 7"></path><path d="M21 12v5h-5"></path></svg>
+3.2% 감소</span>
+</div>
+<p style="margin: 0; font-size: 26px; line-height: 32px; font-weight: 700; letter-spacing: -0.025em; white-space: nowrap">2,438,200<span style="font-size: 16px; font-weight: 500; margin-left: 2px">원</span></p>
+<p style="margin: 0; font-size: 13px; line-height: 18px; color: #64748B">지난달보다 81,000원 적게 썼어요</p>
+</div>
+<div style="flex: 0 0 260px; scroll-snap-align: start; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 16px; box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.04), 0 1px 2px -1px rgba(15, 23, 42, 0.02); padding: 20px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px">
+<h2 style="margin: 0; font-size: 14px; line-height: 20px; font-weight: 600; color: #64748B">수입 · 환급</h2>
+<span style="display: inline-flex; align-items: center; height: 24px; padding: 0 10px; border-radius: 9999px; background: #F1F5F9; color: #334155; font-size: 12px; font-weight: 600; white-space: nowrap">3건</span>
+</div>
+<p style="margin: 0; font-size: 26px; line-height: 32px; font-weight: 700; letter-spacing: -0.025em; white-space: nowrap; color: #047857">+320,000<span style="font-size: 16px; font-weight: 500; margin-left: 2px">원</span></p>
+<p style="margin: 0; font-size: 13px; line-height: 18px; color: #64748B">카드 결제 취소와 환급을 포함해요</p>
+</div>
+<div style="flex: 0 0 260px; scroll-snap-align: start; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 16px; box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.04), 0 1px 2px -1px rgba(15, 23, 42, 0.02); padding: 20px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px">
+<h2 style="margin: 0; font-size: 14px; line-height: 20px; font-weight: 600; color: #64748B">순수익</h2>
+<span style="display: inline-flex; align-items: center; height: 24px; padding: 0 10px; border-radius: 9999px; background: #F1F5F9; color: #334155; font-size: 12px; font-weight: 600; white-space: nowrap">수입 − 지출</span>
+</div>
+<p style="margin: 0; font-size: 26px; line-height: 32px; font-weight: 700; letter-spacing: -0.025em; white-space: nowrap">−2,118,200<span style="font-size: 16px; font-weight: 500; margin-left: 2px">원</span></p>
+<p style="margin: 0; font-size: 13px; line-height: 18px; color: #64748B">거래 86건 기준</p>
+</div>
+<div style="flex: 0 0 260px; scroll-snap-align: start; background: #1D4ED8; border: 1px solid #1D4ED8; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 10px; color: #FFFFFF">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px">
+<h2 style="margin: 0; font-size: 14px; line-height: 20px; font-weight: 600; color: #DBE4FF">가장 많이 쓴 카테고리</h2>
+<span style="display: inline-flex; align-items: center; height: 24px; padding: 0 10px; border-radius: 9999px; background: rgba(255, 255, 255, 0.16); color: #FFFFFF; font-size: 12px; font-weight: 600; white-space: nowrap">32%</span>
+</div>
+<p style="margin: 0; font-size: 26px; line-height: 32px; font-weight: 700; letter-spacing: -0.025em; white-space: nowrap">식비</p>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<p style="margin: 0; font-size: 13px; line-height: 18px; color: #DBE4FF">780,224원 · 이번 달 지출의 32%</p>
+<div aria-hidden="true" style="height: 6px; border-radius: 9999px; background: rgba(255, 255, 255, 0.2); overflow: hidden"><div style="width: 32%; height: 100%; border-radius: 9999px; background: #FFFFFF"></div></div>
+</div>
+</div>
+</section>
+
+<section style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 16px; box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.04), 0 1px 2px -1px rgba(15, 23, 42, 0.02); padding: 20px; display: flex; flex-direction: column; gap: 20px">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h2 style="margin: 0; font-size: 18px; line-height: 26px; font-weight: 600; letter-spacing: -0.01em">카테고리별 지출</h2>
+<p style="margin: 0; font-size: 13px; line-height: 18px; color: #64748B">대분류 기준 · 10월</p>
+</div>
+<div style="position: relative; width: 168px; height: 168px; align-self: center">
+<svg width="168" height="168" viewBox="0 0 200 200" role="img" aria-label="카테고리별 지출 비중: 식비 32%, 생활 24%, 쇼핑 18%, 교통 12%, 취미·여가 8%, 기타 6%">
+<g transform="rotate(-90 100 100)" fill="none" stroke-width="22">
+<circle cx="100" cy="100" r="78" stroke="#1D4ED8" stroke-dasharray="154.83 490.09" stroke-dashoffset="0"></circle>
+<circle cx="100" cy="100" r="78" stroke="#F59E0B" stroke-dasharray="115.62 490.09" stroke-dashoffset="-156.83"></circle>
+<circle cx="100" cy="100" r="78" stroke="#0F766E" stroke-dasharray="86.22 490.09" stroke-dashoffset="-274.45"></circle>
+<circle cx="100" cy="100" r="78" stroke="#93B4FA" stroke-dasharray="56.81 490.09" stroke-dashoffset="-362.67"></circle>
+<circle cx="100" cy="100" r="78" stroke="#C2410C" stroke-dasharray="37.21 490.09" stroke-dashoffset="-421.48"></circle>
+<circle cx="100" cy="100" r="78" stroke="#CBD5E1" stroke-dasharray="27.41 490.09" stroke-dashoffset="-460.69"></circle>
+</g>
+</svg>
+<div aria-hidden="true" style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px">
+<span style="font-size: 11px; line-height: 14px; color: #64748B">10월 총 지출</span>
+<span style="font-size: 15px; line-height: 20px; font-weight: 700; letter-spacing: -0.02em">2,438,200원</span>
+</div>
+</div>
+<ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px">
+<li style="display: flex; align-items: center; gap: 10px; font-size: 14px; line-height: 20px"><span aria-hidden="true" style="width: 10px; height: 10px; border-radius: 3px; background: #1D4ED8; flex: 0 0 auto"></span><span style="flex: 1 1 auto; min-width: 0; color: #334155">식비</span><span style="font-weight: 600; white-space: nowrap">780,224원</span><span style="width: 36px; text-align: right; font-size: 13px; color: #64748B">32%</span></li>
+<li style="display: flex; align-items: center; gap: 10px; font-size: 14px; line-height: 20px"><span aria-hidden="true" style="width: 10px; height: 10px; border-radius: 3px; background: #F59E0B; flex: 0 0 auto"></span><span style="flex: 1 1 auto; min-width: 0; color: #334155">생활</span><span style="font-weight: 600; white-space: nowrap">585,168원</span><span style="width: 36px; text-align: right; font-size: 13px; color: #64748B">24%</span></li>
+<li style="display: flex; align-items: center; gap: 10px; font-size: 14px; line-height: 20px"><span aria-hidden="true" style="width: 10px; height: 10px; border-radius: 3px; background: #0F766E; flex: 0 0 auto"></span><span style="flex: 1 1 auto; min-width: 0; color: #334155">쇼핑</span><span style="font-weight: 600; white-space: nowrap">438,876원</span><span style="width: 36px; text-align: right; font-size: 13px; color: #64748B">18%</span></li>
+<li style="display: flex; align-items: center; gap: 10px; font-size: 14px; line-height: 20px"><span aria-hidden="true" style="width: 10px; height: 10px; border-radius: 3px; background: #93B4FA; flex: 0 0 auto"></span><span style="flex: 1 1 auto; min-width: 0; color: #334155">교통</span><span style="font-weight: 600; white-space: nowrap">292,584원</span><span style="width: 36px; text-align: right; font-size: 13px; color: #64748B">12%</span></li>
+<li style="display: flex; align-items: center; gap: 10px; font-size: 14px; line-height: 20px"><span aria-hidden="true" style="width: 10px; height: 10px; border-radius: 3px; background: #C2410C; flex: 0 0 auto"></span><span style="flex: 1 1 auto; min-width: 0; color: #334155">취미·여가</span><span style="font-weight: 600; white-space: nowrap">195,056원</span><span style="width: 36px; text-align: right; font-size: 13px; color: #64748B">8%</span></li>
+<li style="display: flex; align-items: center; gap: 10px; font-size: 14px; line-height: 20px"><span aria-hidden="true" style="width: 10px; height: 10px; border-radius: 3px; background: #CBD5E1; flex: 0 0 auto"></span><span style="flex: 1 1 auto; min-width: 0; color: #334155">기타</span><span style="font-weight: 600; white-space: nowrap">146,292원</span><span style="width: 36px; text-align: right; font-size: 13px; color: #64748B">6%</span></li>
+</ul>
+</section>
+
+<section style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 16px; box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.04), 0 1px 2px -1px rgba(15, 23, 42, 0.02); padding: 20px; display: flex; flex-direction: column; gap: 20px">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h2 style="margin: 0; font-size: 18px; line-height: 26px; font-weight: 600; letter-spacing: -0.01em">월별 지출 추이</h2>
+<p style="margin: 0; font-size: 13px; line-height: 18px; color: #64748B">2026년 1월 ~ 10월</p>
+</div>
+<div role="img" aria-label="2026년 1월부터 10월까지 월별 지출 막대 그래프. 10월 지출은 243만 원" style="display: flex; flex-direction: column">
+<div style="position: relative; height: 150px; margin-left: 36px; display: flex; align-items: flex-end; gap: 6px; border-bottom: 1px solid #CBD5E1">
+<div aria-hidden="true" style="position: absolute; left: 0; right: 0; top: 0; border-top: 1px dashed #E2E8F0"><span style="position: absolute; left: -36px; top: -8px; width: 30px; text-align: right; font-size: 11px; color: #64748B">300만</span></div>
+<div aria-hidden="true" style="position: absolute; left: 0; right: 0; top: 33.33%; border-top: 1px dashed #E2E8F0"><span style="position: absolute; left: -36px; top: -8px; width: 30px; text-align: right; font-size: 11px; color: #64748B">200만</span></div>
+<div aria-hidden="true" style="position: absolute; left: 0; right: 0; top: 66.67%; border-top: 1px dashed #E2E8F0"><span style="position: absolute; left: -36px; top: -8px; width: 30px; text-align: right; font-size: 11px; color: #64748B">100만</span></div>
+<span aria-hidden="true" style="position: absolute; left: -36px; bottom: -8px; width: 30px; text-align: right; font-size: 11px; color: #64748B">0</span>
+<sc-for list="{{months}}" as="m" hint-placeholder-count="10">
+<div style="position: relative; flex: 1 1 0; min-width: 0; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; gap: 4px">
+<sc-if value="{{m.current}}" hint-placeholder-val="{{false}}">
+<span style="font-size: 11px; line-height: 14px; font-weight: 700; color: #1D4ED8; white-space: nowrap">{{m.value}}</span>
+</sc-if>
+<div style="width: 70%; max-width: 20px; height: {{m.h}}; background: {{m.color}}; border-radius: 4px 4px 0 0"></div>
+</div>
+</sc-for>
+</div>
+<div aria-hidden="true" style="margin-left: 36px; display: flex; gap: 6px; padding-top: 8px">
+<sc-for list="{{months}}" as="m" hint-placeholder-count="10">
+<span style="flex: 1 1 0; min-width: 0; text-align: center; font-size: 11px; white-space: nowrap; color: {{m.labelColor}}; font-weight: {{m.labelWeight}}">{{m.label}}</span>
+</sc-for>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 4px; padding: 12px 14px; border-radius: 12px; background: #F8FAFC; border: 1px solid #E2E8F0; font-size: 13px; line-height: 20px">
+<span style="font-weight: 600">월평균 2,440,000원</span>
+<span style="color: #64748B">가장 적게 쓴 달 · 2월 2,140,000원</span>
+</div>
+</section>
+
+<section style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 16px; box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.04), 0 1px 2px -1px rgba(15, 23, 42, 0.02); padding: 20px; display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px">
+<h2 style="margin: 0; font-size: 18px; line-height: 26px; font-weight: 600; letter-spacing: -0.01em">최근 거래</h2>
+<a href="Mobile-Transactions.dc.html" style="display: inline-flex; align-items: center; gap: 4px; min-height: 44px; padding: 0 4px; font-size: 14px; font-weight: 600; white-space: nowrap">전체 보기
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg>
+</a>
+</div>
+<ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column">
+<li style="display: flex; align-items: center; gap: 12px; padding: 12px 0">
+<span aria-hidden="true" style="width: 40px; height: 40px; border-radius: 12px; background: #EFF4FF; color: #1D4ED8; display: flex; align-items: center; justify-content: center; flex: 0 0 auto"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h13v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5z"></path><path d="M17 11h1.5a2.5 2.5 0 0 1 0 5H17"></path><path d="M8 3v3M12 3v3"></path></svg></span>
+<div style="flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span style="font-size: 14px; line-height: 20px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">스타벅스 강남R점</span>
+<span style="font-size: 12px; line-height: 16px; color: #64748B; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">식비 › 카페/음료 · 10월 26일</span>
+</div>
+<span style="font-size: 14px; font-weight: 600; white-space: nowrap">−6,300원</span>
+</li>
+<li style="display: flex; align-items: center; gap: 12px; padding: 12px 0; border-top: 1px solid #F1F5F9">
+<span aria-hidden="true" style="width: 40px; height: 40px; border-radius: 12px; background: #ECFDF5; color: #047857; display: flex; align-items: center; justify-content: center; flex: 0 0 auto"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"></path><path d="M9 8h6M9 12h6"></path></svg></span>
+<div style="flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span style="font-size: 14px; line-height: 20px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">무신사 결제 취소</span>
+<span style="font-size: 12px; line-height: 16px; color: #64748B; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">쇼핑 › 의류 · 10월 26일</span>
+</div>
+<span style="font-size: 14px; font-weight: 600; white-space: nowrap; color: #047857">+59,000원</span>
+</li>
+<li style="display: flex; align-items: center; gap: 12px; padding: 12px 0; border-top: 1px solid #F1F5F9">
+<span aria-hidden="true" style="width: 40px; height: 40px; border-radius: 12px; background: #F0FDFA; color: #0F766E; display: flex; align-items: center; justify-content: center; flex: 0 0 auto"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 8h14l-1 12H6z"></path><path d="M9 8V6a3 3 0 0 1 6 0v2"></path></svg></span>
+<div style="flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span style="font-size: 14px; line-height: 20px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">쿠팡</span>
+<span style="font-size: 12px; line-height: 16px; color: #64748B; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">쇼핑 › 온라인 쇼핑 · 10월 26일</span>
+</div>
+<span style="font-size: 14px; font-weight: 600; white-space: nowrap">−38,900원</span>
+</li>
+<li style="display: flex; align-items: center; gap: 12px; padding: 12px 0; border-top: 1px solid #F1F5F9">
+<span aria-hidden="true" style="width: 40px; height: 40px; border-radius: 12px; background: #FEF3C7; color: #B45309; display: flex; align-items: center; justify-content: center; flex: 0 0 auto"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .8-1 1.7"></path><path d="M12 17h.01"></path></svg></span>
+<div style="flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 2px">
+<span style="font-size: 14px; line-height: 20px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">GS25 역삼점</span>
+<span style="display: flex; align-items: center; gap: 6px; font-size: 12px; line-height: 16px; color: #64748B; white-space: nowrap"><span style="display: inline-flex; align-items: center; height: 20px; padding: 0 8px; border-radius: 9999px; background: #FEF3C7; color: #B45309; border: 1px solid #FDE68A; font-size: 11px; font-weight: 600">미분류</span>10월 26일</span>
+</div>
+<span style="font-size: 14px; font-weight: 600; white-space: nowrap">−16,100원</span>
+</li>
+</ul>
+</section>
+
+</main>
+
+<nav aria-label="주요 메뉴" style="position: sticky; bottom: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; padding: 6px 8px 10px; background: #FFFFFF; border-top: 1px solid #E2E8F0">
+<a href="Mobile-Main.dc.html" aria-current="page" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; min-height: 56px; border-radius: 12px; color: #1D4ED8; font-size: 11px; line-height: 14px; font-weight: 600">
+<span aria-hidden="true" style="width: 56px; height: 28px; border-radius: 9999px; background: #EFF4FF; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"></rect><rect x="14" y="3" width="7" height="5" rx="1.5"></rect><rect x="14" y="12" width="7" height="9" rx="1.5"></rect><rect x="3" y="16" width="7" height="5" rx="1.5"></rect></svg></span>
+대시보드</a>
+<a href="Mobile-Transactions.dc.html" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; min-height: 56px; border-radius: 12px; color: #475569; font-size: 11px; line-height: 14px; font-weight: 500">
+<span aria-hidden="true" style="width: 56px; height: 28px; border-radius: 9999px; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h12a2 2 0 0 1 2 2v14H7a2 2 0 0 1-2-2z"></path><path d="M5 18a2 2 0 0 1 2-2h12"></path><path d="M9 8h6"></path></svg></span>
+가계부</a>
+<a href="Category.dc.html" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; min-height: 56px; border-radius: 12px; color: #475569; font-size: 11px; line-height: 14px; font-weight: 500">
+<span aria-hidden="true" style="width: 56px; height: 28px; border-radius: 9999px; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12V4a1 1 0 0 1 1-1h8l9 9-9 9z"></path><circle cx="7.5" cy="7.5" r="1.5"></circle></svg></span>
+카테고리</a>
+<a href="Upload.dc.html" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; min-height: 56px; border-radius: 12px; color: #475569; font-size: 11px; line-height: 14px; font-weight: 500">
+<span aria-hidden="true" style="width: 56px; height: 28px; border-radius: 9999px; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V4"></path><path d="m7 9 5-5 5 5"></path><path d="M4 15v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4"></path></svg></span>
+가져오기</a>
+</nav>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1720}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const monthly = [2312000, 2140000, 2568000, 2284000, 2491000, 2375000, 2683000, 2590000, 2519000, 2438200];
+    const months = monthly.map((v, i) => {
+      const current = i === monthly.length - 1;
+      return {
+        label: (i + 1) + '월',
+        value: Math.round(v / 10000) + '만',
+        h: (v / 3000000 * 100).toFixed(1) + '%',
+        current: current,
+        color: current ? '#1D4ED8' : '#7089DB',
+        labelColor: current ? '#1D4ED8' : '#64748B',
+        labelWeight: current ? '700' : '500'
+      };
+    });
+    return { months: months };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>모바일 가계부</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+KR:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F8FAFC;font-family:'Inter','Noto Sans KR',system-ui,sans-serif}
+*{box-sizing:border-box}
+button,input,select{font:inherit}
+a{color:#1D4ED8;text-decoration:none}a:hover{color:#1E40AF}
+:focus-visible{outline:3px solid rgba(29,78,216,0.35);outline-offset:2px}
+</style>
+</helmet>
+<div style="width: 390px; height: 1480px; display: flex; flex-direction: column; background: #F8FAFC; color: #0F172A; font-family: 'Inter', 'Noto Sans KR', system-ui, sans-serif; font-variant-numeric: tabular-nums; letter-spacing: -0.005em">
+
+<header style="display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 60px; padding: 8px 16px; background: #FFFFFF; border-bottom: 1px solid #E2E8F0">
+<div style="display: flex; align-items: center; gap: 10px">
+<span aria-hidden="true" style="width: 32px; height: 32px; border-radius: 10px; background: #1D4ED8; color: #FFFFFF; display: flex; align-items: center; justify-content: center; flex: 0 0 auto"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18.5 14.5A7 7 0 1 1 17 7.4"></path><path d="M18 3.5v4.2h-4.2"></path><circle cx="12" cy="12" r="2.2"></circle></svg></span>
+<span style="font-size: 16px; line-height: 22px; font-weight: 700; letter-spacing: -0.02em">루틴&amp;머니</span>
+</div>
+<button type="button" aria-label="내역 추가" style="width: 44px; height: 44px; border-radius: 10px; border: 1px solid #1D4ED8; background: #1D4ED8; color: #FFFFFF; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
+</button>
+</header>
+
+<main style="flex: 1 1 auto; min-width: 0; padding: 20px 16px 24px; display: flex; flex-direction: column; gap: 16px">
+
+<div style="display: flex; flex-direction: column; gap: 4px">
+<h1 style="margin: 0; font-size: 24px; line-height: 32px; font-weight: 700; letter-spacing: -0.02em">가계부</h1>
+<p style="margin: 0; font-size: 13px; line-height: 18px; color: #64748B">카드 명세서와 직접 입력한 내역을 날짜별로 확인하고 고쳐요.</p>
+</div>
+
+<div role="group" aria-label="조회 월" style="display: flex; align-items: center; justify-content: space-between; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 12px; padding: 1px">
+<button type="button" aria-label="이전 달" style="width: 44px; height: 44px; border: 0; background: transparent; border-radius: 10px; color: #334155; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6"></path></svg>
+</button>
+<span style="font-size: 15px; font-weight: 600; white-space: nowrap">2026년 10월</span>
+<button type="button" aria-label="다음 달" style="width: 44px; height: 44px; border: 0; background: transparent; border-radius: 10px; color: #334155; display: flex; align-items: center; justify-content: center; cursor: pointer">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"></path></svg>
+</button>
+</div>
+
+<section aria-label="이번 달 요약" style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 16px; box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.04), 0 1px 2px -1px rgba(15, 23, 42, 0.02); padding: 16px 18px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<span style="font-size: 13px; line-height: 18px; font-weight: 500; color: #64748B">지출</span>
+<span style="font-size: 24px; line-height: 32px; font-weight: 700; letter-spacing: -0.02em; white-space: nowrap">−2,438,200<span style="font-size: 16px; font-weight: 500; margin-left: 2px">원</span></span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; padding-top: 12px; border-top: 1px solid #F1F5F9">
+<div style="display: flex; flex-direction: column; gap: 2px; min-width: 0">
+<span style="font-size: 12px; line-height: 16px; color: #64748B">수입</span>
+<span style="font-size: 16px; line-height: 22px; font-weight: 700; white-space: nowrap; color: #047857">+320,000원</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 2px; min-width: 0">
+<span style="font-size: 12px; line-height: 16px; color: #64748B">합계 · 86건</span>
+<span style="font-size: 16px; line-height: 22px; font-weight: 700; white-space: nowrap">−2,118,200원</span>
+</div>
+</div>
+</section>
+
+<div style="display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: center; gap: 8px">
+<div role="group" aria-label="거래 유형" style="flex: 1 1 auto; min-width: 0; display: flex; padding: 3px; gap: 2px; background: #F1F5F9; border-radius: 10px">
+<sc-for list="{{types}}" as="t" hint-placeholder-count="3">
+<button type="button" aria-pressed="{{t.pressed}}" onClick="{{t.pick}}" style="flex: 1 1 0; min-width: 0; min-height: 38px; padding: 0 6px; border: 0; border-radius: 8px; background: {{t.bg}}; color: {{t.fg}}; font-size: 13px; font-weight: {{t.weight}}; box-shadow: {{t.shadow}}; cursor: pointer; white-space: nowrap">{{t.label}}</button>
+</sc-for>
+</div>
+<button type="button" aria-label="필터" style="width: 44px; height: 44px; border-radius: 10px; border: 1px solid #E2E8F0; background: #FFFFFF; color: #0F172A; display: flex; align-items: center; justify-content: center; cursor: pointer; flex: 0 0 auto">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"></path></svg>
+</button>
+</div>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px">
+<button type="button" aria-pressed="{{uncatPressed}}" onClick="{{toggleUncat}}" style="display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 14px; border-radius: 10px; border: 1px solid {{uncatBorder}}; background: {{uncatBg}}; color: #92400E; font-size: 13px; font-weight: 600; white-space: nowrap; cursor: pointer">
+<sc-if value="{{uncat}}" hint-placeholder-val="{{false}}"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg></sc-if>
+미분류 6건</button>
+<div role="group" aria-label="보기 방식" style="display: flex; padding: 3px; gap: 2px; background: #F1F5F9; border-radius: 10px">
+<sc-for list="{{views}}" as="v" hint-placeholder-count="2">
+<button type="button" aria-pressed="{{v.pressed}}" onClick="{{v.pick}}" style="min-height: 38px; padding: 0 14px; border: 0; border-radius: 8px; background: {{v.bg}}; color: {{v.fg}}; font-size: 13px; font-weight: {{v.weight}}; box-shadow: {{v.shadow}}; cursor: pointer; white-space: nowrap">{{v.label}}</button>
+</sc-for>
+</div>
+</div>
+</div>
+
+<sc-if value="{{isList}}" hint-placeholder-val="{{true}}">
+<div style="display: flex; flex-direction: column; gap: 16px">
+<sc-for list="{{groups}}" as="g" hint-placeholder-count="3">
+<section style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 0 4px">
+<div style="display: flex; align-items: center; gap: 8px">
+<h2 style="margin: 0; font-size: 14px; line-height: 20px; font-weight: 600; color: #334155">{{g.date}}</h2>
+<sc-if value="{{g.today}}" hint-placeholder-val="{{false}}"><span style="display: inline-flex; align-items: center; height: 20px; padding: 0 8px; border-radius: 9999px; background: #EFF4FF; color: #1D4ED8; font-size: 11px; font-weight: 600">오늘</span></sc-if>
+</div>
+<span style="font-size: 12px; color: #64748B; white-space: nowrap">{{g.total}}</span>
+</div>
+<ul style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 12px">
+<sc-for list="{{g.rows}}" as="r" hint-placeholder-count="3">
+<li style="border-top: {{r.divider}}"><button type="button" style="width: 100%; display: flex; align-items: center; gap: 12px; min-height: 64px; padding: 12px 14px; border: 0; background: transparent; text-align: left; cursor: pointer; color: inherit">
+<span aria-hidden="true" style="width: 40px; height: 40px; border-radius: 12px; background: {{r.iconBg}}; color: {{r.iconFg}}; display: flex; align-items: center; justify-content: center; flex: 0 0 auto"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="{{r.icon}}"></path></svg></span>
+<span style="flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 14px; line-height: 20px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">{{r.merchant}}</span>
+<span style="display: flex; flex-wrap: wrap; gap: 6px"><span style="display: inline-flex; align-items: center; height: 22px; padding: 0 9px; border-radius: 9999px; border: 1px solid {{r.catBorder}}; background: {{r.catBg}}; color: {{r.catFg}}; font-size: 11px; font-weight: 600; white-space: nowrap">{{r.cat}}</span><span style="display: inline-flex; align-items: center; height: 22px; padding: 0 9px; border-radius: 9999px; background: {{r.payBg}}; color: {{r.payFg}}; font-size: 11px; font-weight: 600; white-space: nowrap">{{r.pay}}</span></span>
+</span>
+<span style="font-size: 15px; font-weight: 600; white-space: nowrap; color: {{r.amountColor}}">{{r.amount}}</span>
+</button></li>
+</sc-for>
+</ul>
+</section>
+</sc-for>
+<sc-if value="{{empty}}" hint-placeholder-val="{{false}}">
+<p style="margin: 0; padding: 32px 16px; border-radius: 12px; border: 1px dashed #CBD5E1; background: #FFFFFF; text-align: center; font-size: 14px; line-height: 20px; color: #64748B">조건에 맞는 내역이 없어요</p>
+</sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{isCalendar}}" hint-placeholder-val="{{false}}">
+<section style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 16px; box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.04), 0 1px 2px -1px rgba(15, 23, 42, 0.02); padding: 16px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 2px">
+<h2 style="margin: 0; font-size: 16px; line-height: 24px; font-weight: 600">10월 달력</h2>
+<p style="margin: 0; font-size: 13px; line-height: 18px; color: #64748B">날짜를 누르면 그날 내역으로 이동해요</p>
+</div>
+<div aria-hidden="true" style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; font-size: 12px; font-weight: 600; text-align: center">
+<span style="color: #BE123C">일</span><span style="color: #64748B">월</span><span style="color: #64748B">화</span><span style="color: #64748B">수</span><span style="color: #64748B">목</span><span style="color: #64748B">금</span><span style="color: #1D4ED8">토</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px">
+<sc-for list="{{cells}}" as="c" hint-placeholder-count="35">
+<sc-if value="{{c.empty}}" hint-placeholder-val="{{false}}">
+<span aria-hidden="true"></span>
+</sc-if>
+<sc-if value="{{c.filled}}" hint-placeholder-val="{{true}}">
+<button type="button" aria-label="{{c.aria}}" onClick="{{c.pick}}" style="min-height: 52px; min-width: 0; padding: 6px 0; border: 0; border-radius: 10px; background: {{c.bg}}; box-shadow: {{c.ring}}; display: flex; flex-direction: column; align-items: center; gap: 3px; cursor: pointer; color: #0F172A">
+<span style="font-size: 13px; line-height: 16px; font-weight: {{c.weight}}; color: {{c.numColor}}">{{c.day}}</span>
+<span style="font-size: 10px; line-height: 12px; font-weight: 500; color: #334155; white-space: nowrap">{{c.amt}}</span>
+</button>
+</sc-if>
+</sc-for>
+</div>
+<div style="display: flex; align-items: center; justify-content: flex-end; gap: 6px; font-size: 12px; color: #64748B">
+<span>적게</span>
+<span aria-hidden="true" style="width: 14px; height: 14px; border-radius: 4px; background: #F1F5FF; border: 1px solid #E2E8F0"></span>
+<span aria-hidden="true" style="width: 14px; height: 14px; border-radius: 4px; background: #E0E8FF"></span>
+<span aria-hidden="true" style="width: 14px; height: 14px; border-radius: 4px; background: #C9D6FF"></span>
+<span aria-hidden="true" style="width: 14px; height: 14px; border-radius: 4px; background: #AFC2FF"></span>
+<span>많이</span>
+</div>
+</section>
+</sc-if>
+
+</main>
+
+<nav aria-label="주요 메뉴" style="position: sticky; bottom: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; padding: 6px 8px 10px; background: #FFFFFF; border-top: 1px solid #E2E8F0">
+<a href="Mobile-Main.dc.html" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; min-height: 56px; border-radius: 12px; color: #475569; font-size: 11px; line-height: 14px; font-weight: 500">
+<span aria-hidden="true" style="width: 56px; height: 28px; border-radius: 9999px; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1.5"></rect><rect x="14" y="3" width="7" height="5" rx="1.5"></rect><rect x="14" y="12" width="7" height="9" rx="1.5"></rect><rect x="3" y="16" width="7" height="5" rx="1.5"></rect></svg></span>
+대시보드</a>
+<a href="Mobile-Transactions.dc.html" aria-current="page" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; min-height: 56px; border-radius: 12px; color: #1D4ED8; font-size: 11px; line-height: 14px; font-weight: 600">
+<span aria-hidden="true" style="width: 56px; height: 28px; border-radius: 9999px; background: #EFF4FF; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h12a2 2 0 0 1 2 2v14H7a2 2 0 0 1-2-2z"></path><path d="M5 18a2 2 0 0 1 2-2h12"></path><path d="M9 8h6"></path></svg></span>
+가계부</a>
+<a href="Category.dc.html" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; min-height: 56px; border-radius: 12px; color: #475569; font-size: 11px; line-height: 14px; font-weight: 500">
+<span aria-hidden="true" style="width: 56px; height: 28px; border-radius: 9999px; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12V4a1 1 0 0 1 1-1h8l9 9-9 9z"></path><circle cx="7.5" cy="7.5" r="1.5"></circle></svg></span>
+카테고리</a>
+<a href="Upload.dc.html" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; min-height: 56px; border-radius: 12px; color: #475569; font-size: 11px; line-height: 14px; font-weight: 500">
+<span aria-hidden="true" style="width: 56px; height: 28px; border-radius: 9999px; display: flex; align-items: center; justify-content: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V4"></path><path d="m7 9 5-5 5 5"></path><path d="M4 15v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4"></path></svg></span>
+가져오기</a>
+</nav>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1480}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const s = this.state || {};
+    const type = s.type || 'all';
+    const view = s.view || 'list';
+    const uncat = s.uncat === true;
+
+    const icons = {
+      cafe: 'M4 9h13v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5z M17 11h1.5a2.5 2.5 0 0 1 0 5H17 M8 3v3 M12 3v3',
+      receipt: 'M6 3h12v18l-3-2-3 2-3-2-3 2z M9 8h6 M9 12h6',
+      bag: 'M5 8h14l-1 12H6z M9 8V6a3 3 0 0 1 6 0v2',
+      bowl: 'M3 12h18a9 9 0 0 1-18 0z M8 8c0-2 2-2 2-4 M14 8c0-2 2-2 2-4',
+      car: 'M5 10h14a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2z M6 10l2-5h8l2 5 M7 17v2 M17 17v2',
+      question: 'M3 12a9 9 0 1 0 18 0a9 9 0 1 0-18 0z M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.3-1 .8-1 1.7 M12 17h.01',
+      cart: 'M3 4h2l2.5 11h11l2-8H6.2 M7.7 19a1.3 1.3 0 1 0 2.6 0a1.3 1.3 0 1 0-2.6 0 M15.7 19a1.3 1.3 0 1 0 2.6 0a1.3 1.3 0 1 0-2.6 0',
+      film: 'M5 5h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z M7 5v14 M17 5v14 M3 12h18',
+      book: 'M4 5a2 2 0 0 1 2-2h5v17H6a2 2 0 0 0-2 1z M20 5a2 2 0 0 0-2-2h-5v17h5a2 2 0 0 1 2 1z'
+    };
+    const tones = {
+      blue: ['#EFF4FF', '#1D4ED8'],
+      green: ['#ECFDF5', '#047857'],
+      teal: ['#F0FDFA', '#0F766E'],
+      indigo: ['#EEF2FF', '#3B5BDB'],
+      amber: ['#FEF3C7', '#B45309'],
+      orange: ['#FFF7ED', '#C2410C']
+    };
+    const pays = {
+      card: ['카드', '#EFF4FF', '#1D4ED8'],
+      mixed: ['복합', '#FFF7ED', '#C2410C'],
+      point: ['포인트', '#F5F3FF', '#6D28D9']
+    };
+    const data = [
+      { date: '10월 26일 (월)', today: true, rows: [
+        ['스타벅스 강남R점', '식비 › 카페/음료', 'card', -6300, 'cafe', 'blue'],
+        ['무신사 결제 취소', '쇼핑 › 의류', 'card', 59000, 'receipt', 'green'],
+        ['쿠팡', '쇼핑 › 온라인 쇼핑', 'card', -38900, 'bag', 'teal'],
+        ['배달의민족', '식비 › 배달', 'card', -23500, 'bowl', 'blue'],
+        ['카카오T 택시', '교통 › 택시', 'card', -14200, 'car', 'indigo'],
+        ['GS25 역삼점', '미분류', 'card', -16100, 'question', 'amber']
+      ] },
+      { date: '10월 25일 (일)', today: false, rows: [
+        ['이마트 성수점', '식비 › 장보기', 'card', -54000, 'cart', 'blue'],
+        ['CGV 용산아이파크몰', '취미·여가 › 영화', 'mixed', -28000, 'film', 'orange']
+      ] },
+      { date: '10월 24일 (토)', today: false, rows: [
+        ['올리브영 강남점', '쇼핑 › 잡화', 'card', -24600, 'bag', 'teal'],
+        ['써브웨이 역삼점', '식비 › 외식', 'point', -20000, 'bowl', 'blue'],
+        ['교보문고 광화문점', '취미·여가 › 독서', 'card', -18400, 'book', 'orange']
+      ] }
+    ];
+    const won = (n) => (n < 0 ? '−' : '+') + Math.abs(n).toLocaleString('ko-KR') + '원';
+    const matches = (r) => {
+      if (type === 'expense' && r[3] > 0) return false;
+      if (type === 'income' && r[3] < 0) return false;
+      if (uncat && r[1] !== '미분류') return false;
+      return true;
+    };
+    const groups = [];
+    data.forEach((g) => {
+      const rows = g.rows.filter(matches);
+      if (rows.length === 0) return;
+      const out = rows.reduce((sum, r) => sum + (r[3] < 0 ? r[3] : 0), 0);
+      const inc = rows.reduce((sum, r) => sum + (r[3] > 0 ? r[3] : 0), 0);
+      const parts = [];
+      if (out) parts.push(won(out));
+      if (inc) parts.push(won(inc));
+      groups.push({
+        date: g.date,
+        today: g.today,
+        total: parts.join(' · '),
+        rows: rows.map((r, i) => {
+          const unclassified = r[1] === '미분류';
+          return {
+            merchant: r[0],
+            cat: r[1],
+            catBg: unclassified ? '#FEF3C7' : '#F1F5F9',
+            catFg: unclassified ? '#B45309' : '#334155',
+            catBorder: unclassified ? '#FDE68A' : 'transparent',
+            pay: pays[r[2]][0],
+            payBg: pays[r[2]][1],
+            payFg: pays[r[2]][2],
+            amount: won(r[3]),
+            amountColor: r[3] > 0 ? '#047857' : '#0F172A',
+            icon: icons[r[4]],
+            iconBg: tones[r[5]][0],
+            iconFg: tones[r[5]][1],
+            divider: i === 0 ? '0' : '1px solid #F1F5F9'
+          };
+        })
+      });
+    });
+
+    const segment = (active) => active
+      ? { bg: '#FFFFFF', fg: '#1D4ED8', weight: '600', shadow: '0 1px 2px rgba(15, 23, 42, 0.06)', pressed: 'true' }
+      : { bg: 'transparent', fg: '#475569', weight: '500', shadow: 'none', pressed: 'false' };
+    const types = [
+      { id: 'all', label: '전체 86' },
+      { id: 'expense', label: '지출 83' },
+      { id: 'income', label: '수입 3' }
+    ].map((t) => Object.assign(segment(type === t.id), { label: t.label, pick: () => this.setState({ type: t.id }) }));
+    const views = [
+      { id: 'list', label: '목록' },
+      { id: 'calendar', label: '달력' }
+    ].map((v) => Object.assign(segment(view === v.id), { label: v.label, pick: () => this.setState({ view: v.id }) }));
+
+    const daily = [62, 130, 35, 91, 180, 77, 54, 120, 88, 41, 160, 95, 66, 73, 115, 58, 210, 84, 47, 109, 71, 98, 130, 63, 82, 99];
+    const firstWeekday = 4;
+    const today = 26;
+    const cells = [];
+    for (let i = 0; i < firstWeekday; i++) cells.push({ empty: true, filled: false });
+    for (let d = 1; d <= 31; d++) {
+      const v = daily[d - 1];
+      let bg = 'transparent';
+      if (v !== undefined) bg = v < 60 ? '#F1F5FF' : v < 100 ? '#E0E8FF' : v < 150 ? '#C9D6FF' : '#AFC2FF';
+      cells.push({
+        empty: false,
+        filled: true,
+        day: d,
+        amt: v === undefined ? '' : (v >= 100 ? Math.round(v / 10) : (v / 10).toFixed(1)) + '만',
+        bg: bg,
+        numColor: d > today ? '#64748B' : '#0F172A',
+        weight: d === today ? '700' : '500',
+        ring: d === today ? 'inset 0 0 0 2px #1D4ED8' : 'none',
+        aria: v === undefined ? '10월 ' + d + '일 내역 없음' : '10월 ' + d + '일 지출 ' + (v * 1000).toLocaleString('ko-KR') + '원',
+        pick: () => this.setState({ view: 'list' })
+      });
+    }
+
+    return {
+      types: types,
+      views: views,
+      groups: groups,
+      cells: cells,
+      isList: view === 'list',
+      isCalendar: view === 'calendar',
+      empty: view === 'list' && groups.length === 0,
+      uncat: uncat,
+      uncatPressed: uncat ? 'true' : 'false',
+      uncatBg: uncat ? '#FDE68A' : '#FEF3C7',
+      uncatBorder: uncat ? '#F59E0B' : '#FDE68A',
+      toggleUncat: () => this.setState({ uncat: !uncat })
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>n빵 계산</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+KR:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#A6ABB3;font-family:'Inter','Noto Sans KR',system-ui,sans-serif}
+*{box-sizing:border-box}
+button,input,select{font:inherit}
+a{color:#1D4ED8;text-decoration:none}a:hover{color:#1E40AF}
+:focus-visible{outline:3px solid rgba(29,78,216,0.35);outline-offset:2px}
+</style>
+</helmet>
+<div style="width: 560px; height: 700px; padding: 24px; background: #A6ABB3; display: flex; align-items: center; justify-content: center; color: #0F172A; font-family: 'Inter', 'Noto Sans KR', system-ui, sans-serif; font-variant-numeric: tabular-nums; letter-spacing: -0.005em">
+<section role="dialog" aria-modal="true" aria-labelledby="nway-title" style="width: 100%; max-width: 400px; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 16px; box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.03); padding: 24px; display: flex; flex-direction: column; gap: 20px">
+
+<header style="display: flex; align-items: flex-start; justify-content: space-between; gap: 12px">
+<div style="display: flex; align-items: center; gap: 12px; min-width: 0">
+<span aria-hidden="true" style="width: 40px; height: 40px; border-radius: 12px; background: #EFF4FF; color: #1D4ED8; display: flex; align-items: center; justify-content: center; flex: 0 0 auto"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 19v-1a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v1"></path><circle cx="9" cy="7" r="3.5"></circle><path d="M22 19v-1a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></span>
+<div style="display: flex; flex-direction: column; gap: 2px; min-width: 0">
+<h2 id="nway-title" style="margin: 0; font-size: 18px; line-height: 26px; font-weight: 600; letter-spacing: -0.01em">n빵 계산</h2>
+<p style="margin: 0; font-size: 13px; line-height: 18px; color: #64748B">이마트 성수점 · 10월 25일</p>
+</div>
+</div>
+<a href="TransactionDetail.dc.html" aria-label="닫기" style="width: 44px; height: 44px; margin: -6px -8px 0 0; border-radius: 10px; color: #334155; display: flex; align-items: center; justify-content: center; flex: 0 0 auto">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg>
+</a>
+</header>
+
+<div style="display: flex; flex-direction: column; gap: 16px; padding: 16px; border-radius: 12px; background: #F8FAFC; border: 1px solid #E2E8F0">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px">
+<span style="font-size: 14px; line-height: 20px; color: #475569">전체 결제 금액</span>
+<strong style="font-size: 16px; line-height: 22px; font-weight: 700; white-space: nowrap">54,000원</strong>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px; padding-top: 16px; border-top: 1px solid #E2E8F0">
+<span id="people-label" style="font-size: 14px; line-height: 20px; font-weight: 600">나눌 인원</span>
+<div role="group" aria-labelledby="people-label" style="display: flex; align-items: center; gap: 8px">
+<button type="button" aria-label="한 명 빼기" disabled="{{atMin}}" onClick="{{dec}}" style="width: 44px; height: 44px; border-radius: 10px; border: 1px solid #CBD5E1; background: #FFFFFF; color: {{decColor}}; display: flex; align-items: center; justify-content: center; cursor: pointer; flex: 0 0 auto">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path></svg>
+</button>
+<output aria-live="polite" style="flex: 1 1 auto; min-width: 0; height: 44px; border-radius: 10px; background: #FFFFFF; border: 1px solid #E2E8F0; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 700">{{people}}명</output>
+<button type="button" aria-label="한 명 더하기" disabled="{{atMax}}" onClick="{{inc}}" style="width: 44px; height: 44px; border-radius: 10px; border: 1px solid #CBD5E1; background: #FFFFFF; color: {{incColor}}; display: flex; align-items: center; justify-content: center; cursor: pointer; flex: 0 0 auto">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>
+</button>
+</div>
+<div role="group" aria-label="자주 쓰는 인원" style="display: flex; gap: 6px">
+<sc-for list="{{quick}}" as="q" hint-placeholder-count="5">
+<button type="button" aria-pressed="{{q.pressed}}" onClick="{{q.pick}}" style="flex: 1 1 0; min-width: 0; min-height: 44px; padding: 0 4px; border-radius: 9999px; border: 1px solid {{q.border}}; background: {{q.bg}}; color: {{q.fg}}; font-size: 13px; font-weight: {{q.weight}}; cursor: pointer; white-space: nowrap">{{q.label}}</button>
+</sc-for>
+</div>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 18px 16px; border-radius: 12px; background: #EFF4FF; border: 1px solid #C7D7FE; text-align: center">
+<span style="font-size: 13px; line-height: 18px; font-weight: 600; color: #1D4ED8">내 부담 금액</span>
+<strong aria-live="polite" style="font-size: 28px; line-height: 36px; font-weight: 700; letter-spacing: -0.025em; white-space: nowrap">{{shareText}}<span style="font-size: 18px; font-weight: 500; margin-left: 2px">원</span></strong>
+<span style="font-size: 13px; line-height: 18px; color: #334155">54,000원 ÷ {{people}}명</span>
+<sc-if value="{{hasRemainder}}" hint-placeholder-val="{{false}}">
+<span style="font-size: 12px; line-height: 16px; color: #1E40AF">1원 미만은 올림해서 내 금액에 반영해요</span>
+</sc-if>
+</div>
+
+<p style="margin: 0; font-size: 13px; line-height: 20px; color: #64748B">적용하면 이 거래의 금액이 내 부담 금액으로 바뀌고, 나눠 둔 카테고리는 해제돼요.</p>
+
+<footer style="display: flex; justify-content: flex-end; gap: 8px">
+<a href="TransactionDetail.dc.html" style="display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 18px; border-radius: 10px; border: 1px solid #E2E8F0; background: #FFFFFF; color: #0F172A; font-size: 14px; font-weight: 600">취소</a>
+<a href="TransactionDetail.dc.html" style="display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 18px; border-radius: 10px; border: 1px solid #1D4ED8; background: #1D4ED8; color: #FFFFFF; font-size: 14px; font-weight: 600">이 금액 적용</a>
+</footer>
+
+</section>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":560,"height":700}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const total = 54000;
+    const people = (this.state && this.state.people) || 2;
+    const share = Math.ceil(total / people);
+    const setPeople = (n) => () => this.setState({ people: Math.min(50, Math.max(2, n)) });
+    const quick = [2, 3, 4, 5, 6].map((n) => {
+      const active = people === n;
+      return {
+        label: n + '명',
+        pressed: active ? 'true' : 'false',
+        bg: active ? '#EFF4FF' : '#FFFFFF',
+        border: active ? '#1D4ED8' : '#CBD5E1',
+        fg: active ? '#1D4ED8' : '#334155',
+        weight: active ? '600' : '500',
+        pick: setPeople(n)
+      };
+    });
+    return {
+      people: people,
+      shareText: share.toLocaleString('ko-KR'),
+      hasRemainder: total % people !== 0,
+      quick: quick,
+      atMin: people <= 2,
+      atMax: people >= 50,
+      decColor: people <= 2 ? '#94A3B8' : '#0F172A',
+      incColor: people >= 50 ? '#94A3B8' : '#0F172A',
+      dec: setPeople(people - 1),
+      inc: setPeople(people + 1)
+    };
+  }
+}
+</script>
+</body>
+</html>
