@@ -193,9 +193,3 @@ button,input,select,textarea{font:inherit}
 button{cursor:pointer}
 button:disabled{cursor:not-allowed}
 :focus-visible{outline:3px solid var(--focus-ring);outline-offset:2px}
-
-/* 아직 리디자인을 적용하지 않은 화면이 쓰는 이전 변수와 클래스. 화면을 옮길 때마다 걷어낸다. */
-:root{--ink:var(--text);--muted:var(--text-muted);--line:var(--border);--canvas:var(--ground);--purple:var(--primary);--purple-soft:var(--primary-soft);--red:var(--danger);--mint:var(--positive)}
-.page-container{width:min(1180px,100%);margin:0 auto}.page-heading{margin-bottom:24px}.page-heading h1{margin:0;font-size:24px;line-height:1.35;letter-spacing:-.03em}.page-heading p{margin:7px 0 0;color:var(--muted);font-size:14px}.podo-panel{border:1px solid var(--line);border-radius:13px;background:var(--surface);box-shadow:0 1px 2px #1b12330a}
-.page-container input:not([type=file]),.page-container select,.page-container textarea{border-color:var(--line)!important;border-radius:7px!important;background:#fff}.page-container table{border-collapse:collapse}.page-container table thead{background:#f5f4f7!important;color:#5f5b67}.page-container table th{font-size:12px;font-weight:650}.page-container table td{border-color:#ecebf0}.page-container .bg-blue-500,.page-container .bg-blue-600,.page-container .bg-green-500,.page-container .bg-black{background:var(--purple)!important}.page-container .hover\:bg-blue-600:hover,.page-container .hover\:bg-blue-700:hover,.page-container .hover\:bg-green-600:hover{background:#3e2e6d!important}.page-container .text-blue-500,.page-container .text-blue-600{color:var(--purple)!important}.page-container .ring-blue-500{--tw-ring-color:var(--purple)!important}.page-container .shadow-lg,.page-container .shadow-md,.page-container .shadow{box-shadow:0 8px 28px #25194a12!important}
-@media(max-width:560px){.page-heading h1{font-size:21px}}
