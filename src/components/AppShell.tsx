@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BookText, LayoutDashboard, Tag, Upload, type LucideIcon } from "lucide-react";
 import BrandMark from "@/components/BrandMark";
+import { ThemeSwitcher, ThemeToggleButton } from "@/components/theme/ThemeSwitcher";
 
 interface NavigationItem {
   href: string;
@@ -49,6 +50,7 @@ function Sidebar({ pathname }: { pathname: string }) {
           );
         })}
       </nav>
+      <ThemeSwitcher className="mt-auto" />
     </aside>
   );
 }
@@ -60,9 +62,12 @@ function MobileTopBar() {
         <BrandMark size="sm" />
         <span className="text-base leading-[22px] font-bold tracking-[-0.02em] text-heading">루틴&amp;머니</span>
       </Link>
-      <Link href="/upload" aria-label="명세서 가져오기" className="flex size-11 items-center justify-center rounded-[10px] border border-line-control bg-surface text-ink">
-        <Upload size={20} strokeWidth={1.8} aria-hidden="true" />
-      </Link>
+      <div className="flex items-center gap-2">
+        <ThemeToggleButton />
+        <Link href="/upload" aria-label="명세서 가져오기" className="flex size-11 items-center justify-center rounded-[10px] border border-line-control bg-surface text-ink">
+          <Upload size={20} strokeWidth={1.8} aria-hidden="true" />
+        </Link>
+      </div>
     </header>
   );
 }
