@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>현재 대시보드</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0;background:#ffffff;font-family:Arial,Helvetica,sans-serif}
+*{box-sizing:border-box}
+button,input,select{font:inherit;color:inherit}
+a{color:#364153;text-decoration:none}a:hover{color:#000000}
+</style>
+</helmet>
+<div style="display: flex; min-height: 100vh; background: #ffffff; color: #171717; font-family: Arial, Helvetica, sans-serif; line-height: 1.5">
+
+<aside style="width: 256px; flex: 0 0 256px; background: #ffffff; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1); padding: 32px 24px; display: flex; flex-direction: column">
+<h1 style="margin: 0 0 32px; font-size: 24px; line-height: 32px; font-weight: 700">💰 Routine &amp; Money</h1>
+<nav style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px">
+<a href="Current-Upload.dc.html" style="color: #364153">📤 엑셀 업로드</a>
+<a href="Current-Transactions.dc.html" style="color: #364153">📒 가계부 내역</a>
+<a href="Current-Category.dc.html" style="color: #364153">🗂️ 카테고리</a>
+<a href="Current-Dashboard.dc.html" style="color: #364153">📊 대시보드</a>
+</nav>
+</aside>
+
+<main style="flex: 1 1 auto; min-width: 0; padding: 32px">
+<div style="max-width: 1152px; margin: 0 auto; padding: 40px 24px">
+
+<div style="display: flex; gap: 16px; margin-bottom: 24px">
+<label for="cur-dash-year" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">연도</label>
+<select id="cur-dash-year" style="border: 1px solid #171717; padding: 8px 12px; border-radius: 8px; background: transparent">
+<option>2026</option>
+<option>2025</option>
+<option>2024</option>
+<option>2023</option>
+</select>
+<label for="cur-dash-month" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">월</label>
+<select id="cur-dash-month" style="border: 1px solid #171717; padding: 8px 12px; border-radius: 8px; background: transparent">
+<option>10</option>
+<option>9</option>
+<option>8</option>
+</select>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin-top: 40px">
+<section style="padding: 24px; background: #ffffff; border: 1px solid #171717; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1); border-radius: 16px; margin-bottom: 32px">
+<h2 style="margin: 0 0 16px; font-size: 20px; line-height: 28px; font-weight: 700">📅 월 요약</h2>
+<div style="font-size: 14px; line-height: 20px; display: flex; flex-direction: column; gap: 4px">
+<p style="margin: 0">지출: <span style="color: #e7000b; font-weight: 600">-2,438,200원</span></p>
+<p style="margin: 0">수입: <span style="color: #155dfc; font-weight: 600">+320,000원</span></p>
+<p style="margin: 0">순수익: <span style="color: #e7000b">-2,118,200원</span></p>
+<p style="margin: 0">거래 건수: <strong>86건</strong></p>
+<p style="margin: 0">가장 많이 사용한 카테고리: <strong>쇼핑 &gt; 온라인 쇼핑</strong>(268,876원)</p>
+</div>
+</section>
+
+<section style="padding: 24px; background: #ffffff; border: 1px solid #171717; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1); border-radius: 16px; margin-bottom: 32px">
+<h2 style="margin: 0 0 16px; font-size: 20px; line-height: 28px; font-weight: 700">🍩 카테고리별 지출</h2>
+<div style="width: 100%; height: 300px">
+<div style="width: 300px; height: 300px; display: flex; flex-direction: column; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif">
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; padding: 10px 0; font-size: 12px; line-height: 12px; color: #666666">
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 40px; height: 12px; background: #FF6384; border: 2px solid #ffffff"></span>외식</span>
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 40px; height: 12px; background: #36A2EB; border: 2px solid #ffffff"></span>카페/음료</span>
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 40px; height: 12px; background: #FFCE56; border: 2px solid #ffffff"></span>배달</span>
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 40px; height: 12px; background: #4BC0C0; border: 2px solid #ffffff"></span>장보기</span>
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 40px; height: 12px; background: #9966FF; border: 2px solid #ffffff"></span>생활용품</span>
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 40px; height: 12px; background: #FF9F40; border: 2px solid #ffffff"></span>통신비</span>
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 40px; height: 12px; background: #FF6384; border: 2px solid #ffffff"></span>공과금</span>
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 40px; height: 12px; background: #36A2EB; border: 2px solid #ffffff"></span>집 관련</span>
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 40px; height: 12px; background: #FFCE56; border: 2px solid #ffffff"></span>지하철</span>
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 40px; height: 12px; background: #4BC0C0; border: 2px solid #ffffff"></span>버스</span>
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 40px; height: 12px; background: #9966FF; border: 2px solid #ffffff"></span>택시</span>
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 40px; height: 12px; background: #FF9F40; border: 2px solid #ffffff"></span>의류</span>
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 40px; height: 12px; background: #FF6384; border: 2px solid #ffffff"></span>잡화</span>
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 40px; height: 12px; background: #36A2EB; border: 2px solid #ffffff"></span>온라인 쇼핑</span>
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 40px; height: 12px; background: #FFCE56; border: 2px solid #ffffff"></span>영화</span>
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 40px; height: 12px; background: #4BC0C0; border: 2px solid #ffffff"></span>독서</span>
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 40px; height: 12px; background: #9966FF; border: 2px solid #ffffff"></span>운동</span>
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 40px; height: 12px; background: #FF9F40; border: 2px solid #ffffff"></span>선물</span>
+<span style="display: inline-flex; align-items: center; gap: 6px"><span style="width: 40px; height: 12px; background: #FF6384; border: 2px solid #ffffff"></span>미분류</span>
+</div>
+<svg width="300" height="124" viewBox="0 0 300 124" role="img" aria-label="카테고리별 지출 파이 차트" style="display: block">
+<path d="M150 62 L150 4 A58 58 0 0 1 184.6 15.4 Z" fill="#FF6384" stroke="#ffffff" stroke-width="2"></path>
+<path d="M150 62 L184.6 15.4 A58 58 0 0 1 202.2 36.7 Z" fill="#36A2EB" stroke="#ffffff" stroke-width="2"></path>
+<path d="M150 62 L202.2 36.7 A58 58 0 0 1 208 60.3 Z" fill="#FFCE56" stroke="#ffffff" stroke-width="2"></path>
+<path d="M150 62 L208 60.3 A58 58 0 0 1 202.5 86.7 Z" fill="#4BC0C0" stroke="#ffffff" stroke-width="2"></path>
+<path d="M150 62 L202.5 86.7 A58 58 0 0 1 194.3 99.5 Z" fill="#9966FF" stroke="#ffffff" stroke-width="2"></path>
+<path d="M150 62 L194.3 99.5 A58 58 0 0 1 186.9 106.7 Z" fill="#FF9F40" stroke="#ffffff" stroke-width="2"></path>
+<path d="M150 62 L186.9 106.7 A58 58 0 0 1 158 119.4 Z" fill="#FF6384" stroke="#ffffff" stroke-width="2"></path>
+<path d="M150 62 L158 119.4 A58 58 0 0 1 128.6 115.9 Z" fill="#36A2EB" stroke="#ffffff" stroke-width="2"></path>
+<path d="M150 62 L128.6 115.9 A58 58 0 0 1 120.3 111.8 Z" fill="#FFCE56" stroke="#ffffff" stroke-width="2"></path>
+<path d="M150 62 L120.3 111.8 A58 58 0 0 1 116.5 109.4 Z" fill="#4BC0C0" stroke="#ffffff" stroke-width="2"></path>
+<path d="M150 62 L116.5 109.4 A58 58 0 0 1 97.5 86.7 Z" fill="#9966FF" stroke="#ffffff" stroke-width="2"></path>
+<path d="M150 62 L97.5 86.7 A58 58 0 0 1 92.7 70.7 Z" fill="#FF9F40" stroke="#ffffff" stroke-width="2"></path>
+<path d="M150 62 L92.7 70.7 A58 58 0 0 1 92 62.1 Z" fill="#FF6384" stroke="#ffffff" stroke-width="2"></path>
+<path d="M150 62 L92 62.1 A58 58 0 0 1 105.3 25 Z" fill="#36A2EB" stroke="#ffffff" stroke-width="2"></path>
+<path d="M150 62 L105.3 25 A58 58 0 0 1 109.7 20.3 Z" fill="#FFCE56" stroke="#ffffff" stroke-width="2"></path>
+<path d="M150 62 L109.7 20.3 A58 58 0 0 1 115.6 15.3 Z" fill="#4BC0C0" stroke="#ffffff" stroke-width="2"></path>
+<path d="M150 62 L115.6 15.3 A58 58 0 0 1 128.6 8.1 Z" fill="#9966FF" stroke="#ffffff" stroke-width="2"></path>
+<path d="M150 62 L128.6 8.1 A58 58 0 0 1 139.6 4.9 Z" fill="#FF9F40" stroke="#ffffff" stroke-width="2"></path>
+<path d="M150 62 L139.6 4.9 A58 58 0 0 1 150 4 Z" fill="#FF6384" stroke="#ffffff" stroke-width="2"></path>
+</svg>
+</div>
+</div>
+</section>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin-top: 40px">
+<section style="padding: 24px; background: #ffffff; border: 1px solid #171717; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1); border-radius: 16px; margin-bottom: 32px">
+<h2 style="margin: 0 0 16px; font-size: 20px; line-height: 28px; font-weight: 700">📈 일별 지출 그래프</h2>
+<div style="width: 100%; height: 350px">
+<svg width="100%" viewBox="0 0 476 238" role="img" aria-label="10월 일별 지출 선 그래프" style="display: block; max-width: 476px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif">
+<rect x="203" y="10" width="40" height="12" fill="rgba(255,99,132,0.3)" stroke="#FF6384" stroke-width="3"></rect>
+<text x="249" y="20" font-size="12" fill="#666666">지출</text>
+<line x1="52" y1="172" x2="462" y2="172" stroke="rgba(0,0,0,0.1)" stroke-width="1"></line>
+<text x="50" y="176" font-size="12" fill="#666666" text-anchor="end">0</text>
+<line x1="52" y1="145.2" x2="462" y2="145.2" stroke="rgba(0,0,0,0.1)" stroke-width="1"></line>
+<text x="50" y="149.2" font-size="12" fill="#666666" text-anchor="end">50,000</text>
+<line x1="52" y1="118.4" x2="462" y2="118.4" stroke="rgba(0,0,0,0.1)" stroke-width="1"></line>
+<text x="50" y="122.4" font-size="12" fill="#666666" text-anchor="end">100,000</text>
+<line x1="52" y1="91.6" x2="462" y2="91.6" stroke="rgba(0,0,0,0.1)" stroke-width="1"></line>
+<text x="50" y="95.6" font-size="12" fill="#666666" text-anchor="end">150,000</text>
+<line x1="52" y1="64.8" x2="462" y2="64.8" stroke="rgba(0,0,0,0.1)" stroke-width="1"></line>
+<text x="50" y="68.8" font-size="12" fill="#666666" text-anchor="end">200,000</text>
+<line x1="52" y1="38" x2="462" y2="38" stroke="rgba(0,0,0,0.1)" stroke-width="1"></line>
+<text x="50" y="42" font-size="12" fill="#666666" text-anchor="end">250,000</text>
+<line x1="60" y1="38" x2="60" y2="180" stroke="rgba(0,0,0,0.1)" stroke-width="1"></line>
+<text x="60" y="186" font-size="12" fill="#666666" text-anchor="end" transform="rotate(-50 60 186)">2026-10-01</text>
+<line x1="76.1" y1="38" x2="76.1" y2="180" stroke="rgba(0,0,0,0.1)" stroke-width="1"></line>
+<line x1="92.2" y1="38" x2="92.2" y2="180" stroke="rgba(0,0,0,0.1)" stroke-width="1"></line>
+<text x="92.2" y="186" font-size="12" fill="#666666" text-anchor="end" transform="rotate(-50 92.2 186)">2026-10-03</text>
+<line x1="108.2" y1="38" x2="108.2" y2="180" stroke="rgba(0,0,0,0.1)" stroke-width="1"></line>
+<line x1="124.3" y1="38" x2="124.3" y2="180" stroke="rgba(0,0,0,0.1)" stroke-width="1"></line>
+<text x="124.3" y="186" font-size="12" fill="#666666" text-anchor="end" transform="rotate(-50 124.3 186)">2026-10-05</text>
+<line x1="140.4" y1="38" x2="140.4" y2="180" stroke="rgba(0,0,0,0.1)" stroke-width="1"></line>
+<line x1="156.5" y1="38" x2="156.5" y2="180" stroke="rgba(0,0,0,0.1)" stroke-width="1"></line>
+<text x="156.5" y="186" font-size="12" fill="#666666" text-anchor="end" transform="rotate(-50 156.5 186)">2026-10-07</text>
+<line x1="172.6" y1="38" x2="172.6" y2="180" stroke="rgba(0,0,0,0.1)" stroke-width="1"></line>
+<line x1="188.6" y1="38" x2="188.6" y2="180" stroke="rgba(0,0,0,0.1)" stroke-width="1"></line>
+<text x="188.6" y="186" font-size="12" fill="#666666" text-anchor="end" transform="rotate(-50 188.6 186)">2026-10-09</text>
+<line x1="204.7" y1="38" x2="204.7" y2="180" stroke="rgba(0,0,0,0.1)" stroke-width="1"></line>
+<line x1="220.8" y1="38" x2="220.8" y2="180" stroke="rgba(0,0,0,0.1)" stroke-width="1"></line>
+<text x="220.8" y="186" font-size="12" fill="#666666" text-anchor="end" transform="rotate(-50 220.8 186)">2026-10-11</text>
+<line x1="236.9" y1="38" x2="236.9" y2="180" stroke="rgba(0,0,0,0.1)" stroke-width="1"></line>
+<line x1="253" y1="38" x2="253" y2="180" stroke="rgba(0,0,0,0.1)" stroke-width="1"></line>
+<text x="253" y="186" font-size="12" fill="#666666" text-anchor="end" transform="rotate(-50 253 186)">2026-10-13</text>
+<line x1="269" y1="38" x2="269" y2="180" stroke="rgba(0,0,0,0.1)" stroke-width="1"></line>
+<line x1="285.1" y1="38" x2="285.1" y2="180" stroke="rgba(0,0,0,0.1)" stroke-width="1"></line>
+<text x="285.1" y="186" font-size="12" fill="#666666" text-anchor="end" transform="rotate(-50 285.1 186)">2026-10-15</text>
+<line x1="301.2" y1="38" x2="301.2" y2="180" stroke="rgba(0,0,0,0.1)" stroke-width="1"></line>
+<line x1="317.3" y1="38" x2="317.3" y2="180" stroke="rgba(0,0,0,0.1)" stroke-width="1"></line>
+<text x="317.3" y="186" font-size="12" fill="#666666" text-anchor="end" transform="rotate(-50 317.3 186)">2026-10-17</text>
+<line x1="333.4" y1="38" x2="333.4" y2="180" stroke="rgba(0,0,0,0.1)" stroke-width="1"></line>
+<line x1="349.4" y1="38" x2="349.4" y2="180" stroke="rgba(0,0,0,0.1)" stroke-width="1"></line>
+<text x="349.4" y="186" font-size="12" fill="#666666" text-anchor="end" transform="rotate(-50 349.4 186)">2026-10-19</text>
+<line x1="365.5" y1="38" x2="365.5" y2="180" stroke="rgba(0,0,0,0.1)" stroke-width="1"></line>
+<line x1="381.6" y1="38" x2="381.6" y2="180" stroke="rgba(0,0,0,0.1)" stroke-width="1"></line>
+<text x="381.6" y="186" font-size="12" fill="#666666" text-anchor="end" transform="rotate(-50 381.6 186)">2026-10-21</text>
+<line x1="397.7" y1="38" x2="397.7" y2="180" stroke="rgba(0,0,0,0.1)" stroke-width="1"></line>
+<line x1="413.8" y1="38" x2="413.8" y2="180" stroke="rgba(0,0,0,0.1)" stroke-width="1"></line>
+<text x="413.8" y="186" font-size="12" fill="#666666" text-anchor="end" transform="rotate(-50 413.8 186)">2026-10-23</text>
+<line x1="429.8" y1="38" x2="429.8" y2="180" stroke="rgba(0,0,0,0.1)" stroke-width="1"></line>
+<line x1="445.9" y1="38" x2="445.9" y2="180" stroke="rgba(0,0,0,0.1)" stroke-width="1"></line>
+<text x="445.9" y="186" font-size="12" fill="#666666" text-anchor="end" transform="rotate(-50 445.9 186)">2026-10-25</text>
+<line x1="462" y1="38" x2="462" y2="180" stroke="rgba(0,0,0,0.1)" stroke-width="1"></line>
+<path d="M60 138.8 C63.2 131.5 73.3 101.1 76.1 102.3 C79.8 104 88.2 150.7 92.2 153.2 C94.7 154.9 105.6 129.5 108.2 123.2 C112.1 114 121.3 74.8 124.3 75.5 C127.7 76.3 135.6 120.7 140.4 130.7 C142.1 134.2 154.3 144.6 156.5 143.1 C160.7 140 168.6 110 172.6 107.7 C175 106.3 185.8 121.1 188.6 124.8 C192.2 129.6 202.7 152.4 204.7 150 C209.1 144.7 216.7 89.9 220.8 86.2 C223.2 84.1 232.8 114.7 236.9 121.1 C239.2 124.8 249.3 135.3 253 136.6 C255.7 137.6 266.6 134.8 269 132.9 C273.1 129.6 282.3 109.6 285.1 110.4 C288.7 111.3 299.3 143.9 301.2 140.9 C305.7 133.7 313.8 61 317.3 59.4 C320.2 58.2 328.7 114.2 333.4 127 C335.1 131.7 346.8 147.9 349.4 146.8 C353.2 145.2 361.7 115.1 365.5 113.6 C368.2 112.5 378.1 133.3 381.6 133.9 C384.5 134.5 394.6 122.5 397.7 119.5 C401 116.2 411.4 100.9 413.8 102.3 C417.8 104.7 425.5 134.8 429.8 138.2 C431.9 139.9 442.7 130 445.9 128 C449.1 126.1 458.8 120.8 462 118.9" fill="none" stroke="#FF6384" stroke-width="3"></path>
+<circle cx="60" cy="138.8" r="3" fill="rgba(255,99,132,0.3)" stroke="#FF6384" stroke-width="1"></circle>
+<circle cx="76.1" cy="102.3" r="3" fill="rgba(255,99,132,0.3)" stroke="#FF6384" stroke-width="1"></circle>
+<circle cx="92.2" cy="153.2" r="3" fill="rgba(255,99,132,0.3)" stroke="#FF6384" stroke-width="1"></circle>
+<circle cx="108.2" cy="123.2" r="3" fill="rgba(255,99,132,0.3)" stroke="#FF6384" stroke-width="1"></circle>
+<circle cx="124.3" cy="75.5" r="3" fill="rgba(255,99,132,0.3)" stroke="#FF6384" stroke-width="1"></circle>
+<circle cx="140.4" cy="130.7" r="3" fill="rgba(255,99,132,0.3)" stroke="#FF6384" stroke-width="1"></circle>
+<circle cx="156.5" cy="143.1" r="3" fill="rgba(255,99,132,0.3)" stroke="#FF6384" stroke-width="1"></circle>
+<circle cx="172.6" cy="107.7" r="3" fill="rgba(255,99,132,0.3)" stroke="#FF6384" stroke-width="1"></circle>
+<circle cx="188.6" cy="124.8" r="3" fill="rgba(255,99,132,0.3)" stroke="#FF6384" stroke-width="1"></circle>
+<circle cx="204.7" cy="150" r="3" fill="rgba(255,99,132,0.3)" stroke="#FF6384" stroke-width="1"></circle>
+<circle cx="220.8" cy="86.2" r="3" fill="rgba(255,99,132,0.3)" stroke="#FF6384" stroke-width="1"></circle>
+<circle cx="236.9" cy="121.1" r="3" fill="rgba(255,99,132,0.3)" stroke="#FF6384" stroke-width="1"></circle>
+<circle cx="253" cy="136.6" r="3" fill="rgba(255,99,132,0.3)" stroke="#FF6384" stroke-width="1"></circle>
+<circle cx="269" cy="132.9" r="3" fill="rgba(255,99,132,0.3)" stroke="#FF6384" stroke-width="1"></circle>
+<circle cx="285.1" cy="110.4" r="3" fill="rgba(255,99,132,0.3)" stroke="#FF6384" stroke-width="1"></circle>
+<circle cx="301.2" cy="140.9" r="3" fill="rgba(255,99,132,0.3)" stroke="#FF6384" stroke-width="1"></circle>
+<circle cx="317.3" cy="59.4" r="3" fill="rgba(255,99,132,0.3)" stroke="#FF6384" stroke-width="1"></circle>
+<circle cx="333.4" cy="127" r="3" fill="rgba(255,99,132,0.3)" stroke="#FF6384" stroke-width="1"></circle>
+<circle cx="349.4" cy="146.8" r="3" fill="rgba(255,99,132,0.3)" stroke="#FF6384" stroke-width="1"></circle>
+<circle cx="365.5" cy="113.6" r="3" fill="rgba(255,99,132,0.3)" stroke="#FF6384" stroke-width="1"></circle>
+<circle cx="381.6" cy="133.9" r="3" fill="rgba(255,99,132,0.3)" stroke="#FF6384" stroke-width="1"></circle>
+<circle cx="397.7" cy="119.5" r="3" fill="rgba(255,99,132,0.3)" stroke="#FF6384" stroke-width="1"></circle>
+<circle cx="413.8" cy="102.3" r="3" fill="rgba(255,99,132,0.3)" stroke="#FF6384" stroke-width="1"></circle>
+<circle cx="429.8" cy="138.2" r="3" fill="rgba(255,99,132,0.3)" stroke="#FF6384" stroke-width="1"></circle>
+<circle cx="445.9" cy="128" r="3" fill="rgba(255,99,132,0.3)" stroke="#FF6384" stroke-width="1"></circle>
+<circle cx="462" cy="118.9" r="3" fill="rgba(255,99,132,0.3)" stroke="#FF6384" stroke-width="1"></circle>
+</svg>
+</div>
+</section>
+
+<section style="padding: 24px; background: #ffffff; border: 1px solid #171717; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1); border-radius: 16px; margin-bottom: 32px">
+<h2 style="margin: 0 0 16px; font-size: 20px; line-height: 28px; font-weight: 700">📊 월별 지출 추이 (연 기준)</h2>
+<div style="width: 100%; height: 350px">
+<svg width="100%" viewBox="0 0 476 238" role="img" aria-label="2026년 월별 지출 선 그래프" style="display: block; max-width: 476px; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif">
+<rect x="185" y="10" width="40" height="12" fill="rgba(54,162,235,0.3)" stroke="#36A2EB" stroke-width="3"></rect>
+<text x="231" y="20" font-size="12" fill="#666666">월별 지출</text>
+<line x1="64" y1="210" x2="466" y2="210" stroke="rgba(0,0,0,0.1)" stroke-width="1"></line>
+<text x="62" y="214" font-size="12" fill="#666666" text-anchor="end">0</text>
+<line x1="64" y1="181.3" x2="466" y2="181.3" stroke="rgba(0,0,0,0.1)" stroke-width="1"></line>
+<text x="62" y="185.3" font-size="12" fill="#666666" text-anchor="end">500,000</text>
+<line x1="64" y1="152.7" x2="466" y2="152.7" stroke="rgba(0,0,0,0.1)" stroke-width="1"></line>
+<text x="62" y="156.7" font-size="12" fill="#666666" text-anchor="end">1,000,000</text>
+<line x1="64" y1="124" x2="466" y2="124" stroke="rgba(0,0,0,0.1)" stroke-width="1"></line>
+<text x="62" y="128" font-size="12" fill="#666666" text-anchor="end">1,500,000</text>
+<line x1="64" y1="95.3" x2="466" y2="95.3" stroke="rgba(0,0,0,0.1)" stroke-width="1"></line>
+<text x="62" y="99.3" font-size="12" fill="#666666" text-anchor="end">2,000,000</text>
+<line x1="64" y1="66.7" x2="466" y2="66.7" stroke="rgba(0,0,0,0.1)" stroke-width="1"></line>
+<text x="62" y="70.7" font-size="12" fill="#666666" text-anchor="end">2,500,000</text>
+<line x1="64" y1="38" x2="466" y2="38" stroke="rgba(0,0,0,0.1)" stroke-width="1"></line>
+<text x="62" y="42" font-size="12" fill="#666666" text-anchor="end">3,000,000</text>
+<line x1="72" y1="38" x2="72" y2="218" stroke="rgba(0,0,0,0.1)" stroke-width="1"></line>
+<text x="72" y="232" font-size="12" fill="#666666" text-anchor="middle">1월</text>
+<line x1="107.8" y1="38" x2="107.8" y2="218" stroke="rgba(0,0,0,0.1)" stroke-width="1"></line>
+<text x="107.8" y="232" font-size="12" fill="#666666" text-anchor="middle">2월</text>
+<line x1="143.6" y1="38" x2="143.6" y2="218" stroke="rgba(0,0,0,0.1)" stroke-width="1"></line>
+<text x="143.6" y="232" font-size="12" fill="#666666" text-anchor="middle">3월</text>
+<line x1="179.5" y1="38" x2="179.5" y2="218" stroke="rgba(0,0,0,0.1)" stroke-width="1"></line>
+<text x="179.5" y="232" font-size="12" fill="#666666" text-anchor="middle">4월</text>
+<line x1="215.3" y1="38" x2="215.3" y2="218" stroke="rgba(0,0,0,0.1)" stroke-width="1"></line>
+<text x="215.3" y="232" font-size="12" fill="#666666" text-anchor="middle">5월</text>
+<line x1="251.1" y1="38" x2="251.1" y2="218" stroke="rgba(0,0,0,0.1)" stroke-width="1"></line>
+<text x="251.1" y="232" font-size="12" fill="#666666" text-anchor="middle">6월</text>
+<line x1="286.9" y1="38" x2="286.9" y2="218" stroke="rgba(0,0,0,0.1)" stroke-width="1"></line>
+<text x="286.9" y="232" font-size="12" fill="#666666" text-anchor="middle">7월</text>
+<line x1="322.7" y1="38" x2="322.7" y2="218" stroke="rgba(0,0,0,0.1)" stroke-width="1"></line>
+<text x="322.7" y="232" font-size="12" fill="#666666" text-anchor="middle">8월</text>
+<line x1="358.5" y1="38" x2="358.5" y2="218" stroke="rgba(0,0,0,0.1)" stroke-width="1"></line>
+<text x="358.5" y="232" font-size="12" fill="#666666" text-anchor="middle">9월</text>
+<line x1="394.4" y1="38" x2="394.4" y2="218" stroke="rgba(0,0,0,0.1)" stroke-width="1"></line>
+<text x="394.4" y="232" font-size="12" fill="#666666" text-anchor="middle">10월</text>
+<line x1="430.2" y1="38" x2="430.2" y2="218" stroke="rgba(0,0,0,0.1)" stroke-width="1"></line>
+<text x="430.2" y="232" font-size="12" fill="#666666" text-anchor="middle">11월</text>
+<line x1="466" y1="38" x2="466" y2="218" stroke="rgba(0,0,0,0.1)" stroke-width="1"></line>
+<text x="466" y="232" font-size="12" fill="#666666" text-anchor="middle">12월</text>
+<path d="M72 77.4 C81 79.9 99.6 89 107.8 87.3 C117.5 85.3 134.2 63.9 143.6 62.8 C152.2 61.8 170.3 78.5 179.5 79.1 C188.2 79.6 206.2 67.8 215.3 67.2 C224.1 66.5 242.5 75.1 251.1 73.8 C260.5 72.4 277.5 57.8 286.9 56.2 C295.4 54.7 313.8 60.3 322.7 61.5 C331.7 62.7 349.6 64.5 358.5 65.6 C367.5 66.7 390.8 63 394.4 70.2 C408.7 99.1 415.8 182 430.2 210 C433.7 210 457 210 466 210" fill="none" stroke="#36A2EB" stroke-width="3"></path>
+<circle cx="72" cy="77.4" r="3" fill="rgba(54,162,235,0.3)" stroke="#36A2EB" stroke-width="1"></circle>
+<circle cx="107.8" cy="87.3" r="3" fill="rgba(54,162,235,0.3)" stroke="#36A2EB" stroke-width="1"></circle>
+<circle cx="143.6" cy="62.8" r="3" fill="rgba(54,162,235,0.3)" stroke="#36A2EB" stroke-width="1"></circle>
+<circle cx="179.5" cy="79.1" r="3" fill="rgba(54,162,235,0.3)" stroke="#36A2EB" stroke-width="1"></circle>
+<circle cx="215.3" cy="67.2" r="3" fill="rgba(54,162,235,0.3)" stroke="#36A2EB" stroke-width="1"></circle>
+<circle cx="251.1" cy="73.8" r="3" fill="rgba(54,162,235,0.3)" stroke="#36A2EB" stroke-width="1"></circle>
+<circle cx="286.9" cy="56.2" r="3" fill="rgba(54,162,235,0.3)" stroke="#36A2EB" stroke-width="1"></circle>
+<circle cx="322.7" cy="61.5" r="3" fill="rgba(54,162,235,0.3)" stroke="#36A2EB" stroke-width="1"></circle>
+<circle cx="358.5" cy="65.6" r="3" fill="rgba(54,162,235,0.3)" stroke="#36A2EB" stroke-width="1"></circle>
+<circle cx="394.4" cy="70.2" r="3" fill="rgba(54,162,235,0.3)" stroke="#36A2EB" stroke-width="1"></circle>
+<circle cx="430.2" cy="210" r="3" fill="rgba(54,162,235,0.3)" stroke="#36A2EB" stroke-width="1"></circle>
+<circle cx="466" cy="210" r="3" fill="rgba(54,162,235,0.3)" stroke="#36A2EB" stroke-width="1"></circle>
+</svg>
+</div>
+</section>
+</div>
+
+</div>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1200}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

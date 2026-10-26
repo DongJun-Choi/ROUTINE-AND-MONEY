@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>현재 가계부</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+body{margin:0;background:#ffffff;font-family:Arial,Helvetica,sans-serif}
+*{box-sizing:border-box}
+button,input,select{font:inherit;color:inherit}
+a{color:#364153;text-decoration:none}a:hover{color:#000000}
+</style>
+</helmet>
+<div style="position: relative; display: flex; min-height: 100vh; background: #ffffff; color: #171717; font-family: Arial, Helvetica, sans-serif; line-height: 1.5">
+
+<aside style="width: 256px; flex: 0 0 256px; background: #ffffff; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1); padding: 32px 24px; display: flex; flex-direction: column">
+<h1 style="margin: 0 0 32px; font-size: 24px; line-height: 32px; font-weight: 700">💰 Routine &amp; Money</h1>
+<nav style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 24px">
+<a href="Current-Upload.dc.html" style="color: #364153">📤 엑셀 업로드</a>
+<a href="Current-Transactions.dc.html" style="color: #364153">📒 가계부 내역</a>
+<a href="Current-Category.dc.html" style="color: #364153">🗂️ 카테고리</a>
+<a href="Current-Dashboard.dc.html" style="color: #364153">📊 대시보드</a>
+</nav>
+</aside>
+
+<main style="flex: 1 1 auto; min-width: 0; padding: 32px">
+<div style="max-width: 768px; margin: 0 auto; padding: 0 16px 80px">
+
+<h1 style="margin: 0 0 8px; font-size: 24px; line-height: 32px; font-weight: 700">📒 가계부</h1>
+
+<div style="display: flex; align-items: center; justify-content: space-between; margin: 16px 0">
+<button type="button" aria-label="이전 달" style="padding: 4px 12px; border: 0; border-radius: 8px; background: #f3f4f6">◀</button>
+<h2 style="margin: 0; font-size: 20px; line-height: 28px; font-weight: 700">2026년 10월</h2>
+<div style="display: flex; align-items: center; gap: 8px">
+<button type="button" aria-label="다음 달" style="padding: 4px 12px; border: 0; border-radius: 8px; background: #f3f4f6">▶</button>
+<button type="button" aria-label="오늘로 이동" style="padding: 4px 8px; border: 0; border-radius: 8px; background: #f3f4f6; font-size: 14px; line-height: 20px">⟳</button>
+</div>
+</div>
+
+<div>
+<div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); text-align: center; color: #4a5565; margin-bottom: 8px; font-weight: 600">
+<div>일</div><div>월</div><div>화</div><div>수</div><div>목</div><div>금</div><div>토</div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 8px">
+<sc-for list="{{cells}}" as="c" hint-placeholder-count="35">
+<div style="min-height: 80px; border: 1px solid #171717; border-radius: 8px; padding: 8px; display: flex; flex-direction: column; background: {{c.bg}}; box-shadow: {{c.ring}}">
+<div style="font-size: 14px; line-height: 20px; font-weight: 700; color: #1e2939">{{c.day}}</div>
+<sc-if value="{{c.hasExpense}}" hint-placeholder-val="{{true}}">
+<div style="font-size: 12px; line-height: 16px; color: #e7000b; font-weight: 600; margin-top: auto">{{c.expense}}</div>
+</sc-if>
+<sc-if value="{{c.hasIncome}}" hint-placeholder-val="{{false}}">
+<div style="font-size: 12px; line-height: 16px; color: #155dfc; font-weight: 600">{{c.income}}</div>
+</sc-if>
+</div>
+</sc-for>
+</div>
+</div>
+
+<div style="margin: 24px 0 32px; padding: 20px; border-radius: 16px; background: #f9fafb; border: 1px solid #171717; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1)">
+<div style="font-size: 18px; line-height: 28px; font-weight: 600; margin-bottom: 8px">📊 이번 달 요약</div>
+<div style="display: flex; flex-direction: column; gap: 4px; font-size: 14px; line-height: 20px">
+<span style="color: #e7000b; font-weight: 600">지출: -2,438,200원</span>
+<span style="color: #155dfc; font-weight: 600">수입: +320,000원</span>
+<span style="margin-top: 8px; font-weight: 700; color: #e7000b">합계: -2,118,200원</span>
+</div>
+</div>
+
+<div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px">
+<div style="display: flex; gap: 12px">
+<label for="cur-tx-year" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">연도</label>
+<select id="cur-tx-year" style="border: 1px solid #171717; padding: 8px 12px; border-radius: 8px; background: #ffffff; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1)">
+<option>2026</option>
+<option>2025</option>
+</select>
+<label for="cur-tx-month" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">월</label>
+<select id="cur-tx-month" style="border: 1px solid #171717; padding: 8px 12px; border-radius: 8px; background: #ffffff; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1)">
+<option>10</option>
+<option>09</option>
+</select>
+<button type="button" style="background: #2b7fff; color: #ffffff; padding: 8px 16px; border: 0; border-radius: 8px; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1)">조회</button>
+</div>
+<button type="button" style="background: #00c950; color: #ffffff; padding: 8px 16px; border: 0; border-radius: 8px; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1)">+ 내역 추가</button>
+</div>
+
+<div style="overflow-y: scroll; max-height: 520px; padding-right: 4px; display: flex; flex-direction: column; gap: 24px">
+
+<div>
+<div style="color: #6a7282; font-weight: 600; margin-bottom: 8px">10월 26일 (월)</div>
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div style="background: #ffffff; border-radius: 12px; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1); padding: 16px; border: 1px solid #171717; display: flex; align-items: center; justify-content: space-between">
+<div><div style="color: #101828; font-weight: 500">스타벅스 강남R점</div><div style="margin-top: 4px"><span style="font-size: 12px; line-height: 16px; padding: 4px 8px; border-radius: 4px; background: #ffe2e2; color: #e7000b">카페/음료</span></div></div>
+<div style="text-align: right"><div style="font-weight: 700; font-size: 18px; line-height: 28px; color: #e7000b">-6,300원</div><span style="font-size: 12px; line-height: 16px; padding: 4px 8px; border-radius: 9999px; background: #dbeafe; color: #155dfc">CARD</span></div>
+</div>
+<div style="background: #ffffff; border-radius: 12px; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1); padding: 16px; border: 1px solid #171717; display: flex; align-items: center; justify-content: space-between">
+<div><div style="color: #101828; font-weight: 500">무신사 결제 취소</div><div style="margin-top: 4px"><span style="font-size: 12px; line-height: 16px; padding: 4px 8px; border-radius: 4px; background: #fce7f3; color: #e60076">의류</span></div></div>
+<div style="text-align: right"><div style="font-weight: 700; font-size: 18px; line-height: 28px; color: #155dfc">+59,000원</div><span style="font-size: 12px; line-height: 16px; padding: 4px 8px; border-radius: 9999px; background: #dbeafe; color: #155dfc">CARD</span></div>
+</div>
+<div style="background: #ffffff; border-radius: 12px; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1); padding: 16px; border: 1px solid #171717; display: flex; align-items: center; justify-content: space-between">
+<div><div style="color: #101828; font-weight: 500">쿠팡</div><div style="margin-top: 4px"><span style="font-size: 12px; line-height: 16px; padding: 4px 8px; border-radius: 4px; background: #fce7f3; color: #e60076">온라인 쇼핑</span></div></div>
+<div style="text-align: right"><div style="font-weight: 700; font-size: 18px; line-height: 28px; color: #e7000b">-38,900원</div><span style="font-size: 12px; line-height: 16px; padding: 4px 8px; border-radius: 9999px; background: #dbeafe; color: #155dfc">CARD</span></div>
+</div>
+<div style="background: #ffffff; border-radius: 12px; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1); padding: 16px; border: 1px solid #171717; display: flex; align-items: center; justify-content: space-between">
+<div><div style="color: #101828; font-weight: 500">배달의민족</div><div style="margin-top: 4px"><span style="font-size: 12px; line-height: 16px; padding: 4px 8px; border-radius: 4px; background: #ffe2e2; color: #e7000b">배달</span></div></div>
+<div style="text-align: right"><div style="font-weight: 700; font-size: 18px; line-height: 28px; color: #e7000b">-23,500원</div><span style="font-size: 12px; line-height: 16px; padding: 4px 8px; border-radius: 9999px; background: #dbeafe; color: #155dfc">CARD</span></div>
+</div>
+<div style="background: #ffffff; border-radius: 12px; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1); padding: 16px; border: 1px solid #171717; display: flex; align-items: center; justify-content: space-between">
+<div><div style="color: #101828; font-weight: 500">카카오T 택시</div><div style="margin-top: 4px"><span style="font-size: 12px; line-height: 16px; padding: 4px 8px; border-radius: 4px; background: #dbeafe; color: #155dfc">택시</span></div></div>
+<div style="text-align: right"><div style="font-weight: 700; font-size: 18px; line-height: 28px; color: #e7000b">-14,200원</div><span style="font-size: 12px; line-height: 16px; padding: 4px 8px; border-radius: 9999px; background: #dbeafe; color: #155dfc">CARD</span></div>
+</div>
+<div style="background: #ffffff; border-radius: 12px; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1); padding: 16px; border: 1px solid #171717; display: flex; align-items: center; justify-content: space-between">
+<div><div style="color: #101828; font-weight: 500">GS25 역삼점</div><div style="margin-top: 4px"><span style="font-size: 12px; line-height: 16px; padding: 4px 8px; border-radius: 4px; background: #f3f4f6; color: #6a7282">미분류</span></div></div>
+<div style="text-align: right"><div style="font-weight: 700; font-size: 18px; line-height: 28px; color: #e7000b">-16,100원</div><span style="font-size: 12px; line-height: 16px; padding: 4px 8px; border-radius: 9999px; background: #dbeafe; color: #155dfc">CARD</span></div>
+</div>
+</div>
+</div>
+
+<div>
+<div style="color: #6a7282; font-weight: 600; margin-bottom: 8px">10월 25일 (일)</div>
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div style="background: #ffffff; border-radius: 12px; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1); padding: 16px; border: 1px solid #171717; display: flex; align-items: center; justify-content: space-between">
+<div><div style="color: #101828; font-weight: 500">이마트 성수점</div><div style="margin-top: 4px"><span style="font-size: 12px; line-height: 16px; padding: 4px 8px; border-radius: 4px; background: #ffe2e2; color: #e7000b">장보기</span></div></div>
+<div style="text-align: right"><div style="font-weight: 700; font-size: 18px; line-height: 28px; color: #e7000b">-54,000원</div><span style="font-size: 12px; line-height: 16px; padding: 4px 8px; border-radius: 9999px; background: #dbeafe; color: #155dfc">CARD</span></div>
+</div>
+<div style="background: #ffffff; border-radius: 12px; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1); padding: 16px; border: 1px solid #171717; display: flex; align-items: center; justify-content: space-between">
+<div><div style="color: #101828; font-weight: 500">CGV 용산아이파크몰</div><div style="margin-top: 4px"><span style="font-size: 12px; line-height: 16px; padding: 4px 8px; border-radius: 4px; background: #ffedd4; color: #f54900">영화</span></div></div>
+<div style="text-align: right"><div style="font-weight: 700; font-size: 18px; line-height: 28px; color: #e7000b">-28,000원</div><span style="font-size: 12px; line-height: 16px; padding: 4px 8px; border-radius: 9999px; background: #ffedd4; color: #f54900">MIXED</span></div>
+</div>
+</div>
+</div>
+
+<div>
+<div style="color: #6a7282; font-weight: 600; margin-bottom: 8px">10월 24일 (토)</div>
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div style="background: #ffffff; border-radius: 12px; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1); padding: 16px; border: 1px solid #171717; display: flex; align-items: center; justify-content: space-between">
+<div><div style="color: #101828; font-weight: 500">올리브영 강남점</div><div style="margin-top: 4px"><span style="font-size: 12px; line-height: 16px; padding: 4px 8px; border-radius: 4px; background: #fce7f3; color: #e60076">잡화</span></div></div>
+<div style="text-align: right"><div style="font-weight: 700; font-size: 18px; line-height: 28px; color: #e7000b">-24,600원</div><span style="font-size: 12px; line-height: 16px; padding: 4px 8px; border-radius: 9999px; background: #dbeafe; color: #155dfc">CARD</span></div>
+</div>
+<div style="background: #ffffff; border-radius: 12px; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1); padding: 16px; border: 1px solid #171717; display: flex; align-items: center; justify-content: space-between">
+<div><div style="color: #101828; font-weight: 500">써브웨이 역삼점</div><div style="margin-top: 4px"><span style="font-size: 12px; line-height: 16px; padding: 4px 8px; border-radius: 4px; background: #ffe2e2; color: #e7000b">외식</span></div></div>
+<div style="text-align: right"><div style="font-weight: 700; font-size: 18px; line-height: 28px; color: #e7000b">-20,000원</div><span style="font-size: 12px; line-height: 16px; padding: 4px 8px; border-radius: 9999px; background: #f3e8ff; color: #9810fa">POINT</span></div>
+</div>
+<div style="background: #ffffff; border-radius: 12px; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1); padding: 16px; border: 1px solid #171717; display: flex; align-items: center; justify-content: space-between">
+<div><div style="color: #101828; font-weight: 500">교보문고 광화문점</div><div style="margin-top: 4px"><span style="font-size: 12px; line-height: 16px; padding: 4px 8px; border-radius: 4px; background: #ffedd4; color: #f54900">독서</span></div></div>
+<div style="text-align: right"><div style="font-weight: 700; font-size: 18px; line-height: 28px; color: #e7000b">-18,400원</div><span style="font-size: 12px; line-height: 16px; padding: 4px 8px; border-radius: 9999px; background: #dbeafe; color: #155dfc">CARD</span></div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+</main>
+
+<div style="position: absolute; right: 24px; top: 128px; width: 256px; background: #ffffff; border-radius: 12px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1); border: 1px solid #171717; padding: 16px">
+<h2 style="margin: 0 0 16px; font-size: 18px; line-height: 28px; font-weight: 600">🔎 필터</h2>
+<div style="margin-bottom: 16px">
+<div style="font-size: 14px; line-height: 20px; font-weight: 500; margin-bottom: 4px">카테고리</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 12px">
+<button type="button" style="padding: 4px 12px; border-radius: 9999px; border: 1px solid #d1d5dc; background: #ffffff; color: #364153; font-size: 14px; line-height: 20px">식비</button>
+<button type="button" style="padding: 4px 12px; border-radius: 9999px; border: 1px solid #d1d5dc; background: #ffffff; color: #364153; font-size: 14px; line-height: 20px">생활</button>
+<button type="button" style="padding: 4px 12px; border-radius: 9999px; border: 1px solid #d1d5dc; background: #ffffff; color: #364153; font-size: 14px; line-height: 20px">교통</button>
+<button type="button" style="padding: 4px 12px; border-radius: 9999px; border: 1px solid #d1d5dc; background: #ffffff; color: #364153; font-size: 14px; line-height: 20px">의료</button>
+<button type="button" style="padding: 4px 12px; border-radius: 9999px; border: 1px solid #d1d5dc; background: #ffffff; color: #364153; font-size: 14px; line-height: 20px">쇼핑</button>
+<button type="button" style="padding: 4px 12px; border-radius: 9999px; border: 1px solid #d1d5dc; background: #ffffff; color: #364153; font-size: 14px; line-height: 20px">취미·여가</button>
+<button type="button" style="padding: 4px 12px; border-radius: 9999px; border: 1px solid #d1d5dc; background: #ffffff; color: #364153; font-size: 14px; line-height: 20px">교육</button>
+<button type="button" style="padding: 4px 12px; border-radius: 9999px; border: 1px solid #d1d5dc; background: #ffffff; color: #364153; font-size: 14px; line-height: 20px">금융</button>
+<button type="button" style="padding: 4px 12px; border-radius: 9999px; border: 1px solid #d1d5dc; background: #ffffff; color: #364153; font-size: 14px; line-height: 20px">기타</button>
+<button type="button" style="padding: 4px 12px; border-radius: 9999px; border: 1px solid #2b7fff; background: #dbeafe; color: #155dfc; font-size: 14px; line-height: 20px">전체</button>
+</div>
+</div>
+<div style="margin-bottom: 16px">
+<div style="font-size: 14px; line-height: 20px; font-weight: 500; margin-bottom: 4px">유형</div>
+<div style="display: flex; gap: 8px">
+<button type="button" style="flex: 1 1 0; border: 1px solid #171717; border-radius: 8px; padding: 4px 8px; font-size: 14px; line-height: 20px; background: #ffffff">수입</button>
+<button type="button" style="flex: 1 1 0; border: 1px solid #171717; border-radius: 8px; padding: 4px 8px; font-size: 14px; line-height: 20px; background: #ffffff">지출</button>
+</div>
+</div>
+<div style="margin-bottom: 16px">
+<label for="cur-filter-pay" style="display: block; font-size: 14px; line-height: 20px; font-weight: 500; margin-bottom: 4px">결제 방식</label>
+<select id="cur-filter-pay" style="width: 100%; padding: 8px 12px; border: 1px solid #171717; border-radius: 8px; background: transparent">
+<option>전체</option>
+<option>카드</option>
+<option>포인트</option>
+<option>혼합 결제</option>
+</select>
+</div>
+<div style="display: flex; gap: 8px; margin-top: 16px">
+<button type="button" style="flex: 1 1 0; border: 1px solid #171717; padding: 8px 12px; border-radius: 8px; font-size: 14px; line-height: 20px; background: transparent">초기화</button>
+<button type="button" style="flex: 1 1 0; border: 0; background: #2b7fff; color: #ffffff; padding: 8px 12px; border-radius: 8px; font-size: 14px; line-height: 20px">적용</button>
+</div>
+</div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1520}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const daily = [62, 130, 35, 91, 180, 77, 54, 120, 88, 41, 160, 95, 66, 73, 115, 58, 210, 84, 47, 109, 71, 98, 130, 63, 82, 99];
+    const income = { 5: 141000, 12: 120000, 26: 59000 };
+    const firstWeekday = 4;
+    const cells = [];
+    for (let i = 0; i < firstWeekday; i++) {
+      cells.push({ day: '', bg: '#f3f4f6', ring: 'none', hasExpense: false, hasIncome: false, expense: '', income: '' });
+    }
+    for (let d = 1; d <= 31; d++) {
+      const v = daily[d - 1];
+      const inc = income[d];
+      cells.push({
+        day: d,
+        bg: '#ffffff',
+        ring: d === 26 ? '0 0 0 2px #2b7fff' : 'none',
+        hasExpense: v !== undefined,
+        expense: v !== undefined ? '-' + (v * 1000).toLocaleString('ko-KR') + '원' : '',
+        hasIncome: inc !== undefined,
+        income: inc !== undefined ? '+' + inc.toLocaleString('ko-KR') + '원' : ''
+      });
+    }
+    return { cells: cells };
+  }
+}
+</script>
+</body>
+</html>

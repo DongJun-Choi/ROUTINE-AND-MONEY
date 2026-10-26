@@ -1,0 +1,29 @@
+{
+  "v": 3,
+  "createdOnFiles": { "v": 1, "at": "2026-10-26T09:00:00Z" },
+  "title": "루틴앤머니 리디자인",
+  "launch": { "view": "canvas" },
+  "pages": [],
+  "boards": {
+    "Main.dc.html": { "x": 0, "y": 0, "w": 1440, "h": 1320, "title": "대시보드", "expand": "fill", "is_interactive": true },
+    "Transactions.dc.html": { "x": 1520, "y": 0, "w": 1440, "h": 1240, "title": "가계부", "expand": "fill", "is_interactive": true },
+    "Upload.dc.html": { "x": 0, "y": 1440, "w": 1440, "h": 1320, "title": "명세서 가져오기", "expand": "fill", "is_interactive": true },
+    "Category.dc.html": { "x": 1520, "y": 1440, "w": 1440, "h": 1080, "title": "카테고리", "expand": "fill", "is_interactive": true },
+    "Tokens.dc.html": { "x": 3040, "y": 0, "w": 1440, "h": 4980, "title": "디자인 토큰" },
+    "Current-Dashboard.dc.html": { "x": 0, "y": 3300, "w": 1440, "h": 1200, "title": "현재 · 대시보드", "expand": "fill", "is_interactive": true },
+    "Current-Transactions.dc.html": { "x": 1520, "y": 3300, "w": 1440, "h": 1520, "title": "현재 · 가계부", "expand": "fill", "is_interactive": true },
+    "Current-Upload.dc.html": { "x": 0, "y": 4940, "w": 1440, "h": 1040, "title": "현재 · 엑셀 업로드", "expand": "fill", "is_interactive": true },
+    "Current-Category.dc.html": { "x": 1520, "y": 4940, "w": 1440, "h": 900, "title": "현재 · 카테고리", "expand": "fill", "is_interactive": true },
+    "Main-Dark.dc.html": { "x": 4560, "y": 0, "w": 1440, "h": 1320, "title": "대시보드 · 다크", "expand": "fill", "is_interactive": true },
+    "Transactions-Dark.dc.html": { "x": 6080, "y": 0, "w": 1440, "h": 1240, "title": "가계부 · 다크", "expand": "fill", "is_interactive": true },
+    "Upload-Dark.dc.html": { "x": 4560, "y": 1440, "w": 1440, "h": 1320, "title": "명세서 가져오기 · 다크", "expand": "fill", "is_interactive": true },
+    "Category-Dark.dc.html": { "x": 6080, "y": 1440, "w": 1440, "h": 1080, "title": "카테고리 · 다크", "expand": "fill", "is_interactive": true }
+  },
+  "order": ["Main.dc.html", "Transactions.dc.html", "Upload.dc.html", "Category.dc.html", "Tokens.dc.html", "Current-Dashboard.dc.html", "Current-Transactions.dc.html", "Current-Upload.dc.html", "Current-Category.dc.html", "Main-Dark.dc.html", "Transactions-Dark.dc.html", "Upload-Dark.dc.html", "Category-Dark.dc.html"],
+  "notes": {
+    "heading": { "x": 0, "y": -300, "text": "루틴앤머니 리디자인 · Slate Minimal", "kind": "title1", "maxW": 4240 },
+    "dark": { "x": 4560, "y": -300, "text": "다크 모드", "kind": "title1", "maxW": 2960 },
+    "asis": { "x": 0, "y": 3000, "text": "현재 화면 · 지금 코드 그대로 재현", "kind": "title1", "maxW": 2960 }
+  },
+  "designSystems": []
+}

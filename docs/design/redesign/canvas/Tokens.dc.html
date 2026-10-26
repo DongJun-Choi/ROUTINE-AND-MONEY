@@ -1,0 +1,553 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>디자인 토큰</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Noto+Sans+KR:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F8FAFC;font-family:'Inter','Noto Sans KR',system-ui,sans-serif}
+*{box-sizing:border-box}
+button,input,select{font:inherit}
+a{color:#1D4ED8;text-decoration:none}a:hover{color:#1E40AF}
+input::placeholder{color:#64748B}
+</style>
+</helmet>
+<div style="width: 1440px; height: 4980px; padding: 64px 64px 72px; background: #F8FAFC; color: #0F172A; font-family: 'Inter', 'Noto Sans KR', system-ui, sans-serif; font-variant-numeric: tabular-nums; letter-spacing: -0.005em; display: flex; flex-direction: column; gap: 40px">
+
+<header style="display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; padding-bottom: 36px; border-bottom: 1px solid #E2E8F0">
+<div style="display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; align-items: center; gap: 12px">
+<div style="width: 40px; height: 40px; border-radius: 12px; background: #1D4ED8; color: #FFFFFF; display: flex; align-items: center; justify-content: center">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18.5 14.5A7 7 0 1 1 17 7.4"></path><path d="M18 3.5v4.2h-4.2"></path><circle cx="12" cy="12" r="2.2"></circle></svg>
+</div>
+<span style="font-size: 14px; line-height: 20px; font-weight: 600; color: #1D4ED8">루틴&amp;머니 · Slate Minimal</span>
+</div>
+<h1 style="margin: 0; font-size: 52px; line-height: 60px; font-weight: 700; letter-spacing: -0.035em">디자인 토큰</h1>
+<p style="margin: 0; max-width: 620px; font-size: 17px; line-height: 28px; color: #475569">리디자인 화면에 쓰인 색, 글자, 간격, 컴포넌트를 한 장에 모았어요. 코드에 옮길 때는 이 값을 기준으로 씁니다.</p>
+</div>
+<div style="display: flex; gap: 40px; padding-bottom: 6px">
+<div style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 12px; line-height: 16px; color: #64748B">버전</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 15px; font-weight: 600">v1.0</span></div>
+<div style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 12px; line-height: 16px; color: #64748B">기준일</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 15px; font-weight: 600">2026.10.26</span></div>
+<div style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 12px; line-height: 16px; color: #64748B">기준 너비</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 15px; font-weight: 600">1440px</span></div>
+<div style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 12px; line-height: 16px; color: #64748B">상태</span><span style="display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; color: #B45309"><span aria-hidden="true" style="width: 8px; height: 8px; border-radius: 9999px; background: #F59E0B"></span>검토 필요</span></div>
+</div>
+</header>
+
+<section style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 20px; padding: 36px; box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.04), 0 1px 2px -1px rgba(15, 23, 42, 0.02); display: flex; flex-direction: column; gap: 32px">
+<div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 24px">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; font-weight: 600; color: #1D4ED8; letter-spacing: 0.06em">01 · COLOR</span>
+<h2 style="margin: 0; font-size: 28px; line-height: 36px; font-weight: 700; letter-spacing: -0.025em">색상</h2>
+</div>
+<p style="margin: 0; max-width: 440px; text-align: right; font-size: 14px; line-height: 22px; color: #64748B">색은 역할 이름으로 부르고, 대비는 WCAG 기준으로 적었어요. 본문 글자는 모두 4.5 : 1 이상입니다.</p>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 20px">
+<div style="grid-column: span 5; height: 236px; border-radius: 16px; background: #1D4ED8; color: #FFFFFF; padding: 24px 26px; display: flex; flex-direction: column; justify-content: space-between">
+<div style="display: flex; align-items: flex-start; justify-content: space-between; gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 20px; line-height: 28px; font-weight: 700; letter-spacing: -0.02em">Primary</span>
+<span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #DBE4FF">color.primary</span>
+</div>
+<span style="display: inline-flex; align-items: center; height: 28px; padding: 0 12px; border-radius: 9999px; background: rgba(255, 255, 255, 0.16); font-size: 12px; font-weight: 600; white-space: nowrap">흰 글자 6.7 : 1 · AA</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 32px; line-height: 40px; font-weight: 600; letter-spacing: -0.02em">#1D4ED8</span>
+<span style="font-size: 14px; line-height: 20px; color: #DBE4FF">주요 버튼 · 선택된 메뉴 · 링크 · 강조 막대</span>
+</div>
+</div>
+<div style="grid-column: span 7; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px">
+<div style="display: flex; align-items: center; gap: 16px; padding: 16px; border: 1px solid #E2E8F0; border-radius: 16px">
+<div style="width: 76px; height: 76px; border-radius: 14px; background: #1E40AF; flex: 0 0 auto"></div>
+<div style="min-width: 0; display: flex; flex-direction: column; gap: 3px">
+<span style="font-size: 15px; line-height: 22px; font-weight: 600">Primary Hover</span>
+<span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #64748B">primary-hover · #1E40AF</span>
+<span style="font-size: 13px; line-height: 18px; color: #475569">버튼 hover · 링크 hover</span>
+<span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; font-weight: 500; color: #334155">흰 글자 8.7 : 1</span>
+</div>
+</div>
+<div style="display: flex; align-items: center; gap: 16px; padding: 16px; border: 1px solid #E2E8F0; border-radius: 16px">
+<div style="width: 76px; height: 76px; border-radius: 14px; background: #EFF4FF; box-shadow: inset 0 0 0 1px #DBE4FF; flex: 0 0 auto; display: flex; align-items: center; justify-content: center; color: #1D4ED8; font-size: 18px; font-weight: 700">가</div>
+<div style="min-width: 0; display: flex; flex-direction: column; gap: 3px">
+<span style="font-size: 15px; line-height: 22px; font-weight: 600">Primary Soft</span>
+<span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #64748B">primary-soft · #EFF4FF</span>
+<span style="font-size: 13px; line-height: 18px; color: #475569">아이콘 배경 · 오늘 표시 · 카드 칩</span>
+<span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; font-weight: 500; color: #334155">파란 글자 6.1 : 1</span>
+</div>
+</div>
+<div style="display: flex; align-items: center; gap: 16px; padding: 16px; border: 1px solid #E2E8F0; border-radius: 16px">
+<div style="width: 76px; height: 76px; border-radius: 14px; background: #1D4ED8; flex: 0 0 auto; display: flex; align-items: center; justify-content: center; color: #DBE4FF; font-size: 18px; font-weight: 700">가</div>
+<div style="min-width: 0; display: flex; flex-direction: column; gap: 3px">
+<span style="font-size: 15px; line-height: 22px; font-weight: 600">On Primary Sub</span>
+<span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #64748B">on-primary-sub · #DBE4FF</span>
+<span style="font-size: 13px; line-height: 18px; color: #475569">파란 카드 위 보조 글자</span>
+<span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; font-weight: 500; color: #334155">파란 배경 위 5.3 : 1</span>
+</div>
+</div>
+<div style="display: flex; align-items: center; gap: 16px; padding: 16px; border: 1px solid #E2E8F0; border-radius: 16px">
+<div style="width: 76px; height: 76px; flex: 0 0 auto; display: flex; align-items: center; justify-content: center">
+<div style="width: 60px; height: 40px; border-radius: 10px; background: #FFFFFF; border: 1px solid #1D4ED8; box-shadow: 0 0 0 4px rgba(29, 78, 216, 0.35)"></div>
+</div>
+<div style="min-width: 0; display: flex; flex-direction: column; gap: 3px">
+<span style="font-size: 15px; line-height: 22px; font-weight: 600">Focus Ring</span>
+<span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #64748B">focus · #1D4ED8 / 35%</span>
+<span style="font-size: 13px; line-height: 18px; color: #475569">키보드 포커스 3px 외곽선</span>
+<span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; font-weight: 500; color: #334155">입력창은 15% 번짐</span>
+</div>
+</div>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; align-items: baseline; justify-content: space-between; gap: 16px">
+<span style="font-size: 16px; line-height: 24px; font-weight: 600">Neutral · Slate</span>
+<span style="font-size: 13px; color: #64748B">밝은 쪽은 면과 선, 어두운 쪽은 글자에 써요</span>
+</div>
+<div style="display: flex; height: 120px; border-radius: 16px; overflow: hidden; border: 1px solid #E2E8F0">
+<div style="flex: 1 1 0; background: #FFFFFF; padding: 14px; display: flex; align-items: flex-end"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; font-weight: 500; color: #334155">#FFFFFF</span></div>
+<div style="flex: 1 1 0; background: #F8FAFC; padding: 14px; display: flex; align-items: flex-end"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; font-weight: 500; color: #334155">#F8FAFC</span></div>
+<div style="flex: 1 1 0; background: #F1F5F9; padding: 14px; display: flex; align-items: flex-end"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; font-weight: 500; color: #334155">#F1F5F9</span></div>
+<div style="flex: 1 1 0; background: #E2E8F0; padding: 14px; display: flex; align-items: flex-end"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; font-weight: 500; color: #334155">#E2E8F0</span></div>
+<div style="flex: 1 1 0; background: #CBD5E1; padding: 14px; display: flex; align-items: flex-end"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; font-weight: 500; color: #0F172A">#CBD5E1</span></div>
+<div style="flex: 1 1 0; background: #64748B; padding: 14px; display: flex; align-items: flex-end"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; font-weight: 500; color: #FFFFFF">#64748B</span></div>
+<div style="flex: 1 1 0; background: #475569; padding: 14px; display: flex; align-items: flex-end"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; font-weight: 500; color: #FFFFFF">#475569</span></div>
+<div style="flex: 1 1 0; background: #334155; padding: 14px; display: flex; align-items: flex-end"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; font-weight: 500; color: #FFFFFF">#334155</span></div>
+<div style="flex: 1 1 0; background: #0F172A; padding: 14px; display: flex; align-items: flex-end"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; font-weight: 500; color: #FFFFFF">#0F172A</span></div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(9, minmax(0, 1fr))">
+<div style="padding: 0 14px; display: flex; flex-direction: column; gap: 3px"><span style="font-size: 13px; line-height: 18px; font-weight: 600">Surface</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #64748B">surface</span><span style="font-size: 12px; line-height: 17px; color: #475569">카드 · 사이드바</span></div>
+<div style="padding: 0 14px; display: flex; flex-direction: column; gap: 3px"><span style="font-size: 13px; line-height: 18px; font-weight: 600">Ground</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #64748B">ground</span><span style="font-size: 12px; line-height: 17px; color: #475569">페이지 배경</span></div>
+<div style="padding: 0 14px; display: flex; flex-direction: column; gap: 3px"><span style="font-size: 13px; line-height: 18px; font-weight: 600">Subtle</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #64748B">subtle</span><span style="font-size: 12px; line-height: 17px; color: #475569">카테고리 칩 · 행 구분</span></div>
+<div style="padding: 0 14px; display: flex; flex-direction: column; gap: 3px"><span style="font-size: 13px; line-height: 18px; font-weight: 600">Border</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #64748B">border</span><span style="font-size: 12px; line-height: 17px; color: #475569">카드 · 보조 버튼 테두리</span></div>
+<div style="padding: 0 14px; display: flex; flex-direction: column; gap: 3px"><span style="font-size: 13px; line-height: 18px; font-weight: 600">Border Strong</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #64748B">border-strong</span><span style="font-size: 12px; line-height: 17px; color: #475569">입력창 · 차트 축</span></div>
+<div style="padding: 0 14px; display: flex; flex-direction: column; gap: 3px"><span style="font-size: 13px; line-height: 18px; font-weight: 600">Muted</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #64748B">text-muted</span><span style="font-size: 12px; line-height: 17px; color: #475569">라벨 · 날짜 · 4.8 : 1</span></div>
+<div style="padding: 0 14px; display: flex; flex-direction: column; gap: 3px"><span style="font-size: 13px; line-height: 18px; font-weight: 600">Icon</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #64748B">text-icon</span><span style="font-size: 12px; line-height: 17px; color: #475569">아이콘 · 비선택 탭</span></div>
+<div style="padding: 0 14px; display: flex; flex-direction: column; gap: 3px"><span style="font-size: 13px; line-height: 18px; font-weight: 600">Text Sub</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #64748B">text-sub</span><span style="font-size: 12px; line-height: 17px; color: #475569">보조 본문 · 메뉴</span></div>
+<div style="padding: 0 14px; display: flex; flex-direction: column; gap: 3px"><span style="font-size: 13px; line-height: 18px; font-weight: 600">Text</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #64748B">text</span><span style="font-size: 12px; line-height: 17px; color: #475569">제목 · 금액 · 지출</span></div>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; align-items: baseline; justify-content: space-between; gap: 16px">
+<span style="font-size: 16px; line-height: 24px; font-weight: 600">Semantic</span>
+<span style="font-size: 13px; color: #64748B">글자 · 배경 · 테두리를 한 벌로 써요</span>
+</div>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px">
+<div style="border: 1px solid #E2E8F0; border-radius: 16px; overflow: hidden">
+<div style="display: flex; height: 60px"><div style="flex: 5 1 0; background: #047857"></div><div style="flex: 3 1 0; background: #ECFDF5"></div><div style="flex: 2 1 0; background: #A7F3D0"></div></div>
+<div style="padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px"><span style="font-size: 15px; line-height: 22px; font-weight: 600">긍정 · Positive</span><span style="display: inline-flex; align-items: center; height: 24px; padding: 0 10px; border-radius: 9999px; background: #ECFDF5; color: #047857; border: 1px solid #A7F3D0; font-size: 12px; font-weight: 600; white-space: nowrap">3.2% 감소</span></div>
+<p style="margin: 0; font-size: 13px; line-height: 20px; color: #475569">수입 · 지출 감소 · 수집 켜짐</p>
+<div style="display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; font-size: 12px; line-height: 16px"><span style="color: #64748B">글자</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace">#047857</span><span style="color: #64748B">배경</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace">#ECFDF5</span><span style="color: #64748B">테두리</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace">#A7F3D0</span><span style="color: #64748B">대비</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 600">5.2 : 1</span></div>
+</div>
+</div>
+<div style="border: 1px solid #E2E8F0; border-radius: 16px; overflow: hidden">
+<div style="display: flex; height: 60px"><div style="flex: 5 1 0; background: #B45309"></div><div style="flex: 3 1 0; background: #FEF3C7"></div><div style="flex: 2 1 0; background: #FDE68A"></div></div>
+<div style="padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px"><span style="font-size: 15px; line-height: 22px; font-weight: 600">대기 · Pending</span><span style="display: inline-flex; align-items: center; height: 24px; padding: 0 10px; border-radius: 9999px; background: #FEF3C7; color: #B45309; border: 1px solid #FDE68A; font-size: 12px; font-weight: 600; white-space: nowrap">미분류</span></div>
+<p style="margin: 0; font-size: 13px; line-height: 20px; color: #475569">미분류 · 중복 건너뜀 · 검토 필요</p>
+<div style="display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; font-size: 12px; line-height: 16px"><span style="color: #64748B">글자</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace">#B45309</span><span style="color: #64748B">배경</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace">#FEF3C7</span><span style="color: #64748B">테두리</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace">#FDE68A</span><span style="color: #64748B">대비</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 600">4.5 : 1</span></div>
+</div>
+</div>
+<div style="border: 1px solid #E2E8F0; border-radius: 16px; overflow: hidden">
+<div style="display: flex; height: 60px"><div style="flex: 5 1 0; background: #BE123C"></div><div style="flex: 3 1 0; background: #FFF1F2"></div><div style="flex: 2 1 0; background: #FECDD3"></div></div>
+<div style="padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px"><span style="font-size: 15px; line-height: 22px; font-weight: 600">위험 · Danger</span><span style="display: inline-flex; align-items: center; height: 24px; padding: 0 10px; border-radius: 9999px; background: #FFF1F2; color: #BE123C; border: 1px solid #FECDD3; font-size: 12px; font-weight: 600; white-space: nowrap">삭제</span></div>
+<p style="margin: 0; font-size: 13px; line-height: 20px; color: #475569">삭제 · 오류 · 입력 실패</p>
+<div style="display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; font-size: 12px; line-height: 16px"><span style="color: #64748B">글자</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace">#BE123C</span><span style="color: #64748B">배경</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace">#FFF1F2</span><span style="color: #64748B">테두리</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace">#FECDD3</span><span style="color: #64748B">대비</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 600">5.7 : 1</span></div>
+</div>
+</div>
+<div style="border: 1px solid #E2E8F0; border-radius: 16px; overflow: hidden">
+<div style="display: flex; height: 60px"><div style="flex: 5 1 0; background: #1D4ED8"></div><div style="flex: 3 1 0; background: #EFF4FF"></div><div style="flex: 2 1 0; background: #C7D2FE"></div></div>
+<div style="padding: 18px 20px 20px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px"><span style="font-size: 15px; line-height: 22px; font-weight: 600">정보 · Info</span><span style="display: inline-flex; align-items: center; height: 24px; padding: 0 10px; border-radius: 9999px; background: #EFF4FF; color: #1D4ED8; border: 1px solid #C7D2FE; font-size: 12px; font-weight: 600; white-space: nowrap">오늘</span></div>
+<p style="margin: 0; font-size: 13px; line-height: 20px; color: #475569">선택 상태 · 오늘 · 결제수단 카드</p>
+<div style="display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; font-size: 12px; line-height: 16px"><span style="color: #64748B">글자</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace">#1D4ED8</span><span style="color: #64748B">배경</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace">#EFF4FF</span><span style="color: #64748B">테두리</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace">#C7D2FE</span><span style="color: #64748B">대비</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 600">6.1 : 1</span></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section style="background: #0B1120; border: 1px solid #233047; border-radius: 20px; padding: 36px; display: flex; flex-direction: column; gap: 32px; color: #E2E8F0">
+<div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 24px">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; font-weight: 600; color: #8AB0FF; letter-spacing: 0.06em">02 · DARK</span>
+<h2 style="margin: 0; font-size: 28px; line-height: 36px; font-weight: 700; letter-spacing: -0.025em; color: #F1F5F9">다크 팔레트</h2>
+</div>
+<p style="margin: 0; max-width: 460px; text-align: right; font-size: 14px; line-height: 22px; color: #94A3B8">라이트와 같은 토큰 이름에 값만 바꿔요. 대비는 카드 면 #111A2E 기준이고, 그림자 대신 테두리와 면의 밝기로 층을 나눕니다.</p>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; align-items: baseline; justify-content: space-between; gap: 16px">
+<span style="font-size: 16px; line-height: 24px; font-weight: 600; color: #F1F5F9">Neutral · Night</span>
+<span style="font-size: 13px; color: #94A3B8">어두운 쪽은 면과 선, 밝은 쪽은 글자에 써요</span>
+</div>
+<div style="display: flex; height: 120px; border-radius: 16px; overflow: hidden; border: 1px solid #233047">
+<div style="flex: 1 1 0; background: #0B1120; padding: 14px; display: flex; align-items: flex-end"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; font-weight: 500; color: #CBD5E1">#0B1120</span></div>
+<div style="flex: 1 1 0; background: #111A2E; padding: 14px; display: flex; align-items: flex-end"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; font-weight: 500; color: #CBD5E1">#111A2E</span></div>
+<div style="flex: 1 1 0; background: #18233A; padding: 14px; display: flex; align-items: flex-end"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; font-weight: 500; color: #CBD5E1">#18233A</span></div>
+<div style="flex: 1 1 0; background: #232D41; padding: 14px; display: flex; align-items: flex-end"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; font-weight: 500; color: #E2E8F0">#232D41</span></div>
+<div style="flex: 1 1 0; background: #233047; padding: 14px; display: flex; align-items: flex-end"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; font-weight: 500; color: #E2E8F0">#233047</span></div>
+<div style="flex: 1 1 0; background: #334155; padding: 14px; display: flex; align-items: flex-end"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; font-weight: 500; color: #F1F5F9">#334155</span></div>
+<div style="flex: 1 1 0; background: #94A3B8; padding: 14px; display: flex; align-items: flex-end"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; font-weight: 500; color: #0B1120">#94A3B8</span></div>
+<div style="flex: 1 1 0; background: #CBD5E1; padding: 14px; display: flex; align-items: flex-end"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; font-weight: 500; color: #0B1120">#CBD5E1</span></div>
+<div style="flex: 1 1 0; background: #E2E8F0; padding: 14px; display: flex; align-items: flex-end"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; font-weight: 500; color: #0B1120">#E2E8F0</span></div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(9, minmax(0, 1fr))">
+<div style="padding: 0 14px; display: flex; flex-direction: column; gap: 3px"><span style="font-size: 13px; line-height: 18px; font-weight: 600; color: #F1F5F9">Ground</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #94A3B8">ground</span><span style="font-size: 12px; line-height: 17px; color: #CBD5E1">페이지 배경 · 입력창</span></div>
+<div style="padding: 0 14px; display: flex; flex-direction: column; gap: 3px"><span style="font-size: 13px; line-height: 18px; font-weight: 600; color: #F1F5F9">Surface</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #94A3B8">surface</span><span style="font-size: 12px; line-height: 17px; color: #CBD5E1">카드 · 사이드바</span></div>
+<div style="padding: 0 14px; display: flex; flex-direction: column; gap: 3px"><span style="font-size: 13px; line-height: 18px; font-weight: 600; color: #F1F5F9">Raised</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #94A3B8">surface-raised</span><span style="font-size: 12px; line-height: 17px; color: #CBD5E1">안쪽 상자 · 표 머리글</span></div>
+<div style="padding: 0 14px; display: flex; flex-direction: column; gap: 3px"><span style="font-size: 13px; line-height: 18px; font-weight: 600; color: #F1F5F9">Subtle</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #94A3B8">subtle</span><span style="font-size: 12px; line-height: 17px; color: #CBD5E1">카테고리 칩 · 막대 바탕</span></div>
+<div style="padding: 0 14px; display: flex; flex-direction: column; gap: 3px"><span style="font-size: 13px; line-height: 18px; font-weight: 600; color: #F1F5F9">Border</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #94A3B8">border</span><span style="font-size: 12px; line-height: 17px; color: #CBD5E1">카드 · 목록 테두리</span></div>
+<div style="padding: 0 14px; display: flex; flex-direction: column; gap: 3px"><span style="font-size: 13px; line-height: 18px; font-weight: 600; color: #F1F5F9">Border Strong</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #94A3B8">border-strong</span><span style="font-size: 12px; line-height: 17px; color: #CBD5E1">입력창 · 보조 버튼 · 축</span></div>
+<div style="padding: 0 14px; display: flex; flex-direction: column; gap: 3px"><span style="font-size: 13px; line-height: 18px; font-weight: 600; color: #F1F5F9">Muted</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #94A3B8">text-muted</span><span style="font-size: 12px; line-height: 17px; color: #CBD5E1">라벨 · 날짜 · 6.8 : 1</span></div>
+<div style="padding: 0 14px; display: flex; flex-direction: column; gap: 3px"><span style="font-size: 13px; line-height: 18px; font-weight: 600; color: #F1F5F9">Text Sub</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #94A3B8">text-sub</span><span style="font-size: 12px; line-height: 17px; color: #CBD5E1">보조 본문 · 메뉴</span></div>
+<div style="padding: 0 14px; display: flex; flex-direction: column; gap: 3px"><span style="font-size: 13px; line-height: 18px; font-weight: 600; color: #F1F5F9">Text</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #94A3B8">text</span><span style="font-size: 12px; line-height: 17px; color: #CBD5E1">본문 · 제목은 #F1F5F9</span></div>
+</div>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 20px; align-items: start">
+<div style="grid-column: span 7; background: #111A2E; border: 1px solid #233047; border-radius: 16px; overflow: hidden">
+<div style="display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 0.9fr); gap: 12px; padding: 14px 20px; background: #18233A; font-size: 12px; font-weight: 600; color: #94A3B8"><span>토큰</span><span>라이트</span><span>다크</span><span style="text-align: right">다크 대비</span></div>
+<div style="display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 0.9fr); gap: 12px; align-items: center; padding: 12px 20px; border-top: 1px solid #1C2740"><span style="display: flex; flex-direction: column; gap: 2px"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; font-weight: 600; color: #F1F5F9">primary</span><span style="font-size: 12px; color: #94A3B8">버튼 · 선택 메뉴</span></span><span style="display: inline-flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #CBD5E1"><span style="width: 14px; height: 14px; border-radius: 4px; background: #1D4ED8"></span>#1D4ED8</span><span style="display: inline-flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #CBD5E1"><span style="width: 14px; height: 14px; border-radius: 4px; background: #1D4ED8"></span>#1D4ED8</span><span style="text-align: right; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; font-weight: 600; color: #E2E8F0">흰 글자 6.7</span></div>
+<div style="display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 0.9fr); gap: 12px; align-items: center; padding: 12px 20px; border-top: 1px solid #1C2740"><span style="display: flex; flex-direction: column; gap: 2px"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; font-weight: 600; color: #F1F5F9">primary-text</span><span style="font-size: 12px; color: #94A3B8">링크 · 강조 글자</span></span><span style="display: inline-flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #CBD5E1"><span style="width: 14px; height: 14px; border-radius: 4px; background: #1D4ED8"></span>#1D4ED8</span><span style="display: inline-flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #CBD5E1"><span style="width: 14px; height: 14px; border-radius: 4px; background: #8AB0FF"></span>#8AB0FF</span><span style="text-align: right; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; font-weight: 600; color: #E2E8F0">8.0</span></div>
+<div style="display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 0.9fr); gap: 12px; align-items: center; padding: 12px 20px; border-top: 1px solid #1C2740"><span style="display: flex; flex-direction: column; gap: 2px"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; font-weight: 600; color: #F1F5F9">primary-soft</span><span style="font-size: 12px; color: #94A3B8">아이콘 배경 · 카드 칩</span></span><span style="display: inline-flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #CBD5E1"><span style="width: 14px; height: 14px; border-radius: 4px; background: #EFF4FF"></span>#EFF4FF</span><span style="display: inline-flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #CBD5E1"><span style="width: 14px; height: 14px; border-radius: 4px; background: #182B4E; box-shadow: inset 0 0 0 1px #334155"></span>#182B4E</span><span style="text-align: right; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; font-weight: 600; color: #E2E8F0">#93B4FF 6.8</span></div>
+<div style="display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 0.9fr); gap: 12px; align-items: center; padding: 12px 20px; border-top: 1px solid #1C2740"><span style="display: flex; flex-direction: column; gap: 2px"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; font-weight: 600; color: #F1F5F9">positive</span><span style="font-size: 12px; color: #94A3B8">수입 · 지출 감소</span></span><span style="display: inline-flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #CBD5E1"><span style="width: 14px; height: 14px; border-radius: 4px; background: #047857"></span>#047857</span><span style="display: inline-flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #CBD5E1"><span style="width: 14px; height: 14px; border-radius: 4px; background: #34D399"></span>#34D399</span><span style="text-align: right; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; font-weight: 600; color: #E2E8F0">9.0</span></div>
+<div style="display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 0.9fr); gap: 12px; align-items: center; padding: 12px 20px; border-top: 1px solid #1C2740"><span style="display: flex; flex-direction: column; gap: 2px"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; font-weight: 600; color: #F1F5F9">pending</span><span style="font-size: 12px; color: #94A3B8">미분류 · 중복</span></span><span style="display: inline-flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #CBD5E1"><span style="width: 14px; height: 14px; border-radius: 4px; background: #B45309"></span>#B45309</span><span style="display: inline-flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #CBD5E1"><span style="width: 14px; height: 14px; border-radius: 4px; background: #FBBF24"></span>#FBBF24</span><span style="text-align: right; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; font-weight: 600; color: #E2E8F0">8.3</span></div>
+<div style="display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 0.9fr); gap: 12px; align-items: center; padding: 12px 20px; border-top: 1px solid #1C2740"><span style="display: flex; flex-direction: column; gap: 2px"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; font-weight: 600; color: #F1F5F9">danger</span><span style="font-size: 12px; color: #94A3B8">삭제 · 오류</span></span><span style="display: inline-flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #CBD5E1"><span style="width: 14px; height: 14px; border-radius: 4px; background: #BE123C"></span>#BE123C</span><span style="display: inline-flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #CBD5E1"><span style="width: 14px; height: 14px; border-radius: 4px; background: #FB7185"></span>#FB7185</span><span style="text-align: right; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; font-weight: 600; color: #E2E8F0">6.4</span></div>
+<div style="display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 0.9fr); gap: 12px; align-items: center; padding: 12px 20px; border-top: 1px solid #1C2740"><span style="display: flex; flex-direction: column; gap: 2px"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; font-weight: 600; color: #F1F5F9">bar-current</span><span style="font-size: 12px; color: #94A3B8">선택한 달 · 강조 막대</span></span><span style="display: inline-flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #CBD5E1"><span style="width: 14px; height: 14px; border-radius: 4px; background: #1D4ED8"></span>#1D4ED8</span><span style="display: inline-flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #CBD5E1"><span style="width: 14px; height: 14px; border-radius: 4px; background: #6B9BFF"></span>#6B9BFF</span><span style="text-align: right; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; font-weight: 600; color: #E2E8F0">6.4</span></div>
+<div style="display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 0.9fr); gap: 12px; align-items: center; padding: 12px 20px; border-top: 1px solid #1C2740"><span style="display: flex; flex-direction: column; gap: 2px"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; font-weight: 600; color: #F1F5F9">bar-default</span><span style="font-size: 12px; color: #94A3B8">나머지 막대</span></span><span style="display: inline-flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #CBD5E1"><span style="width: 14px; height: 14px; border-radius: 4px; background: #7089DB"></span>#7089DB</span><span style="display: inline-flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #CBD5E1"><span style="width: 14px; height: 14px; border-radius: 4px; background: #4A67A8"></span>#4A67A8</span><span style="text-align: right; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; font-weight: 600; color: #E2E8F0">3.1</span></div>
+<div style="display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 0.9fr); gap: 12px; align-items: center; padding: 12px 20px; border-top: 1px solid #1C2740"><span style="display: flex; flex-direction: column; gap: 2px"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; font-weight: 600; color: #F1F5F9">focus</span><span style="font-size: 12px; color: #94A3B8">키보드 포커스 외곽선</span></span><span style="display: inline-flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #CBD5E1"><span style="width: 14px; height: 14px; border-radius: 4px; background: rgba(29, 78, 216, 0.35)"></span>35%</span><span style="display: inline-flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #CBD5E1"><span style="width: 14px; height: 14px; border-radius: 4px; background: rgba(138, 176, 255, 0.5)"></span>#8AB0FF 50%</span><span style="text-align: right; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; font-weight: 600; color: #E2E8F0">—</span></div>
+<div style="display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr) minmax(0, 1fr) minmax(0, 0.9fr); gap: 12px; align-items: center; padding: 12px 20px; border-top: 1px solid #1C2740"><span style="display: flex; flex-direction: column; gap: 2px"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; font-weight: 600; color: #F1F5F9">tooltip</span><span style="font-size: 12px; color: #94A3B8">차트 툴팁 · 반전</span></span><span style="display: inline-flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #CBD5E1"><span style="width: 14px; height: 14px; border-radius: 4px; background: #0F172A; box-shadow: inset 0 0 0 1px #334155"></span>#0F172A</span><span style="display: inline-flex; align-items: center; gap: 8px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #CBD5E1"><span style="width: 14px; height: 14px; border-radius: 4px; background: #E2E8F0"></span>#E2E8F0</span><span style="text-align: right; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; font-weight: 600; color: #E2E8F0">17.2</span></div>
+</div>
+
+<div style="grid-column: span 5; display: flex; flex-direction: column; gap: 20px">
+<div style="background: #111A2E; border: 1px solid #233047; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 14px">
+<span style="font-size: 14px; font-weight: 600; color: #F1F5F9">의미 색 · 칩</span>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<span style="display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: 9999px; background: #11303A; color: #34D399; border: 1px solid rgba(52, 211, 153, 0.3); font-size: 12px; font-weight: 600">3.2% 감소</span>
+<span style="display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: 9999px; background: #312C29; color: #FBBF24; border: 1px solid rgba(251, 191, 36, 0.3); font-size: 12px; font-weight: 600">미분류</span>
+<span style="display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: 9999px; background: #311F35; color: #FB7185; border: 1px solid rgba(251, 113, 133, 0.3); font-size: 12px; font-weight: 600">삭제</span>
+<span style="display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: 9999px; background: #182B4E; color: #93B4FF; font-size: 12px; font-weight: 600">오늘 · 카드</span>
+<span style="display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: 9999px; background: #25254E; color: #C4B5FD; font-size: 12px; font-weight: 600">포인트</span>
+<span style="display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: 9999px; background: #36282A; color: #FDBA74; font-size: 12px; font-weight: 600">복합</span>
+<span style="display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: 9999px; background: #232D41; color: #CBD5E1; font-size: 12px; font-weight: 600">식비 › 카페/음료</span>
+</div>
+<div style="display: flex; gap: 24px; padding-top: 4px; font-size: 18px; font-weight: 700"><span style="color: #F1F5F9">−6,300원</span><span style="color: #34D399">+59,000원</span></div>
+</div>
+<div style="background: #111A2E; border: 1px solid #233047; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 14px">
+<span style="font-size: 14px; font-weight: 600; color: #F1F5F9">차트 · 카테고리 순서</span>
+<div style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px">
+<div style="display: flex; flex-direction: column; gap: 6px"><span style="height: 36px; border-radius: 9px; background: #6B9BFF"></span><span style="font-size: 12px; color: #CBD5E1">식비</span></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><span style="height: 36px; border-radius: 9px; background: #FBBF24"></span><span style="font-size: 12px; color: #CBD5E1">생활</span></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><span style="height: 36px; border-radius: 9px; background: #14B8A6"></span><span style="font-size: 12px; color: #CBD5E1">쇼핑</span></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><span style="height: 36px; border-radius: 9px; background: #BFD0FF"></span><span style="font-size: 12px; color: #CBD5E1">교통</span></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><span style="height: 36px; border-radius: 9px; background: #F97316"></span><span style="font-size: 12px; color: #CBD5E1">취미·여가</span></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><span style="height: 36px; border-radius: 9px; background: #475569"></span><span style="font-size: 12px; color: #CBD5E1">기타</span></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px">
+<span style="font-size: 12px; color: #94A3B8">달력 지출 단계</span>
+<div style="display: flex; height: 28px; border-radius: 8px; overflow: hidden; border: 1px solid #233047"><div style="flex: 1 1 0; background: #1A2743"></div><div style="flex: 1 1 0; background: #233458"></div><div style="flex: 1 1 0; background: #2E4371"></div><div style="flex: 1 1 0; background: #3A558E"></div></div>
+</div>
+</div>
+<div style="background: #111A2E; border: 1px solid #233047; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 14px">
+<span style="font-size: 14px; font-weight: 600; color: #F1F5F9">층 구분</span>
+<div style="padding: 16px; border-radius: 14px; background: #0B1120; border: 1px solid #233047; display: flex; flex-direction: column; gap: 10px">
+<span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #94A3B8">ground</span>
+<div style="padding: 14px; border-radius: 12px; background: #111A2E; border: 1px solid #233047; display: flex; flex-direction: column; gap: 10px">
+<span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #94A3B8">surface + border</span>
+<div style="padding: 12px; border-radius: 10px; background: #18233A; border: 1px solid #233047"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #CBD5E1">surface-raised</span></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<section style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 20px; padding: 36px; box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.04), 0 1px 2px -1px rgba(15, 23, 42, 0.02); display: flex; flex-direction: column; gap: 32px">
+<div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 24px">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; font-weight: 600; color: #1D4ED8; letter-spacing: 0.06em">03 · DATA VIZ</span>
+<h2 style="margin: 0; font-size: 28px; line-height: 36px; font-weight: 700; letter-spacing: -0.025em">데이터 시각화</h2>
+</div>
+<p style="margin: 0; max-width: 440px; text-align: right; font-size: 14px; line-height: 22px; color: #64748B">이웃한 색은 명도가 달라서 색을 구분하기 어려운 사람도 조각을 나눠 볼 수 있어요.</p>
+</div>
+<div style="display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 20px">
+<div style="grid-column: span 4; display: flex; flex-direction: column">
+<span style="font-size: 13px; line-height: 18px; font-weight: 600; color: #64748B; margin-bottom: 8px">카테고리 순서</span>
+<div style="display: flex; align-items: center; gap: 14px; padding: 10px 0"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #64748B; width: 14px">1</span><span style="width: 32px; height: 32px; border-radius: 9px; background: #1D4ED8; flex: 0 0 auto"></span><span style="flex: 1 1 auto; font-size: 14px; font-weight: 600">식비</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #475569">#1D4ED8</span></div>
+<div style="display: flex; align-items: center; gap: 14px; padding: 10px 0; border-top: 1px solid #F1F5F9"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #64748B; width: 14px">2</span><span style="width: 32px; height: 32px; border-radius: 9px; background: #F59E0B; flex: 0 0 auto"></span><span style="flex: 1 1 auto; font-size: 14px; font-weight: 600">생활</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #475569">#F59E0B</span></div>
+<div style="display: flex; align-items: center; gap: 14px; padding: 10px 0; border-top: 1px solid #F1F5F9"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #64748B; width: 14px">3</span><span style="width: 32px; height: 32px; border-radius: 9px; background: #0F766E; flex: 0 0 auto"></span><span style="flex: 1 1 auto; font-size: 14px; font-weight: 600">쇼핑</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #475569">#0F766E</span></div>
+<div style="display: flex; align-items: center; gap: 14px; padding: 10px 0; border-top: 1px solid #F1F5F9"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #64748B; width: 14px">4</span><span style="width: 32px; height: 32px; border-radius: 9px; background: #93B4FA; flex: 0 0 auto"></span><span style="flex: 1 1 auto; font-size: 14px; font-weight: 600">교통</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #475569">#93B4FA</span></div>
+<div style="display: flex; align-items: center; gap: 14px; padding: 10px 0; border-top: 1px solid #F1F5F9"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #64748B; width: 14px">5</span><span style="width: 32px; height: 32px; border-radius: 9px; background: #C2410C; flex: 0 0 auto"></span><span style="flex: 1 1 auto; font-size: 14px; font-weight: 600">취미·여가</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #475569">#C2410C</span></div>
+<div style="display: flex; align-items: center; gap: 14px; padding: 10px 0; border-top: 1px solid #F1F5F9"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #64748B; width: 14px">6</span><span style="width: 32px; height: 32px; border-radius: 9px; background: #CBD5E1; flex: 0 0 auto"></span><span style="flex: 1 1 auto; font-size: 14px; font-weight: 600">기타</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #475569">#CBD5E1</span></div>
+</div>
+
+<div style="grid-column: span 4; border-radius: 16px; background: #F8FAFC; border: 1px solid #E2E8F0; padding: 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px">
+<div style="position: relative; width: 176px; height: 176px">
+<svg width="176" height="176" viewBox="0 0 176 176" role="img" aria-label="카테고리 색 6개를 순서대로 쓴 도넛 차트 예시">
+<g transform="rotate(-90 88 88)" fill="none" stroke-width="22">
+<circle cx="88" cy="88" r="60" stroke="#1D4ED8" stroke-dasharray="118.64 376.99" stroke-dashoffset="0"></circle>
+<circle cx="88" cy="88" r="60" stroke="#F59E0B" stroke-dasharray="88.48 376.99" stroke-dashoffset="-120.64"></circle>
+<circle cx="88" cy="88" r="60" stroke="#0F766E" stroke-dasharray="65.86 376.99" stroke-dashoffset="-211.12"></circle>
+<circle cx="88" cy="88" r="60" stroke="#93B4FA" stroke-dasharray="43.24 376.99" stroke-dashoffset="-278.98"></circle>
+<circle cx="88" cy="88" r="60" stroke="#C2410C" stroke-dasharray="28.16 376.99" stroke-dashoffset="-324.22"></circle>
+<circle cx="88" cy="88" r="60" stroke="#CBD5E1" stroke-dasharray="20.62 376.99" stroke-dashoffset="-354.38"></circle>
+</g>
+</svg>
+<div aria-hidden="true" style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px"><span style="font-size: 11px; color: #64748B">총 지출</span><span style="font-size: 15px; font-weight: 700">243만</span></div>
+</div>
+<span style="font-size: 13px; line-height: 18px; color: #475569; text-align: center">도넛 · 굵기 22 · 조각 사이 2px 간격</span>
+</div>
+
+<div style="grid-column: span 4; border-radius: 16px; background: #F8FAFC; border: 1px solid #E2E8F0; padding: 24px; display: flex; flex-direction: column; gap: 20px">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div role="img" aria-label="막대 그래프 예시. 선택한 달만 진한 파란색" style="display: flex; align-items: flex-end; gap: 10px; height: 104px; border-bottom: 1px solid #CBD5E1; padding: 0 4px">
+<div style="flex: 1 1 0; height: 62%; background: #7089DB; border-radius: 6px 6px 0 0"></div>
+<div style="flex: 1 1 0; height: 78%; background: #7089DB; border-radius: 6px 6px 0 0"></div>
+<div style="flex: 1 1 0; height: 70%; background: #7089DB; border-radius: 6px 6px 0 0"></div>
+<div style="flex: 1 1 0; height: 92%; background: #7089DB; border-radius: 6px 6px 0 0"></div>
+<div style="flex: 1 1 0; height: 84%; background: #7089DB; border-radius: 6px 6px 0 0"></div>
+<div style="flex: 1 1 0; height: 80%; background: #1D4ED8; border-radius: 6px 6px 0 0"></div>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 12px; color: #334155">
+<span style="display: inline-flex; align-items: center; gap: 6px"><span aria-hidden="true" style="width: 10px; height: 10px; border-radius: 3px; background: #1D4ED8"></span>선택한 달 #1D4ED8</span>
+<span style="display: inline-flex; align-items: center; gap: 6px"><span aria-hidden="true" style="width: 10px; height: 10px; border-radius: 3px; background: #7089DB"></span>나머지 #7089DB · 3.3 : 1</span>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="font-size: 13px; line-height: 18px; font-weight: 600; color: #64748B">달력 지출 단계</span>
+<div style="display: flex; height: 36px; border-radius: 10px; overflow: hidden; border: 1px solid #E2E8F0">
+<div style="flex: 1 1 0; background: #F1F5FF"></div><div style="flex: 1 1 0; background: #E0E8FF"></div><div style="flex: 1 1 0; background: #C9D6FF"></div><div style="flex: 1 1 0; background: #AFC2FF"></div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #475569"><span>~6만</span><span>~10만</span><span>~15만</span><span>15만+</span></div>
+</div>
+</div>
+</div>
+</section>
+
+<div style="display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 24px; align-items: stretch">
+<section style="grid-column: span 7; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 20px; padding: 36px; box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.04), 0 1px 2px -1px rgba(15, 23, 42, 0.02); display: flex; flex-direction: column; gap: 28px">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; font-weight: 600; color: #1D4ED8; letter-spacing: 0.06em">04 · TYPE</span>
+<h2 style="margin: 0; font-size: 28px; line-height: 36px; font-weight: 700; letter-spacing: -0.025em">글자</h2>
+</div>
+<div style="display: flex; align-items: center; gap: 36px; padding: 28px 32px; border-radius: 16px; background: #F8FAFC; border: 1px solid #E2E8F0">
+<span aria-hidden="true" style="font-size: 104px; line-height: 1; font-weight: 700; letter-spacing: -0.05em">Aa가</span>
+<div style="display: flex; flex-direction: column; gap: 14px; border-left: 1px solid #E2E8F0; padding-left: 32px">
+<div style="display: flex; align-items: baseline; gap: 12px"><span style="font-family: 'Inter', sans-serif; font-size: 20px; font-weight: 600; letter-spacing: -0.02em">Inter</span><span style="font-size: 13px; color: #64748B">영문 · 숫자 · 기호</span></div>
+<div style="display: flex; align-items: baseline; gap: 12px"><span style="font-family: 'Noto Sans KR', sans-serif; font-size: 20px; font-weight: 600; letter-spacing: -0.02em">Noto Sans KR</span><span style="font-size: 13px; color: #64748B">한글</span></div>
+<div style="display: flex; align-items: baseline; gap: 12px"><span style="font-size: 20px; font-weight: 600; font-variant-numeric: tabular-nums">0123456789</span><span style="font-size: 13px; color: #64748B">tabular-nums로 자릿수 고정</span></div>
+</div>
+</div>
+<div style="display: flex; flex-direction: column">
+<div style="display: grid; grid-template-columns: 150px minmax(0, 1fr) auto; align-items: baseline; gap: 20px; padding: 16px 0"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #64748B">page-title</span><span style="font-size: 28px; line-height: 36px; font-weight: 700; letter-spacing: -0.025em">대시보드</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #334155; white-space: nowrap">28/36 · 700 · −2.5%</span></div>
+<div style="display: grid; grid-template-columns: 150px minmax(0, 1fr) auto; align-items: baseline; gap: 20px; padding: 16px 0; border-top: 1px solid #F1F5F9"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #64748B">metric</span><span style="font-size: 30px; line-height: 36px; font-weight: 700; letter-spacing: -0.025em">2,438,200<span style="font-size: 18px; font-weight: 500; margin-left: 2px">원</span></span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #334155; white-space: nowrap">30/36 · 700 · 단위 18/500</span></div>
+<div style="display: grid; grid-template-columns: 150px minmax(0, 1fr) auto; align-items: baseline; gap: 20px; padding: 16px 0; border-top: 1px solid #F1F5F9"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #64748B">card-title</span><span style="font-size: 18px; line-height: 26px; font-weight: 600; letter-spacing: -0.01em">월별 지출 추이</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #334155; white-space: nowrap">18/26 · 600 · −1%</span></div>
+<div style="display: grid; grid-template-columns: 150px minmax(0, 1fr) auto; align-items: baseline; gap: 20px; padding: 16px 0; border-top: 1px solid #F1F5F9"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #64748B">body</span><span style="font-size: 14px; line-height: 20px">가계부에 반영된 최신 내역이에요</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #334155; white-space: nowrap">14/20 · 400</span></div>
+<div style="display: grid; grid-template-columns: 150px minmax(0, 1fr) auto; align-items: baseline; gap: 20px; padding: 16px 0; border-top: 1px solid #F1F5F9"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #64748B">label</span><span style="font-size: 13px; line-height: 18px; font-weight: 600; color: #64748B">이번 달 지출</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #334155; white-space: nowrap">13/18 · 600</span></div>
+<div style="display: grid; grid-template-columns: 150px minmax(0, 1fr) auto; align-items: baseline; gap: 20px; padding: 16px 0; border-top: 1px solid #F1F5F9"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #64748B">caption</span><span style="font-size: 12px; line-height: 16px; color: #64748B">10월 26일 · 카드 · 마지막 확인 10분 전</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #334155; white-space: nowrap">12/16 · 400</span></div>
+<div style="display: grid; grid-template-columns: 150px minmax(0, 1fr) auto; align-items: center; gap: 20px; padding: 16px 0; border-top: 1px solid #F1F5F9"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #64748B">micro</span><span><span style="display: inline-flex; align-items: center; height: 22px; padding: 0 9px; border-radius: 9999px; background: #F1F5F9; color: #334155; font-size: 11px; font-weight: 600">식비 › 카페/음료</span></span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #334155; white-space: nowrap">11/14 · 600</span></div>
+</div>
+</section>
+
+<section style="grid-column: span 5; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 20px; padding: 36px; box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.04), 0 1px 2px -1px rgba(15, 23, 42, 0.02); display: flex; flex-direction: column; gap: 28px">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; font-weight: 600; color: #1D4ED8; letter-spacing: 0.06em">05 · AMOUNT</span>
+<h2 style="margin: 0; font-size: 28px; line-height: 36px; font-weight: 700; letter-spacing: -0.025em">금액 표기</h2>
+</div>
+<div style="padding: 28px; border-radius: 16px; background: #F8FAFC; border: 1px solid #E2E8F0; display: flex; flex-direction: column; gap: 16px">
+<span style="font-size: 46px; line-height: 52px; font-weight: 700; letter-spacing: -0.03em; white-space: nowrap">2,438,200<span style="font-size: 27px; font-weight: 500; margin-left: 3px">원</span></span>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<span style="display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: 9999px; background: #FFFFFF; border: 1px solid #E2E8F0; font-size: 12px; font-weight: 600; color: #334155">숫자 · 700</span>
+<span style="display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: 9999px; background: #FFFFFF; border: 1px solid #E2E8F0; font-size: 12px; font-weight: 600; color: #334155">단위 · 500 · 0.6배</span>
+<span style="display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: 9999px; background: #FFFFFF; border: 1px solid #E2E8F0; font-size: 12px; font-weight: 600; color: #334155">tabular-nums</span>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<span style="font-size: 14px; line-height: 20px; font-weight: 600">부호와 단위</span>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+<div style="padding: 14px 16px; border-radius: 12px; border: 1px solid #A7F3D0; background: #ECFDF5; display: flex; flex-direction: column; gap: 6px"><span style="display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: #047857"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"></path></svg>권장</span><span style="font-size: 20px; line-height: 28px; font-weight: 700">−6,300원</span></div>
+<div style="padding: 14px 16px; border-radius: 12px; border: 1px solid #FECDD3; background: #FFF1F2; display: flex; flex-direction: column; gap: 6px"><span style="display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: #BE123C"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg>피하기</span><span style="font-size: 20px; line-height: 28px; font-weight: 700">-₩6,300</span></div>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<span style="font-size: 14px; line-height: 20px; font-weight: 600">지출은 기본 글자색</span>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+<div style="padding: 14px 16px; border-radius: 12px; border: 1px solid #A7F3D0; background: #ECFDF5; display: flex; flex-direction: column; gap: 6px"><span style="display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: #047857"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"></path></svg>권장</span><span style="font-size: 20px; line-height: 28px; font-weight: 700; color: #0F172A">−38,900원</span></div>
+<div style="padding: 14px 16px; border-radius: 12px; border: 1px solid #FECDD3; background: #FFF1F2; display: flex; flex-direction: column; gap: 6px"><span style="display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: #BE123C"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg>피하기</span><span style="font-size: 20px; line-height: 28px; font-weight: 700; color: #DC2626">−38,900원</span></div>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<span style="font-size: 14px; line-height: 20px; font-weight: 600">수입은 녹색과 + 기호</span>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+<div style="padding: 14px 16px; border-radius: 12px; border: 1px solid #A7F3D0; background: #ECFDF5; display: flex; flex-direction: column; gap: 6px"><span style="display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: #047857"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"></path></svg>권장</span><span style="font-size: 20px; line-height: 28px; font-weight: 700; color: #047857">+59,000원</span></div>
+<div style="padding: 14px 16px; border-radius: 12px; border: 1px solid #FECDD3; background: #FFF1F2; display: flex; flex-direction: column; gap: 6px"><span style="display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: #BE123C"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"></path></svg>피하기</span><span style="font-size: 20px; line-height: 28px; font-weight: 700; color: #1D4ED8">59,000원</span></div>
+</div>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 10px; margin-top: auto">
+<span style="font-size: 14px; line-height: 20px; font-weight: 600">목록에서는 오른쪽 정렬</span>
+<div style="border: 1px solid #E2E8F0; border-radius: 12px; padding: 6px 18px; display: flex; flex-direction: column; font-size: 15px; font-weight: 600">
+<div style="display: flex; justify-content: space-between; padding: 8px 0"><span style="font-weight: 500; color: #475569">스타벅스</span><span>−6,300원</span></div>
+<div style="display: flex; justify-content: space-between; padding: 8px 0; border-top: 1px solid #F1F5F9"><span style="font-weight: 500; color: #475569">쿠팡</span><span>−38,900원</span></div>
+<div style="display: flex; justify-content: space-between; padding: 8px 0; border-top: 1px solid #F1F5F9"><span style="font-weight: 500; color: #475569">이마트</span><span>−154,000원</span></div>
+<div style="display: flex; justify-content: space-between; padding: 8px 0; border-top: 1px solid #F1F5F9"><span style="font-weight: 500; color: #475569">무신사 취소</span><span style="color: #047857">+59,000원</span></div>
+</div>
+</div>
+</section>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px">
+<section style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 20px; padding: 36px; box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.04), 0 1px 2px -1px rgba(15, 23, 42, 0.02); display: flex; flex-direction: column; gap: 24px">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; font-weight: 600; color: #1D4ED8; letter-spacing: 0.06em">06 · SPACE</span>
+<h2 style="margin: 0; font-size: 28px; line-height: 36px; font-weight: 700; letter-spacing: -0.025em">간격</h2>
+</div>
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div style="display: grid; grid-template-columns: 64px minmax(0, 1fr) 44px; align-items: center; gap: 12px"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #64748B">space-1</span><span style="display: block; width: 16px; height: 14px; border-radius: 4px; background: #93B4FA"></span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; text-align: right">4</span></div>
+<div style="display: grid; grid-template-columns: 64px minmax(0, 1fr) 44px; align-items: center; gap: 12px"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #64748B">space-2</span><span style="display: block; width: 32px; height: 14px; border-radius: 4px; background: #93B4FA"></span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; text-align: right">8</span></div>
+<div style="display: grid; grid-template-columns: 64px minmax(0, 1fr) 44px; align-items: center; gap: 12px"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #64748B">space-3</span><span style="display: block; width: 48px; height: 14px; border-radius: 4px; background: #93B4FA"></span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; text-align: right">12</span></div>
+<div style="display: grid; grid-template-columns: 64px minmax(0, 1fr) 44px; align-items: center; gap: 12px"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #64748B">space-4</span><span style="display: block; width: 64px; height: 14px; border-radius: 4px; background: #7089DB"></span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; text-align: right">16</span></div>
+<div style="display: grid; grid-template-columns: 64px minmax(0, 1fr) 44px; align-items: center; gap: 12px"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #64748B">space-6</span><span style="display: block; width: 96px; height: 14px; border-radius: 4px; background: #7089DB"></span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; text-align: right">24</span></div>
+<div style="display: grid; grid-template-columns: 64px minmax(0, 1fr) 44px; align-items: center; gap: 12px"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #64748B">space-8</span><span style="display: block; width: 128px; height: 14px; border-radius: 4px; background: #1D4ED8"></span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; text-align: right">32</span></div>
+<div style="display: grid; grid-template-columns: 64px minmax(0, 1fr) 44px; align-items: center; gap: 12px"><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; color: #64748B">space-10</span><span style="display: block; width: 160px; height: 14px; border-radius: 4px; background: #1D4ED8"></span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; text-align: right">40</span></div>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: auto">
+<span style="display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: 9999px; background: #F1F5F9; font-size: 12px; font-weight: 600; color: #334155">카드 안쪽 24</span>
+<span style="display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: 9999px; background: #F1F5F9; font-size: 12px; font-weight: 600; color: #334155">카드 사이 24</span>
+<span style="display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: 9999px; background: #F1F5F9; font-size: 12px; font-weight: 600; color: #334155">목록 행 12</span>
+<span style="display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: 9999px; background: #F1F5F9; font-size: 12px; font-weight: 600; color: #334155">페이지 여백 32 · 40</span>
+</div>
+</section>
+
+<section style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 20px; padding: 36px; box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.04), 0 1px 2px -1px rgba(15, 23, 42, 0.02); display: flex; flex-direction: column; gap: 24px">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; font-weight: 600; color: #1D4ED8; letter-spacing: 0.06em">07 · RADIUS</span>
+<h2 style="margin: 0; font-size: 28px; line-height: 36px; font-weight: 700; letter-spacing: -0.025em">모서리</h2>
+</div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px 16px">
+<div style="display: flex; flex-direction: column; gap: 10px"><div style="height: 72px; border-radius: 6px; background: #EFF4FF; border: 1.5px solid #1D4ED8"></div><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 13px; font-weight: 600">6</span><span style="font-size: 12px; line-height: 16px; color: #475569">막대 끝 · 툴팁</span></div>
+<div style="display: flex; flex-direction: column; gap: 10px"><div style="height: 72px; border-radius: 8px; background: #EFF4FF; border: 1.5px solid #1D4ED8"></div><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 13px; font-weight: 600">8</span><span style="font-size: 12px; line-height: 16px; color: #475569">탭 안쪽 버튼</span></div>
+<div style="display: flex; flex-direction: column; gap: 10px"><div style="height: 72px; border-radius: 10px; background: #EFF4FF; border: 1.5px solid #1D4ED8"></div><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 13px; font-weight: 600">10</span><span style="font-size: 12px; line-height: 16px; color: #475569">버튼 · 입력 · 메뉴</span></div>
+<div style="display: flex; flex-direction: column; gap: 10px"><div style="height: 72px; border-radius: 12px; background: #EFF4FF; border: 1.5px solid #1D4ED8"></div><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 13px; font-weight: 600">12</span><span style="font-size: 12px; line-height: 16px; color: #475569">안쪽 상자 · 아이콘</span></div>
+<div style="display: flex; flex-direction: column; gap: 10px"><div style="height: 72px; border-radius: 16px; background: #EFF4FF; border: 1.5px solid #1D4ED8"></div><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 13px; font-weight: 600">16</span><span style="font-size: 12px; line-height: 16px; color: #475569">카드</span></div>
+<div style="display: flex; flex-direction: column; gap: 10px"><div style="height: 72px; border-radius: 9999px; background: #EFF4FF; border: 1.5px solid #1D4ED8"></div><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 13px; font-weight: 600">full</span><span style="font-size: 12px; line-height: 16px; color: #475569">칩 · 상태 점</span></div>
+</div>
+</section>
+
+<section style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 20px; padding: 36px; box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.04), 0 1px 2px -1px rgba(15, 23, 42, 0.02); display: flex; flex-direction: column; gap: 24px">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; font-weight: 600; color: #1D4ED8; letter-spacing: 0.06em">08 · ELEVATION</span>
+<h2 style="margin: 0; font-size: 28px; line-height: 36px; font-weight: 700; letter-spacing: -0.025em">그림자</h2>
+</div>
+<div style="flex: 1 1 auto; padding: 24px; border-radius: 16px; background: #F8FAFC; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 20px">
+<div style="display: flex; flex-direction: column; gap: 10px"><div style="height: 72px; border-radius: 12px; background: #F8FAFC; border: 1px dashed #CBD5E1"></div><span style="font-size: 13px; font-weight: 600">0 · 바닥</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #475569">none</span></div>
+<div style="display: flex; flex-direction: column; gap: 10px"><div style="height: 72px; border-radius: 12px; background: #FFFFFF; border: 1px solid #E2E8F0; box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.04), 0 1px 2px -1px rgba(15, 23, 42, 0.02)"></div><span style="font-size: 13px; font-weight: 600">1 · 카드</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #475569">0 1 3 / 4%</span></div>
+<div style="display: flex; flex-direction: column; gap: 10px"><div style="height: 72px; border-radius: 12px; background: #FFFFFF; border: 1px solid #E2E8F0; box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.06), 0 4px 6px -4px rgba(15, 23, 42, 0.03)"></div><span style="font-size: 13px; font-weight: 600">2 · 팝오버</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #475569">0 10 15 −3 / 6%</span></div>
+<div style="display: flex; flex-direction: column; gap: 10px"><div style="height: 72px; border-radius: 12px; background: #FFFFFF; box-shadow: 0 20px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.03)"></div><span style="font-size: 13px; font-weight: 600">3 · 모달</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #475569">0 20 25 −5 / 8%</span></div>
+</div>
+</section>
+</div>
+
+<section style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 20px; padding: 36px; box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.04), 0 1px 2px -1px rgba(15, 23, 42, 0.02); display: flex; flex-direction: column; gap: 32px">
+<div style="display: flex; align-items: flex-end; justify-content: space-between; gap: 24px">
+<div style="display: flex; flex-direction: column; gap: 6px">
+<span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px; font-weight: 600; color: #1D4ED8; letter-spacing: 0.06em">09 · COMPONENTS</span>
+<h2 style="margin: 0; font-size: 28px; line-height: 36px; font-weight: 700; letter-spacing: -0.025em">컴포넌트</h2>
+</div>
+<p style="margin: 0; max-width: 440px; text-align: right; font-size: 14px; line-height: 22px; color: #64748B">누를 수 있는 요소는 모두 높이 44px 이상이에요.</p>
+</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px">
+<div style="display: flex; flex-direction: column; gap: 28px">
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px"><span style="font-size: 15px; font-weight: 600">버튼</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #64748B">h 46 · px 18 · r 10 · 14/600</span></div>
+<div style="display: flex; flex-wrap: wrap; gap: 10px">
+<button type="button" style="display: inline-flex; align-items: center; gap: 8px; min-height: 46px; padding: 0 18px; border-radius: 10px; border: 1px solid #1D4ED8; background: #1D4ED8; color: #FFFFFF; font-size: 14px; font-weight: 600"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>내역 추가</button>
+<button type="button" style="min-height: 46px; padding: 0 18px; border-radius: 10px; border: 1px solid #E2E8F0; background: #FFFFFF; color: #0F172A; font-size: 14px; font-weight: 600">이번 달</button>
+<button type="button" style="min-height: 46px; padding: 0 18px; border-radius: 10px; border: 1px solid #FECDD3; background: #FFF1F2; color: #BE123C; font-size: 14px; font-weight: 600">삭제</button>
+<button type="button" disabled style="min-height: 46px; padding: 0 18px; border-radius: 10px; border: 1px solid #E2E8F0; background: #F1F5F9; color: #64748B; font-size: 14px; font-weight: 600">업로드하기</button>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 12px">
+<span style="font-size: 15px; font-weight: 600">탭 · 아이콘 버튼 · 링크</span>
+<div style="display: flex; flex-wrap: wrap; align-items: center; gap: 16px">
+<div role="group" aria-label="기간 예시" style="display: flex; padding: 3px; gap: 2px; background: #F1F5F9; border-radius: 10px">
+<button type="button" aria-pressed="true" style="min-height: 38px; padding: 0 14px; border: 0; border-radius: 8px; background: #FFFFFF; color: #1D4ED8; font-size: 13px; font-weight: 600; box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06)">올해</button>
+<button type="button" aria-pressed="false" style="min-height: 38px; padding: 0 14px; border: 0; border-radius: 8px; background: transparent; color: #475569; font-size: 13px; font-weight: 500">최근 12개월</button>
+</div>
+<div role="group" aria-label="월 이동 예시" style="display: flex; align-items: center; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 12px; padding: 1px">
+<button type="button" aria-label="이전 달" style="width: 44px; height: 44px; border: 0; background: transparent; border-radius: 10px; color: #334155; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6"></path></svg></button>
+<span style="font-size: 15px; font-weight: 600; padding: 0 6px; white-space: nowrap">2026년 10월</span>
+<button type="button" aria-label="다음 달" style="width: 44px; height: 44px; border: 0; background: transparent; border-radius: 10px; color: #334155; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"></path></svg></button>
+</div>
+<a href="Transactions.dc.html" style="display: inline-flex; align-items: center; gap: 4px; min-height: 44px; font-size: 14px; font-weight: 600">전체 보기<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"></path><path d="m13 6 6 6-6 6"></path></svg></a>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px"><span style="font-size: 15px; font-weight: 600">입력창</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #64748B">h 46 · r 10 · 테두리 #CBD5E1</span></div>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px">
+<div style="display: flex; flex-direction: column; gap: 6px"><label for="tok-in-1" style="font-size: 13px; font-weight: 600; color: #334155">기본</label><input id="tok-in-1" type="text" placeholder="예: 스타벅스" style="height: 46px; min-width: 0; padding: 0 14px; border: 1px solid #CBD5E1; border-radius: 10px; background: #FFFFFF; color: #0F172A; font-size: 14px"></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><label for="tok-in-2" style="font-size: 13px; font-weight: 600; color: #334155">포커스</label><input id="tok-in-2" type="text" value="배달의민족" style="height: 46px; min-width: 0; padding: 0 14px; border: 1px solid #1D4ED8; border-radius: 10px; background: #FFFFFF; color: #0F172A; font-size: 14px; box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.15)"></div>
+<div style="display: flex; flex-direction: column; gap: 6px"><label for="tok-in-3" style="font-size: 13px; font-weight: 600; color: #334155">오류</label><input id="tok-in-3" type="text" aria-describedby="tok-in-3-help" style="height: 46px; min-width: 0; padding: 0 14px; border: 1px solid #BE123C; border-radius: 10px; background: #FFFFFF; color: #0F172A; font-size: 14px; box-shadow: 0 0 0 3px rgba(190, 18, 60, 0.12)"><span id="tok-in-3-help" style="font-size: 12px; line-height: 16px; color: #BE123C">키워드를 입력해 주세요</span></div>
+</div>
+</div>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 28px">
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px"><span style="font-size: 15px; font-weight: 600">칩</span><span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; color: #64748B">h 22–26 · full · 11–12/600</span></div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<span style="display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: 9999px; background: #F1F5F9; color: #334155; font-size: 12px; font-weight: 600">식비 › 카페/음료</span>
+<span style="display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: 9999px; background: #FEF3C7; color: #B45309; border: 1px solid #FDE68A; font-size: 12px; font-weight: 600">미분류</span>
+<span style="display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: 9999px; background: #FEF3C7; color: #B45309; border: 1px solid #FDE68A; font-size: 12px; font-weight: 600">중복 건너뜀</span>
+<span style="display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: 9999px; background: #ECFDF5; color: #047857; border: 1px solid #A7F3D0; font-size: 12px; font-weight: 600">3.2% 감소</span>
+<span style="display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 10px; border-radius: 9999px; background: #ECFDF5; color: #047857; border: 1px solid #A7F3D0; font-size: 12px; font-weight: 600"><span aria-hidden="true" style="width: 6px; height: 6px; border-radius: 9999px; background: #10B981"></span>켜짐</span>
+<span style="display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: 9999px; background: #EFF4FF; color: #1D4ED8; font-size: 12px; font-weight: 600">카드</span>
+<span style="display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: 9999px; background: #F5F3FF; color: #6D28D9; font-size: 12px; font-weight: 600">포인트</span>
+<span style="display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: 9999px; background: #FFF7ED; color: #C2410C; font-size: 12px; font-weight: 600">복합</span>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 12px; flex: 1 1 auto">
+<span style="font-size: 15px; font-weight: 600">조합 예시</span>
+<div style="flex: 1 1 auto; padding: 20px; border-radius: 16px; background: #F8FAFC; border: 1px solid #E2E8F0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; align-items: start">
+<div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 16px; box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.04), 0 1px 2px -1px rgba(15, 23, 42, 0.02); padding: 20px; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 8px"><span style="font-size: 13px; font-weight: 600; color: #64748B">이번 달 지출</span><span style="display: inline-flex; align-items: center; height: 22px; padding: 0 8px; border-radius: 9999px; background: #ECFDF5; color: #047857; border: 1px solid #A7F3D0; font-size: 11px; font-weight: 600; white-space: nowrap">3.2% 감소</span></div>
+<span style="font-size: 26px; line-height: 32px; font-weight: 700; letter-spacing: -0.025em; white-space: nowrap">2,438,200<span style="font-size: 16px; font-weight: 500; margin-left: 2px">원</span></span>
+<span style="font-size: 12px; line-height: 16px; color: #64748B">지난달보다 81,000원 적게 썼어요</span>
+</div>
+<div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 16px; box-shadow: 0 1px 3px 0 rgba(15, 23, 42, 0.04), 0 1px 2px -1px rgba(15, 23, 42, 0.02); padding: 14px 16px; display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; align-items: center; gap: 12px">
+<span aria-hidden="true" style="width: 40px; height: 40px; border-radius: 12px; background: #EFF4FF; color: #1D4ED8; display: flex; align-items: center; justify-content: center; flex: 0 0 auto"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h13v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5z"></path><path d="M17 11h1.5a2.5 2.5 0 0 1 0 5H17"></path><path d="M8 3v3M12 3v3"></path></svg></span>
+<span style="flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; line-height: 20px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">스타벅스 강남R점</span><span style="font-size: 12px; line-height: 16px; color: #64748B">10월 26일</span></span>
+<span style="font-size: 14px; font-weight: 600; white-space: nowrap">−6,300원</span>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 6px; padding-left: 52px"><span style="display: inline-flex; align-items: center; height: 22px; padding: 0 9px; border-radius: 9999px; background: #F1F5F9; color: #334155; font-size: 11px; font-weight: 600">식비 › 카페/음료</span><span style="display: inline-flex; align-items: center; height: 22px; padding: 0 9px; border-radius: 9999px; background: #EFF4FF; color: #1D4ED8; font-size: 11px; font-weight: 600">카드</span></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":4980}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>
