@@ -22,7 +22,7 @@ export async function POST(req: Request) {
 
     if (result.duplicate) {
       return NextResponse.json(
-        { message: "이미 업로드한 거래 파일입니다." },
+        { message: "이미 업로드한 거래 파일입니다.", duplicate: true },
         { status: 400 }
       );
     }

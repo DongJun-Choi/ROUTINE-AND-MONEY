@@ -1,56 +1,85 @@
 "use client";
 
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useState } from "react";
-import CategoryPie from "@/components/dashboard/CategoryPie";
-import DailyChart from "@/components/dashboard/DailyChart";
-import MonthlyChart from "@/components/dashboard/MonthlyChart";
-import Summary from "@/components/dashboard/Summary";
+import Link from "next/link";
+import { Upload } from "lucide-react";
+import { useMemo, useState } from "react";
+import CategoryBreakdownCard from "@/components/dashboard/CategoryBreakdownCard";
+import DailySpendingCard from "@/components/dashboard/DailySpendingCard";
+import DashboardSkeleton from "@/components/dashboard/DashboardSkeleton";
+import MonthlyTrendCard from "@/components/dashboard/MonthlyTrendCard";
+import RecentTransactionsCard from "@/components/dashboard/RecentTransactionsCard";
+import SummaryCards from "@/components/dashboard/SummaryCards";
+import { useDashboardData } from "@/components/dashboard/useDashboardData";
+import Button, { buttonStyles } from "@/components/ui/Button";
+import { Card } from "@/components/ui/Card";
+import MonthSwitcher from "@/components/ui/MonthSwitcher";
+import PageHeader from "@/components/ui/PageHeader";
+import { buildDashboardView } from "@/lib/dashboard/stats";
+import { compareYearMonth, shiftMonth, type YearMonth } from "@/lib/date";
+import { formatNumber } from "@/lib/format";
 
 export default function DashboardPage() {
-  const today = new Date();
-  const [year, setYear] = useState(today.getFullYear());
-  const [month, setMonth] = useState(today.getMonth() + 1);
+  const [today] = useState(() => new Date());
+  const currentPeriod: YearMonth = { year: today.getFullYear(), month: today.getMonth() + 1 };
+  const [period, setPeriod] = useState<YearMonth>(currentPeriod);
+  const { status, loaded, reload } = useDashboardData(period);
 
-  const stepMonth = (amount: number) => {
-    const next = new Date(year, month - 1 + amount, 1);
-    setYear(next.getFullYear());
-    setMonth(next.getMonth() + 1);
-  };
+  const view = useMemo(() => (loaded ? buildDashboardView(loaded.data, loaded.period, today) : null), [loaded, today]);
+  const shownPeriod = loaded?.period ?? period;
+  const isCurrentMonth = compareYearMonth(period, currentPeriod) === 0;
+  const isShowingCurrentMonth = compareYearMonth(shownPeriod, currentPeriod) === 0;
+
+  const description =
+    status === "error" ? "데이터를 불러오지 못했어요."
+      : status === "loading" || !view ? `${period.month}월 내역을 불러오는 중이에요.`
+        : view.transactionCount > 0 ? `${period.month}월 카드 사용 흐름이에요. 거래 ${formatNumber(view.transactionCount)}건이 반영되어 있어요.`
+          : `${period.month}월에는 반영된 거래가 없어요.`;
 
   return (
-    <div className="dashboard-page">
-      <div className="page-heading">
-        <h1>대시보드</h1>
-        <p>수입과 지출 흐름을 한눈에 확인하세요.</p>
-      </div>
+    <div className="flex flex-col gap-6">
+      <PageHeader
+        title="대시보드"
+        description={description}
+        actions={
+          <>
+            <MonthSwitcher
+              year={period.year}
+              month={period.month}
+              onPrev={() => setPeriod((value) => shiftMonth(value, -1))}
+              onNext={() => setPeriod((value) => shiftMonth(value, 1))}
+              className="flex-1 sm:flex-none"
+            />
+            <Button size="lg" onClick={() => setPeriod(currentPeriod)} disabled={isCurrentMonth}>이번 달</Button>
+            <Link href="/upload" className={buttonStyles({ variant: "primary", size: "lg", className: "max-lg:hidden" })}>
+              <Upload size={18} strokeWidth={2} aria-hidden="true" />
+              명세서 가져오기
+            </Link>
+          </>
+        }
+      />
 
-      <div className="dashboard-toolbar">
-        <div className="view-tabs" aria-label="대시보드 보기">
-          <span className="active">개요</span>
-        </div>
-        <div className="period-control">
-          <button className="icon-button" onClick={() => stepMonth(-1)} aria-label="이전 달"><ChevronLeft size={17} /></button>
-          <strong>{year}년 {month}월</strong>
-          <button className="icon-button" onClick={() => stepMonth(1)} aria-label="다음 달"><ChevronRight size={17} /></button>
-        </div>
-      </div>
+      {status === "error" && (
+        <Card role="alert" className="flex-row flex-wrap items-center justify-between gap-3 border-danger-line bg-danger-soft">
+          <p className="m-0 text-sm font-medium text-danger">대시보드 데이터를 불러오지 못했어요. 데이터베이스가 켜져 있는지 확인한 뒤 다시 시도해 주세요.</p>
+          <Button onClick={reload}>다시 시도</Button>
+        </Card>
+      )}
 
-      <Summary year={year} month={month} />
-      <div className="dashboard-grid">
-        <section className="podo-panel dashboard-panel">
-          <div className="panel-heading"><h2>카테고리별 지출</h2><span>{month}월 소비 비중</span></div>
-          <div className="chart-wrap"><CategoryPie year={year} month={month} /></div>
-        </section>
-        <section className="podo-panel dashboard-panel">
-          <div className="panel-heading"><h2>일별 지출 그래프</h2><span>{year}년 {month}월</span></div>
-          <div className="chart-wrap"><DailyChart year={year} month={month} /></div>
-        </section>
-        <section className="podo-panel dashboard-panel full">
-          <div className="panel-heading"><h2>월별 지출 추이</h2><span>{year}년 월별 흐름</span></div>
-          <div className="chart-wrap"><MonthlyChart year={year} /></div>
-        </section>
-      </div>
+      {!view ? (
+        status === "loading" && <DashboardSkeleton />
+      ) : (
+        <div className={`flex flex-col gap-6 transition-opacity ${status === "loading" ? "opacity-60" : ""}`} aria-busy={status === "loading"}>
+          <SummaryCards month={shownPeriod.month} view={view} />
+          <div className="flex flex-wrap gap-6">
+            <MonthlyTrendCard className="flex-[7_1_560px]" yearSeries={view.yearSeries} recentSeries={view.recentSeries} />
+            <CategoryBreakdownCard className="flex-[5_1_380px]" month={shownPeriod.month} groups={view.categoryGroups} total={view.categoryTotal} insight={view.categoryInsight} />
+          </div>
+          <div className="flex flex-wrap gap-6">
+            <DailySpendingCard className="flex-[7_1_560px]" period={shownPeriod} daily={view.daily} isCurrentMonth={isShowingCurrentMonth} />
+            <RecentTransactionsCard className="flex-[5_1_380px]" transactions={view.recentTransactions} />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
