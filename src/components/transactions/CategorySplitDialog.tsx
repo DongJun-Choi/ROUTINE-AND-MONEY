@@ -2,11 +2,11 @@
 
 import { Plus, Split, Trash2 } from "lucide-react";
 import { useState } from "react";
+import CategorySelect from "@/components/category/CategorySelect";
 import { vizColor } from "@/components/charts/vizColor";
 import Button from "@/components/ui/Button";
 import MoneyInput from "@/components/ui/MoneyInput";
 import { Dialog, OverlayHeader } from "@/components/ui/Overlay";
-import Select from "@/components/ui/Select";
 import TextInput from "@/components/ui/TextInput";
 import { formatNumber } from "@/lib/format";
 import { evaluateSplits, initialSplitDrafts, MAX_SPLITS, MIN_SPLITS, nextSplitDraft, SPLIT_LABEL_MAX_LENGTH, type SplitDraft } from "@/lib/transactions/split";
@@ -43,7 +43,6 @@ function CategorySplitBody({ totalAmount, merchant, categories, initialSplits, o
   const { allocated, difference, hasEmpty, canApply } = evaluateSplits(totalAmount, drafts);
   const status = splitStatus(difference, hasEmpty);
   const removable = drafts.length > MIN_SPLITS;
-  const parents = categories.filter((category) => category.parentId === null);
 
   const update = (index: number, patch: Partial<SplitDraft>) => setDrafts((current) => current.map((draft, draftIndex) => (draftIndex === index ? { ...draft, ...patch } : draft)));
 
@@ -101,22 +100,14 @@ function CategorySplitBody({ totalAmount, merchant, categories, initialSplits, o
                 onChange={(value) => update(index, { amount: value ?? 0 })}
                 className="col-start-1 row-start-2 sm:col-start-2 sm:row-start-1"
               />
-              <Select
+              <CategorySelect
                 aria-label={`항목 ${index + 1} 카테고리`}
-                value={draft.categoryId ?? ""}
-                onChange={(event) => update(index, { categoryId: event.target.value ? Number(event.target.value) : null })}
+                categories={categories}
+                value={draft.categoryId}
+                onChange={(categoryId) => update(index, { categoryId })}
+                emptyLabel="미분류"
                 className="col-span-2 col-start-2 row-start-2 sm:col-span-1 sm:col-start-3 sm:row-start-1"
-              >
-                <option value="">미분류</option>
-                {parents.map((parent) => (
-                  <optgroup key={parent.id} label={parent.name}>
-                    <option value={parent.id}>{parent.name}</option>
-                    {categories.filter((category) => category.parentId === parent.id).map((child) => (
-                      <option key={child.id} value={child.id}>{child.name}</option>
-                    ))}
-                  </optgroup>
-                ))}
-              </Select>
+              />
             </li>
           ))}
         </ul>
